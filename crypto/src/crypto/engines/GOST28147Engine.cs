@@ -267,7 +267,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 		private void Gost28147Func(int[] workingKey, ReadOnlySpan<byte> input, Span<byte> output)
 		{
 			int N1 = (int)Pack.LE_To_UInt32(input);
-			int N2 = (int)Pack.LE_To_UInt32(input[4..]);
+			int N2 = (int)Pack.LE_To_UInt32(input.Slice(4));
 			int tmp;  //tmp -> for saving N1
 
 			if (this.forEncryption)
@@ -315,7 +315,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 			N2 = N2 ^ Gost28147_mainStep(N1, workingKey[0]);  // 32 step (N1=N1)
 
 			Pack.UInt32_To_LE((uint)N1, output);
-			Pack.UInt32_To_LE((uint)N2, output[4..]);
+			Pack.UInt32_To_LE((uint)N2, output.Slice(4));
 		}
 #else
 		private void Gost28147Func(int[] workingKey, byte[] inBytes, int inOff, byte[] outBytes, int outOff)

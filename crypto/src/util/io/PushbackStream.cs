@@ -89,7 +89,7 @@ namespace Org.BouncyCastle.Utilities.IO
                 return new ValueTask<int>(1);
             }
 
-            return Streams.ReadAsync(s, buffer, cancellationToken);
+            return base.ReadAsync(buffer, cancellationToken);
         }
 #endif
 

@@ -124,7 +124,7 @@ namespace Org.BouncyCastle.Crypto
         public virtual int DoFinal(ReadOnlySpan<byte> input, Span<byte> output)
         {
             int len = ProcessBytes(input, output);
-            len += DoFinal(output[len..]);
+            len += DoFinal(output.Slice(len));
             return len;
         }
 #endif

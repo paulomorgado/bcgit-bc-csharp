@@ -3,6 +3,9 @@ using System.Diagnostics;
 #if NETSTANDARD1_0_OR_GREATER || NETCOREAPP1_0_OR_GREATER
 using System.Runtime.CompilerServices;
 #endif
+#if !NETFRAMEWORK
+using System.Buffers;
+#endif
 
 using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Crypto.Utilities;
@@ -184,7 +187,7 @@ namespace Org.BouncyCastle.Crypto.Modes
 #endif
         }
 
-#if NETCOREAPP2_0_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void ProcessAadBytes(ReadOnlySpan<byte> input)
         {
             // Don't enter AAD state until we actually get input
@@ -203,8 +206,8 @@ namespace Org.BouncyCastle.Crypto.Modes
                     return;
                 }
 
-                input[..available].CopyTo(m_buf.AsSpan(m_bufPos));
-                input = input[available..];
+                input.Slice(0, available).CopyTo(m_buf.AsSpan(m_bufPos));
+                input = input.Slice(available);
 
                 ProcessBufferAad(m_buf);
                 //m_bufPos = 0;
@@ -213,7 +216,7 @@ namespace Org.BouncyCastle.Crypto.Modes
             while (input.Length >= Rate)
             {
                 ProcessBufferAad(input);
-                input = input[Rate..];
+                input = input.Slice(Rate);
             }
 
             input.CopyTo(m_buf);
@@ -297,9 +300,10 @@ namespace Org.BouncyCastle.Crypto.Modes
                 if (m_bufPos >= Rate)
                 {
                     ProcessBufferDecrypt(m_buf, 0, outBytes, outOff + resultLength);
-                    m_bufPos -= Rate;
-                    Array.Copy(m_buf, Rate, m_buf, 0, m_bufPos);
                     resultLength += Rate;
+
+                    m_bufPos -= Rate;
+                    m_buf.AsSpan(0, m_bufPos).CopyFrom(m_buf.AsSpan(Rate));
 
                     available += Rate;
                     if (len < available)
@@ -356,8 +360,8 @@ namespace Org.BouncyCastle.Crypto.Modes
                         return 0;
                     }
 
-                    input[..available].CopyTo(m_buf.AsSpan(m_bufPos));
-                    input = input[available..];
+                    input.Slice(0, available).CopyTo(m_buf.AsSpan(m_bufPos));
+                    input = input.Slice(available);
 
                     ProcessBufferEncrypt(m_buf, output);
                     resultLength = Rate;
@@ -366,8 +370,8 @@ namespace Org.BouncyCastle.Crypto.Modes
 
                 while (input.Length >= Rate)
                 {
-                    ProcessBufferEncrypt(input, output[resultLength..]);
-                    input = input[Rate..];
+                    ProcessBufferEncrypt(input, output.Slice(resultLength));
+                    input = input.Slice(Rate);
                     resultLength += Rate;
                 }
             }
@@ -385,7 +389,7 @@ namespace Org.BouncyCastle.Crypto.Modes
                 Debug.Assert(Rate >= CryptoABytes);
                 if (m_bufPos >= Rate)
                 {
-                    ProcessBufferDecrypt(m_buf, output[resultLength..]);
+                    ProcessBufferDecrypt(m_buf, output.Slice(resultLength));
                     resultLength += Rate;
 
                     m_bufPos -= Rate;
@@ -401,16 +405,16 @@ namespace Org.BouncyCastle.Crypto.Modes
                 }
 
                 available = Rate - m_bufPos;
-                input[..available].CopyTo(m_buf.AsSpan(m_bufPos));
-                input = input[available..];
-                ProcessBufferDecrypt(m_buf, output[resultLength..]);
+                input.Slice(0, available).CopyTo(m_buf.AsSpan(m_bufPos));
+                input = input.Slice(available);
+                ProcessBufferDecrypt(m_buf, output.Slice(resultLength));
                 resultLength += Rate;
                 //m_bufPos = 0;
 
                 while (input.Length >= BufSizeDecrypt)
                 {
-                    ProcessBufferDecrypt(input, output[resultLength..]);
-                    input = input[Rate..];
+                    ProcessBufferDecrypt(input, output.Slice(resultLength));
+                    input = input.Slice(Rate);
                     resultLength += Rate;
                 }
             }
@@ -483,7 +487,7 @@ namespace Org.BouncyCastle.Crypto.Modes
                 m_mac = new byte[CryptoABytes];
                 Pack.UInt64_To_LE(S3, m_mac.AsSpan());
                 Pack.UInt64_To_LE(S4, m_mac.AsSpan(8));
-                m_mac.CopyTo(output[m_bufPos..]);
+                m_mac.CopyTo(output.Slice(m_bufPos));
 
                 Reset(clearMac: false);
             }
@@ -694,7 +698,7 @@ namespace Org.BouncyCastle.Crypto.Modes
             Debug.Assert(buffer.Length >= Rate);
 
             S0 ^= Pack.LE_To_UInt64(buffer);
-            S1 ^= Pack.LE_To_UInt64(buffer[8..]);
+            S1 ^= Pack.LE_To_UInt64(buffer.Slice(8));
 
             P8();
         }
@@ -709,8 +713,8 @@ namespace Org.BouncyCastle.Crypto.Modes
             Pack.UInt64_To_LE(S0 ^ t0, output);
             S0 = t0;
 
-            ulong t1 = Pack.LE_To_UInt64(buffer[8..]);
-            Pack.UInt64_To_LE(S1 ^ t1, output[8..]);
+            ulong t1 = Pack.LE_To_UInt64(buffer.Slice(8));
+            Pack.UInt64_To_LE(S1 ^ t1, output.Slice(8));
             S1 = t1;
 
             P8();
@@ -725,8 +729,8 @@ namespace Org.BouncyCastle.Crypto.Modes
             S0 ^= Pack.LE_To_UInt64(buffer);
             Pack.UInt64_To_LE(S0, output);
 
-            S1 ^= Pack.LE_To_UInt64(buffer[8..]);
-            Pack.UInt64_To_LE(S1, output[8..]);
+            S1 ^= Pack.LE_To_UInt64(buffer.Slice(8));
+            Pack.UInt64_To_LE(S1, output.Slice(8));
 
             P8();
         }
@@ -741,10 +745,10 @@ namespace Org.BouncyCastle.Crypto.Modes
                 Pack.UInt64_To_LE(S0 ^ t0, output);
                 S0 = t0;
 
-                input = input[8..];
+                input = input.Slice(8);
                 if (!input.IsEmpty)
                 {
-                    ProcessFinalDecrypt64(input, output[8..], ref S1);
+                    ProcessFinalDecrypt64(input, output.Slice(8), ref S1);
                 }
 
                 S1 ^= Pad(input.Length);
@@ -768,7 +772,7 @@ namespace Org.BouncyCastle.Crypto.Modes
             Debug.Assert(1 <= inLen && inLen < 8);
 
             ulong t = Pack.LE_To_UInt64_Low(input);
-            Pack.UInt64_To_LE_Low(s ^ t, output[..inLen]);
+            Pack.UInt64_To_LE_Low(s ^ t, output.Slice(0, inLen));
             s &= ulong.MaxValue << (inLen << 3);
             s ^= t;
         }
@@ -782,10 +786,10 @@ namespace Org.BouncyCastle.Crypto.Modes
                 S0 ^= Pack.LE_To_UInt64(input);
                 Pack.UInt64_To_LE(S0, output);
 
-                input = input[8..];
+                input = input.Slice(8);
                 if (!input.IsEmpty)
                 {
-                    ProcessFinalEncrypt64(input, output[8..], ref S1);
+                    ProcessFinalEncrypt64(input, output.Slice(8), ref S1);
                 }
 
                 S1 ^= Pad(input.Length);
@@ -810,7 +814,7 @@ namespace Org.BouncyCastle.Crypto.Modes
             Debug.Assert(output.Length >= inLen);
 
             s ^= Pack.LE_To_UInt64_Low(input);
-            Pack.UInt64_To_LE_Low(s, output[..inLen]);
+            Pack.UInt64_To_LE_Low(s, output.Slice(0, inLen));
         }
 #else
         private void ProcessBufferAad(byte[] buffer, int bufOff)

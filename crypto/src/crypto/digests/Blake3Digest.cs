@@ -438,7 +438,7 @@ namespace Org.BouncyCastle.Crypto.Digests
                 }
 
                 /* Fill the buffer */
-                input[..remainingLen].CopyTo(m_theBuffer.AsSpan(m_thePos));
+                input.Slice(0, remainingLen).CopyTo(m_theBuffer.AsSpan(m_thePos));
 
                 /* Process the buffer */
                 CompressBlock(m_theBuffer);
@@ -454,11 +454,11 @@ namespace Org.BouncyCastle.Crypto.Digests
             for (messagePos = remainingLen; messagePos < blockWiseLastPos; messagePos += BLOCKLEN)
             {
                 /* Process the buffer */
-                CompressBlock(input[messagePos..]);
+                CompressBlock(input.Slice(messagePos));
             }
 
             /* Fill the buffer with the remaining bytes of the message */
-            input[messagePos..].CopyTo(m_theBuffer);
+            input.Slice(messagePos).CopyTo(m_theBuffer);
             m_thePos += pLen - messagePos;
         }
 #endif
@@ -537,7 +537,7 @@ namespace Org.BouncyCastle.Crypto.Digests
         {
             int digestSize = GetDigestSize();
             Check.OutputLength(output, digestSize, "output buffer too short");
-            return OutputFinal(output[..digestSize]);
+            return OutputFinal(output.Slice(0, digestSize));
         }
 
         public int OutputFinal(Span<byte> output)
@@ -568,7 +568,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             {
                 /* Copy data from current hash */
                 int dataToCopy = System.Math.Min(dataLeft, BLOCKLEN - m_thePos);
-                m_theBuffer.AsSpan(m_thePos, dataToCopy).CopyTo(output[outPos..]);
+                m_theBuffer.AsSpan(m_thePos, dataToCopy).CopyTo(output.Slice(outPos));
 
                 /* Adjust counters */
                 m_thePos += dataToCopy;
@@ -584,7 +584,7 @@ namespace Org.BouncyCastle.Crypto.Digests
 
                 /* Copy data from current hash */
                 int dataToCopy = System.Math.Min(dataLeft, BLOCKLEN);
-                m_theBuffer.AsSpan(0, dataToCopy).CopyTo(output[outPos..]);
+                m_theBuffer.AsSpan(0, dataToCopy).CopyTo(output.Slice(outPos));
 
                 /* Adjust counters */
                 m_thePos += dataToCopy;

@@ -143,17 +143,17 @@ namespace Org.BouncyCastle.Crypto.Digests
 
             if (m_bufPos > 0)
             {
-                input[..available].CopyTo(m_buf.AsSpan(m_bufPos));
+                input.Slice(0, available).CopyTo(m_buf.AsSpan(m_bufPos));
                 x0 ^= Pack.BE_To_UInt64(m_buf);
                 P(ASCON_PB_ROUNDS);
-                input = input[available..];
+                input = input.Slice(available);
             }
 
             while (input.Length >= 8)
             {
                 x0 ^= Pack.BE_To_UInt64(input);
                 P(ASCON_PB_ROUNDS);
-                input = input[8..];
+                input = input.Slice(8);
             }
 
             input.CopyTo(m_buf);
@@ -173,7 +173,7 @@ namespace Org.BouncyCastle.Crypto.Digests
 
             Check.OutputLength(output, digestSize, "output buffer is too short");
 
-            return OutputFinal(output[..digestSize]);
+            return OutputFinal(output.Slice(0, digestSize));
         }
 #endif
 
@@ -291,7 +291,7 @@ namespace Org.BouncyCastle.Crypto.Digests
                 }
 
                 Pack.UInt64_To_BE(x0, output);
-                output = output[8..];
+                output = output.Slice(8);
                 m_bufPos = 8;
             }
             else if (m_bufPos < 8)
@@ -304,8 +304,8 @@ namespace Org.BouncyCastle.Crypto.Digests
                     return result;
                 }
 
-                output[..available].CopyFrom(m_buf.AsSpan(m_bufPos));
-                output = output[available..];
+                output.Slice(0, available).CopyFrom(m_buf.AsSpan(m_bufPos));
+                output = output.Slice(available);
                 m_bufPos = 8;
             }
 
@@ -313,7 +313,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             {
                 P(ASCON_PB_ROUNDS);
                 Pack.UInt64_To_BE(x0, output);
-                output = output[8..];
+                output = output.Slice(8);
             }
 
             if (!output.IsEmpty)

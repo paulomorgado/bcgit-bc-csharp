@@ -151,11 +151,11 @@ namespace Org.BouncyCastle.Crypto.Agreement.Kdf
                 if (remaining > digestSize)
                 {
                     dig.CopyTo(output);
-                    output = output[digestSize..];
+                    output = output.Slice(digestSize);
                 }
                 else
                 {
-                    dig[..remaining].CopyTo(output);
+                    dig.Slice(0, remaining).CopyTo(output);
                 }
 
                 counter++;

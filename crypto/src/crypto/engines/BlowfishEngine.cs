@@ -523,7 +523,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 		private void EncryptBlock(ReadOnlySpan<byte> input, Span<byte> output)
 		{
 			uint xl = Pack.BE_To_UInt32(input);
-			uint xr = Pack.BE_To_UInt32(input[4..]);
+			uint xr = Pack.BE_To_UInt32(input.Slice(4));
 
 			xl ^= P[0];
 
@@ -536,13 +536,13 @@ namespace Org.BouncyCastle.Crypto.Engines
 			xr ^= P[ROUNDS + 1];
 
 			Pack.UInt32_To_BE(xr, output);
-			Pack.UInt32_To_BE(xl, output[4..]);
+			Pack.UInt32_To_BE(xl, output.Slice(4));
 		}
 
 		private void DecryptBlock(ReadOnlySpan<byte> input, Span<byte> output)
 		{
 			uint xl = Pack.BE_To_UInt32(input);
-			uint xr = Pack.BE_To_UInt32(input[4..]);
+			uint xr = Pack.BE_To_UInt32(input.Slice(4));
 
 			xl ^= P[ROUNDS + 1];
 
@@ -555,7 +555,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 			xr ^= P[0];
 
 			Pack.UInt32_To_BE(xr, output);
-			Pack.UInt32_To_BE(xl, output[4..]);
+			Pack.UInt32_To_BE(xl, output.Slice(4));
 		}
 #else
 		private void EncryptBlock(byte[] src, int srcIndex, byte[] dst, int dstIndex)

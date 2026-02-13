@@ -109,7 +109,7 @@ namespace Org.BouncyCastle.Crypto.Digests
         {
             Span<byte> lengthEncoding = stackalloc byte[9];
             int count = LeftEncode(buf.Length * 8, lengthEncoding);
-            digest.BlockUpdate(lengthEncoding[..count]);
+            digest.BlockUpdate(lengthEncoding.Slice(0, count));
             digest.BlockUpdate(buf);
         }
 #endif

@@ -134,8 +134,8 @@ namespace Org.BouncyCastle.Crypto.Digests
 
             if (m_bufPos > 0)
             {
-                input[..available].CopyTo(m_buf.AsSpan(m_bufPos));
-                input = input[available..];
+                input.Slice(0, available).CopyTo(m_buf.AsSpan(m_bufPos));
+                input = input.Slice(available);
 
                 ProcessBlock(m_buf, SPARKLE_STEPS_SLIM);
             }
@@ -143,7 +143,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             while (input.Length > RATE_BYTES)
             {
                 ProcessBlock(input, SPARKLE_STEPS_SLIM);
-                input = input[RATE_BYTES..];
+                input = input.Slice(RATE_BYTES);
             }
 
             input.CopyTo(m_buf);
@@ -220,19 +220,19 @@ namespace Org.BouncyCastle.Crypto.Digests
             // addition of last msg block (incl. padding)
             ProcessBlock(m_buf, SPARKLE_STEPS_BIG);
 
-            Pack.UInt32_To_LE(state[..RATE_WORDS], output);
+            Pack.UInt32_To_LE(state.AsSpan(0, RATE_WORDS), output);
 
             if (STATE_WORDS == 16)
             {
                 SparkleEngine.SparkleOpt16(state, SPARKLE_STEPS_SLIM);
-                Pack.UInt32_To_LE(state[..RATE_WORDS], output[16..]);
+                Pack.UInt32_To_LE(state.AsSpan(0, RATE_WORDS), output.Slice(16));
                 SparkleEngine.SparkleOpt16(state, SPARKLE_STEPS_SLIM);
-                Pack.UInt32_To_LE(state[..RATE_WORDS], output[32..]);
+                Pack.UInt32_To_LE(state.AsSpan(0, RATE_WORDS), output.Slice(32));
             }
             else
             {
                 SparkleEngine.SparkleOpt12(state, SPARKLE_STEPS_SLIM);
-                Pack.UInt32_To_LE(state[..RATE_WORDS], output[16..]);
+                Pack.UInt32_To_LE(state.AsSpan(0, RATE_WORDS), output.Slice(16));
             }
 
             Reset();
@@ -254,9 +254,9 @@ namespace Org.BouncyCastle.Crypto.Digests
         private void ProcessBlock(ReadOnlySpan<byte> block, int steps)
         {
             uint t0 = Pack.LE_To_UInt32(block);
-            uint t1 = Pack.LE_To_UInt32(block[4..]);
-            uint t2 = Pack.LE_To_UInt32(block[8..]);
-            uint t3 = Pack.LE_To_UInt32(block[12..]);
+            uint t1 = Pack.LE_To_UInt32(block.Slice(4));
+            uint t2 = Pack.LE_To_UInt32(block.Slice(8));
+            uint t3 = Pack.LE_To_UInt32(block.Slice(12));
 #else
         private void ProcessBlock(byte[] buf, int off, int steps)
         {

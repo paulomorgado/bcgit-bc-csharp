@@ -200,7 +200,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             Check.OutputLength(output, BlockSize, "output buffer too short");
 
             byte[] z = new byte[BlockSize];
-            input[..BlockSize].CopyTo(z);
+            input.Slice(0, BlockSize).CopyTo(z);
 
             int i = 0, rounds = m_roundKeys.Length - 3;
             while (i < rounds)

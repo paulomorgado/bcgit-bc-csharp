@@ -119,9 +119,9 @@ namespace Org.BouncyCastle.Crypto.Digests
             Finish();
 
             Pack.UInt32_To_LE(H1, output);
-            Pack.UInt32_To_LE(H2, output[4..]);
-            Pack.UInt32_To_LE(H3, output[8..]);
-            Pack.UInt32_To_LE(H4, output[12..]);
+            Pack.UInt32_To_LE(H2, output.Slice(4));
+            Pack.UInt32_To_LE(H3, output.Slice(8));
+            Pack.UInt32_To_LE(H4, output.Slice(12));
 
             Reset();
 

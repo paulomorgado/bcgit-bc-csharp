@@ -86,7 +86,7 @@ namespace Org.BouncyCastle.Utilities.IO
 #if NET6_0_OR_GREATER
         public override ValueTask<int> ReadAsync(Memory<byte> buffer, CancellationToken cancellationToken = default)
         {
-            return Streams.ReadAsync(this, buffer, cancellationToken);
+            return base.ReadAsync(buffer, cancellationToken);
         }
 #endif
 #endif

@@ -260,8 +260,8 @@ namespace Org.BouncyCastle.Crypto.Engines
                     return;
                 }
 
-                input[..available].CopyTo(m_buf.AsSpan(m_bufPos));
-                input = input[available..];
+                input.Slice(0, available).CopyTo(m_buf.AsSpan(m_bufPos));
+                input = input.Slice(available);
 
                 ProcessBufferAad(m_buf);
                 //m_bufPos = 0;
@@ -270,7 +270,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             while (input.Length >= ASCON_AEAD_RATE)
             {
                 ProcessBufferAad(input);
-                input = input[ASCON_AEAD_RATE..];
+                input = input.Slice(ASCON_AEAD_RATE);
             }
 
             input.CopyTo(m_buf);
@@ -416,8 +416,8 @@ namespace Org.BouncyCastle.Crypto.Engines
 
                 while (input.Length >= ASCON_AEAD_RATE)
                 {
-                    ProcessBufferEncrypt(input, output[resultLength..]);
-                    input = input[ASCON_AEAD_RATE..];
+                    ProcessBufferEncrypt(input, output.Slice(resultLength));
+                    input = input.Slice(ASCON_AEAD_RATE);
                     resultLength += ASCON_AEAD_RATE;
                 }
             }
@@ -531,7 +531,7 @@ namespace Org.BouncyCastle.Crypto.Engines
                 mac = new byte[CRYPTO_ABYTES];
                 Pack.UInt64_To_BE(x3, mac.AsSpan());
                 Pack.UInt64_To_BE(x4, mac.AsSpan(8));
-                mac.CopyTo(output[m_bufPos..]);
+                mac.CopyTo(output.Slice(m_bufPos));
 
                 Reset(false);
             }
@@ -784,7 +784,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             x0 ^= Pack.BE_To_UInt64(buffer);
             if (ASCON_AEAD_RATE == 16)
             {
-                x1 ^= Pack.BE_To_UInt64(buffer[8..]);
+                x1 ^= Pack.BE_To_UInt64(buffer.Slice(8));
             }
             P(nr);
         }
@@ -802,8 +802,8 @@ namespace Org.BouncyCastle.Crypto.Engines
             }
             if (ASCON_AEAD_RATE == 16)
             {
-                ulong c1 = Pack.BE_To_UInt64(buffer[8..]);
-                Pack.UInt64_To_BE(x1 ^ c1, output[8..]);
+                ulong c1 = Pack.BE_To_UInt64(buffer.Slice(8));
+                Pack.UInt64_To_BE(x1 ^ c1, output.Slice(8));
                 x1 = c1;
             }
             P(nr);
@@ -821,8 +821,8 @@ namespace Org.BouncyCastle.Crypto.Engines
             }
             if (ASCON_AEAD_RATE == 16)
             {
-                x1 ^= Pack.BE_To_UInt64(buffer[8..]);
-                Pack.UInt64_To_BE(x1, output[8..]);
+                x1 ^= Pack.BE_To_UInt64(buffer.Slice(8));
+                Pack.UInt64_To_BE(x1, output.Slice(8));
             }
             P(nr);
         }
@@ -837,14 +837,14 @@ namespace Org.BouncyCastle.Crypto.Engines
                 x0 ^= cx;
                 Pack.UInt64_To_BE(x0, output);
                 x0 = cx;
-                input = input[8..];
-                output = output[8..];
+                input = input.Slice(8);
+                output = output.Slice(8);
                 x1 ^= PAD(input.Length);
                 if (!input.IsEmpty)
                 {
                     cx = Pack.BE_To_UInt64_High(input);
                     x1 ^= cx;
-                    Pack.UInt64_To_BE_High(x1, output[..input.Length]);
+                    Pack.UInt64_To_BE_High(x1, output.Slice(0, input.Length));
                     x1 &= ulong.MaxValue >> (input.Length << 3);
                     x1 ^= cx;
                 }
@@ -856,7 +856,7 @@ namespace Org.BouncyCastle.Crypto.Engines
                 {
                     ulong cx = Pack.BE_To_UInt64_High(input);
                     x0 ^= cx;
-                    Pack.UInt64_To_BE_High(x0, output[..input.Length]);
+                    Pack.UInt64_To_BE_High(x0, output.Slice(0, input.Length));
                     x0 &= ulong.MaxValue >> (input.Length << 3);
                     x0 ^= cx;
                 }

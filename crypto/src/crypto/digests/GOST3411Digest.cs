@@ -126,16 +126,16 @@ namespace Org.BouncyCastle.Crypto.Digests
 			while ((xBufOff != 0) && (input.Length > 0))
 			{
 				Update(input[0]);
-				input = input[1..];
+				input = input.Slice(1);
 			}
 
 			while (input.Length >= xBuf.Length)
 			{
-				input[..xBuf.Length].CopyTo(xBuf.AsSpan());
+				input.Slice(0, xBuf.Length).CopyTo(xBuf.AsSpan());
 
 				sumByteArray(xBuf); // calc sum M
 				processBlock(xBuf, 0);
-				input = input[xBuf.Length..];
+				input = input.Slice(xBuf.Length);
 				byteCount += (uint)xBuf.Length;
 			}
 
@@ -143,7 +143,7 @@ namespace Org.BouncyCastle.Crypto.Digests
 			while (input.Length > 0)
 			{
 				Update(input[0]);
-				input = input[1..];
+				input = input.Slice(1);
 			}
 		}
 #endif

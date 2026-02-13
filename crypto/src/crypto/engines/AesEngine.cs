@@ -531,9 +531,9 @@ namespace Org.BouncyCastle.Crypto.Engines
         private void EncryptBlock(ReadOnlySpan<byte> input, Span<byte> output, uint[][] KW)
         {
             uint C0 = Pack.LE_To_UInt32(input);
-            uint C1 = Pack.LE_To_UInt32(input[4..]);
-            uint C2 = Pack.LE_To_UInt32(input[8..]);
-            uint C3 = Pack.LE_To_UInt32(input[12..]);
+            uint C1 = Pack.LE_To_UInt32(input.Slice(4));
+            uint C2 = Pack.LE_To_UInt32(input.Slice(8));
+            uint C3 = Pack.LE_To_UInt32(input.Slice(12));
 
             uint[] kw = KW[0];
             uint t0 = C0 ^ kw[0];
@@ -571,17 +571,17 @@ namespace Org.BouncyCastle.Crypto.Engines
             C3 = (uint)s[r3 & 255] ^ (((uint)s[(r0 >> 8) & 255]) << 8) ^ (((uint)s[(r1 >> 16) & 255]) << 16) ^ (((uint)S[(r2 >> 24) & 255]) << 24) ^ kw[3];
 
             Pack.UInt32_To_LE(C0, output);
-            Pack.UInt32_To_LE(C1, output[4..]);
-            Pack.UInt32_To_LE(C2, output[8..]);
-            Pack.UInt32_To_LE(C3, output[12..]);
+            Pack.UInt32_To_LE(C1, output.Slice(4));
+            Pack.UInt32_To_LE(C2, output.Slice(8));
+            Pack.UInt32_To_LE(C3, output.Slice(12));
         }
 
         private void DecryptBlock(ReadOnlySpan<byte> input, Span<byte> output, uint[][] KW)
         {
             uint C0 = Pack.LE_To_UInt32(input);
-            uint C1 = Pack.LE_To_UInt32(input[4..]);
-            uint C2 = Pack.LE_To_UInt32(input[8..]);
-            uint C3 = Pack.LE_To_UInt32(input[12..]);
+            uint C1 = Pack.LE_To_UInt32(input.Slice(4));
+            uint C2 = Pack.LE_To_UInt32(input.Slice(8));
+            uint C3 = Pack.LE_To_UInt32(input.Slice(12));
 
             uint[] kw = KW[ROUNDS];
             uint t0 = C0 ^ kw[0];
@@ -619,9 +619,9 @@ namespace Org.BouncyCastle.Crypto.Engines
             C3 = (uint)Si[r3 & 255] ^ (((uint)s[(r2 >> 8) & 255]) << 8) ^ (((uint)s[(r1 >> 16) & 255]) << 16) ^ (((uint)s[(r0 >> 24) & 255]) << 24) ^ kw[3];
 
             Pack.UInt32_To_LE(C0, output);
-            Pack.UInt32_To_LE(C1, output[4..]);
-            Pack.UInt32_To_LE(C2, output[8..]);
-            Pack.UInt32_To_LE(C3, output[12..]);
+            Pack.UInt32_To_LE(C1, output.Slice(4));
+            Pack.UInt32_To_LE(C2, output.Slice(8));
+            Pack.UInt32_To_LE(C3, output.Slice(12));
         }
 #else
         private void EncryptBlock(byte[] input, int inOff, byte[] output, int outOff, uint[][] KW)
@@ -714,10 +714,10 @@ namespace Org.BouncyCastle.Crypto.Engines
             C2 = (uint)s[r2 & 255] ^ (((uint)Si[(r1 >> 8) & 255]) << 8) ^ (((uint)Si[(r0 >> 16) & 255]) << 16) ^ (((uint)s[(r3 >> 24) & 255]) << 24) ^ kw[2];
             C3 = (uint)Si[r3 & 255] ^ (((uint)s[(r2 >> 8) & 255]) << 8) ^ (((uint)s[(r1 >> 16) & 255]) << 16) ^ (((uint)s[(r0 >> 24) & 255]) << 24) ^ kw[3];
 
-            Pack.UInt32_To_LE(C0, output, outOff + 0);
-            Pack.UInt32_To_LE(C1, output, outOff + 4);
-            Pack.UInt32_To_LE(C2, output, outOff + 8);
-            Pack.UInt32_To_LE(C3, output, outOff + 12);
+            Pack.UInt32_To_LE(C0, output);
+            Pack.UInt32_To_LE(C1, output.Slice(4));
+            Pack.UInt32_To_LE(C2, output.Slice(8));
+            Pack.UInt32_To_LE(C3, output.Slice(12));
         }
 #endif
     }

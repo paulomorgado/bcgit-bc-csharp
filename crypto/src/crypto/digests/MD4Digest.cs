@@ -112,16 +112,11 @@ namespace Org.BouncyCastle.Crypto.Digests
 #if !NETFRAMEWORK
         public override int DoFinal(Span<byte> output)
         {
-            Finish();
-
-            Pack.UInt32_To_LE((uint)H1, output);
-            Pack.UInt32_To_LE((uint)H2, output[4..]);
-            Pack.UInt32_To_LE((uint)H3, output[8..]);
-            Pack.UInt32_To_LE((uint)H4, output[12..]);
-
-            Reset();
-
-            return DigestLength;
+            int digestLength = DigestLength;
+            byte[] buf = new byte[digestLength];
+            DoFinal(buf, 0);
+            buf.AsSpan(0, digestLength).CopyTo(output);
+            return digestLength;
         }
 #endif
 

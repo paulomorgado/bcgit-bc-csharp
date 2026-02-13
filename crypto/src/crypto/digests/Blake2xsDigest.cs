@@ -302,9 +302,9 @@ namespace Org.BouncyCastle.Crypto.Digests
         /// <returns>The number of bytes written.</returns>
         public int DoFinal(Span<byte> output)
         {
-            Check.OutputLength(output, digestLength, "output buffer too short");
-
-            return OutputFinal(output[..digestLength]);
+            int digestSize = GetDigestSize();
+            Check.OutputLength(output, digestSize, "output buffer too short");
+            return OutputFinal(output.Slice(0, digestSize));
         }
 
         /// <summary>Close the digest, producing the final digest value.</summary>

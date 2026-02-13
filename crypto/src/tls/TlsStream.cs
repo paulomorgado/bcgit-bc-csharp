@@ -86,7 +86,7 @@ namespace Org.BouncyCastle.Tls
 
         public override ValueTask<int> ReadAsync(Memory<byte> buffer, CancellationToken cancellationToken = default)
         {
-            return Streams.ReadAsync(this, buffer, cancellationToken);
+            return base.ReadAsync(buffer, cancellationToken);
         }
 #endif
 
@@ -116,11 +116,6 @@ namespace Org.BouncyCastle.Tls
         public override void Write(ReadOnlySpan<byte> buffer)
         {
             m_handler.WriteApplicationData(buffer);
-        }
-
-        public override ValueTask WriteAsync(ReadOnlyMemory<byte> buffer, CancellationToken cancellationToken = default)
-        {
-            return Streams.WriteAsync(this, buffer, cancellationToken);
         }
 #endif
 

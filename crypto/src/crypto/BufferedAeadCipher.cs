@@ -249,7 +249,7 @@ namespace Org.BouncyCastle.Crypto
         public override int DoFinal(ReadOnlySpan<byte> input, Span<byte> output)
         {
             int len = cipher.ProcessBytes(input, output);
-            len += cipher.DoFinal(output[len..]);
+            len += cipher.DoFinal(output.Slice(len));
             return len;
         }
 #endif

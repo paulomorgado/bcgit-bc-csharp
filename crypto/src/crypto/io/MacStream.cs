@@ -92,7 +92,7 @@ namespace Org.BouncyCastle.Crypto.IO
 
         public override ValueTask<int> ReadAsync(Memory<byte> buffer, CancellationToken cancellationToken = default)
         {
-            return Streams.ReadAsync(ReadSource, buffer, cancellationToken);
+            return ReadSource.ReadAsync(buffer, cancellationToken);
         }
 #endif
 

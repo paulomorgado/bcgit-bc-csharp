@@ -121,7 +121,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 		{
 			// Pack bytes into integers
 			uint v0 = Pack.BE_To_UInt32(input);
-			uint v1 = Pack.BE_To_UInt32(input[4..]);
+			uint v1 = Pack.BE_To_UInt32(input.Slice(4));
 
 			uint sum = 0;
 
@@ -133,7 +133,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 			}
 
 			Pack.UInt32_To_BE(v0, output);
-			Pack.UInt32_To_BE(v1, output[4..]);
+			Pack.UInt32_To_BE(v1, output.Slice(4));
 
 			return block_size;
 		}
@@ -142,7 +142,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 		{
 			// Pack bytes into integers
 			uint v0 = Pack.BE_To_UInt32(input);
-			uint v1 = Pack.BE_To_UInt32(input[4..]);
+			uint v1 = Pack.BE_To_UInt32(input.Slice(4));
 
 			uint sum = d_sum;
 
@@ -154,7 +154,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 			}
 
 			Pack.UInt32_To_BE(v0, output);
-			Pack.UInt32_To_BE(v1, output[4..]);
+			Pack.UInt32_To_BE(v1, output.Slice(4));
 
 			return block_size;
 		}

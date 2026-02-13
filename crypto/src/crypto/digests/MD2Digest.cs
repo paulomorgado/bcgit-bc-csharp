@@ -211,7 +211,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             while ((mOff != 0) && (input.Length > 0))
             {
                 Update(input[0]);
-                input = input[1..];
+                input = input.Slice(1);
             }
 
             //
@@ -219,10 +219,10 @@ namespace Org.BouncyCastle.Crypto.Digests
             //
             while (input.Length >= 16)
             {
-                input[..16].CopyTo(M);
+                input.Slice(0, 16).CopyTo(M);
                 ProcessChecksum(M);
                 ProcessBlock(M);
-                input = input[16..];
+                input = input.Slice(16);
             }
 
             //
@@ -231,7 +231,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             while (input.Length > 0)
             {
                 Update(input[0]);
-                input = input[1..];
+                input = input.Slice(1);
             }
         }
 #endif

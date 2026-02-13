@@ -130,7 +130,7 @@ namespace Org.BouncyCastle.Crypto.Digests
 
         public virtual int DoFinal(Span<byte> output)
         {
-            return OutputFinal(output[..GetDigestSize()]);
+            return OutputFinal(output.Slice(0, GetDigestSize()));
         }
 
         public virtual int OutputFinal(Span<byte> output)

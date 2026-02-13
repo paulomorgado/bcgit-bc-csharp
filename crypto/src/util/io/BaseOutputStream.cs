@@ -69,7 +69,7 @@ namespace Org.BouncyCastle.Utilities.IO
 
         public override ValueTask WriteAsync(ReadOnlyMemory<byte> buffer, CancellationToken cancellationToken = default)
         {
-            return Streams.WriteAsync(this, buffer, cancellationToken);
+            return base.WriteAsync(buffer, cancellationToken);
         }
 #endif
 

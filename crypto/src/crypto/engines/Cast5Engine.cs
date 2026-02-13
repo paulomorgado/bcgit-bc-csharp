@@ -593,14 +593,14 @@ namespace Org.BouncyCastle.Crypto.Engines
             // the array is in bytes, the increment is 8x8 bits = 64
 
             uint L0 = Pack.BE_To_UInt32(input);
-            uint R0 = Pack.BE_To_UInt32(input[4..]);
+            uint R0 = Pack.BE_To_UInt32(input.Slice(4));
 
             uint[] result = new uint[2];
             CAST_Encipher(L0, R0, result);
 
             // now stuff them into the destination block
             Pack.UInt32_To_BE(result[0], output);
-            Pack.UInt32_To_BE(result[1], output[4..]);
+            Pack.UInt32_To_BE(result[1], output.Slice(4));
 
             return BLOCK_SIZE;
         }
@@ -611,14 +611,14 @@ namespace Org.BouncyCastle.Crypto.Engines
             // batch the units up into a 32 bit chunk and go for it
             // the array is in bytes, the increment is 8x8 bits = 64
             uint L16 = Pack.BE_To_UInt32(input);
-            uint R16 = Pack.BE_To_UInt32(input[4..]);
+            uint R16 = Pack.BE_To_UInt32(input.Slice(4));
 
             uint[] result = new uint[2];
             CAST_Decipher(L16, R16, result);
 
             // now stuff them into the destination block
             Pack.UInt32_To_BE(result[0], output);
-            Pack.UInt32_To_BE(result[1], output[4..]);
+            Pack.UInt32_To_BE(result[1], output.Slice(4));
 
             return BLOCK_SIZE;
         }

@@ -831,7 +831,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             {
                 int toWrite = System.Math.Min(blockSize, outputSizeBytes - (i * blockSize));
                 //Output((ulong)i, outBytes, outOff + (i * blockSize), toWrite);
-                Output((ulong)i, output[(i * blockSize)..], toWrite);
+                Output((ulong)i, output.Slice(i * blockSize), toWrite);
             }
 
             Reset();
@@ -885,12 +885,12 @@ namespace Org.BouncyCastle.Crypto.Digests
                 int toWrite = System.Math.Min(8, outputBytes - (i * 8));
                 if (toWrite == 8)
                 {
-                    Pack.UInt64_To_LE(outputWords[i], output[(i * 8)..]);
+                    Pack.UInt64_To_LE(outputWords[i], output.Slice(i * 8));
                 }
                 else
                 {
                     Pack.UInt64_To_LE(outputWords[i], currentBytes);
-                    currentBytes[..toWrite].CopyTo(output[(i * 8)..]);
+                    currentBytes.Slice(0, toWrite).CopyTo(output.Slice(i * 8));
                 }
             }
         }

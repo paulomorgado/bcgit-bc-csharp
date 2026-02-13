@@ -391,7 +391,7 @@ namespace Org.BouncyCastle.Crypto.Digests
                 }
 
                 // full buffer + at least 1 byte
-                input[..remainingLength].CopyTo(buffer.AsSpan(bufferPos));
+                input.Slice(0, remainingLength).CopyTo(buffer.AsSpan(bufferPos));
                 IncrementCounter(BLOCK_LENGTH_BYTES);
                 Compress(buffer);
                 bufferPos = 0;
@@ -405,12 +405,12 @@ namespace Org.BouncyCastle.Crypto.Digests
             {
                 // block wise 64 bytes without buffer:
                 IncrementCounter(BLOCK_LENGTH_BYTES);
-                Compress(input[messagePos..]);
+                Compress(input.Slice(messagePos));
                 messagePos += BLOCK_LENGTH_BYTES;
             }
 
             // fill the buffer with left bytes, this might be a full block
-            input[messagePos..].CopyTo(buffer.AsSpan());
+            input.Slice(messagePos).CopyTo(buffer.AsSpan());
             bufferPos += input.Length - messagePos;
         }
 #endif

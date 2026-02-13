@@ -149,20 +149,20 @@ namespace Org.BouncyCastle.Crypto.Digests
             while (bufOff != 0 && input.Length > 0)
             {
                 Update(input[0]);
-                input = input[1..];
+                input = input.Slice(1);
             }
 
             while (input.Length >= blockSize)
             {
                 ProcessBlock(input);
-                input = input[blockSize..];
+                input = input.Slice(blockSize);
                 ++inputBlocks;
             }
 
             while (input.Length > 0)
             {
                 Update(input[0]);
-                input = input[1..];
+                input = input.Slice(1);
             }
         }
 #endif
@@ -272,7 +272,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             for (int col = columns - neededColumns; col < columns; ++col)
             {
                 Pack.UInt64_To_LE(state[col], output);
-                output = output[8..];
+                output = output.Slice(8);
             }
 
             Reset();
@@ -317,7 +317,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             for (int col = 0; col < columns; ++col)
             {
                 ulong word = Pack.LE_To_UInt64(input);
-                input = input[8..];
+                input = input.Slice(8);
 
                 tempState1[col] = state[col] ^ word;
                 tempState2[col] = word;

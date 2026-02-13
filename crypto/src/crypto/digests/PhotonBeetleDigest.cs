@@ -148,15 +148,15 @@ namespace Org.BouncyCastle.Crypto.Digests
 
             if (m_bufPos > 0)
             {
-                input[..available].CopyTo(m_buf.AsSpan(m_bufPos));
+                input.Slice(0, available).CopyTo(m_buf.AsSpan(m_bufPos));
                 ProcessBuffer(m_buf);
-                input = input[available..];
+                input = input.Slice(available);
             }
 
             while (input.Length >= 16)
             {
                 ProcessBuffer(input);
-                input = input[16..];
+                input = input.Slice(16);
             }
 
             input.CopyTo(m_buf);
@@ -193,7 +193,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             PHOTON_Permutation();
             state.AsSpan(0, SQUEEZE_RATE_INBYTES).CopyTo(output);
             PHOTON_Permutation();
-            state.AsSpan(0, TAG_INBYTES - SQUEEZE_RATE_INBYTES).CopyTo(output[SQUEEZE_RATE_INBYTES..]);
+            state.AsSpan(0, TAG_INBYTES - SQUEEZE_RATE_INBYTES).CopyTo(output.Slice(SQUEEZE_RATE_INBYTES));
 
             Reset();
             return TAG_INBYTES;
@@ -254,20 +254,20 @@ namespace Org.BouncyCastle.Crypto.Digests
         {
             if (m_phase == 0)
             {
-                buf[..16].CopyTo(state);
+                buf.Slice(0, 16).CopyTo(state);
 
                 m_phase = 1;
             }
             else
             {
                 PHOTON_Permutation();
-                Bytes.XorTo(4, buf      , state);
+                Bytes.XorTo(4, buf.Slice(0, 4), state);
                 PHOTON_Permutation();
-                Bytes.XorTo(4, buf[ 4..], state);
+                Bytes.XorTo(4, buf.Slice(4, 4), state);
                 PHOTON_Permutation();
-                Bytes.XorTo(4, buf[ 8..], state);
+                Bytes.XorTo(4, buf.Slice(8, 4), state);
                 PHOTON_Permutation();
-                Bytes.XorTo(4, buf[12..], state);
+                Bytes.XorTo(4, buf.Slice(12, 4), state);
 
                 m_phase = 2;
             }

@@ -70,11 +70,11 @@ namespace Org.BouncyCastle.Crypto.Digests
             Finish();
 
             Pack.UInt64_To_BE(H1, output);
-            Pack.UInt64_To_BE(H2, output[8..]);
-            Pack.UInt64_To_BE(H3, output[16..]);
-            Pack.UInt64_To_BE(H4, output[24..]);
-            Pack.UInt64_To_BE(H5, output[32..]);
-            Pack.UInt64_To_BE(H6, output[40..]);
+            Pack.UInt64_To_BE(H2, output.Slice(8));
+            Pack.UInt64_To_BE(H3, output.Slice(16));
+            Pack.UInt64_To_BE(H4, output.Slice(24));
+            Pack.UInt64_To_BE(H5, output.Slice(32));
+            Pack.UInt64_To_BE(H6, output.Slice(40));
 
             Reset();
 

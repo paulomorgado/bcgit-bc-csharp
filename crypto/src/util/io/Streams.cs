@@ -52,7 +52,7 @@ namespace Org.BouncyCastle.Utilities.IO
                 }
                 finally
                 {
-                    ArrayPool<byte>.Shared.Return(buffer);
+                    ArrayPool<byte>.Shared.Return(buffer, clearArray: true);
                 }
 #endif
             }
@@ -186,7 +186,7 @@ namespace Org.BouncyCastle.Utilities.IO
             }
             finally
             {
-                ArrayPool<byte>.Shared.Return(localBuffer, true);
+                ArrayPool<byte>.Shared.Return(localBuffer, clearArray: true);
             }
         }
 #endif
@@ -260,41 +260,59 @@ namespace Org.BouncyCastle.Utilities.IO
         }
 #endif
 
-#if NET6_0_OR_GREATER
-        public static ValueTask WriteAsync(Stream destination, ReadOnlyMemory<byte> buffer,
+#if !NETFRAMEWORK
+        public static Task WriteAsync(Stream destination, ReadOnlyMemory<byte> buffer,
             CancellationToken cancellationToken = default)
         {
             if (MemoryMarshal.TryGetArray(buffer, out ArraySegment<byte> array))
             {
-                return new ValueTask(
-                    destination.WriteAsync(array.Array!, array.Offset, array.Count, cancellationToken));
+                return destination.WriteAsync(array.Array!, array.Offset, array.Count, cancellationToken);
             }
 
-            byte[] sharedBuffer = buffer.ToArray();
-            var writeTask = destination.WriteAsync(sharedBuffer, 0, buffer.Length, cancellationToken);
-            return new ValueTask(WriteAsyncCompletion(writeTask, sharedBuffer));
+            return WriteAsyncCompletion(destination, buffer, cancellationToken);
         }
 
-        private static async ValueTask WriteAsyncCompletion(ValueTask writeTask, byte[] localBuffer)
+        private static async Task WriteAsyncCompletion(Stream destination, ReadOnlyMemory<byte> buffer,
+            CancellationToken cancellationToken)
         {
+            byte[] localBuffer = ArrayPool<byte>.Shared.Rent(buffer.Length);
             try
             {
-                await writeTask.ConfigureAwait(false);
+                buffer.Span.CopyTo(localBuffer);
+                await destination.WriteAsync(localBuffer, 0, buffer.Length).ConfigureAwait(false);
             }
             finally
             {
-                Array.Clear(localBuffer, 0, localBuffer.Length);
+                ArrayPool<byte>.Shared.Return(localBuffer, clearArray: true);
             }
         }
 
-        internal static ValueTask WriteAsyncDirect(Stream destination, ReadOnlyMemory<byte> buffer,
+        internal static
+#if NET6_0_OR_GREATER
+            ValueTask
+#else
+            Task
+#endif
+            WriteAsyncDirect(Stream destination, ReadOnlyMemory<byte> buffer,
             CancellationToken cancellationToken = default)
         {
             if (cancellationToken.IsCancellationRequested)
-                return ValueTask.FromCanceled(cancellationToken);
+                return
+#if NET6_0_OR_GREATER
+                    ValueTask
+#else
+                    Task
+#endif
+                        .FromCanceled(cancellationToken);
 
             destination.Write(buffer.Span);
-            return ValueTask.CompletedTask;
+            return
+#if NET6_0_OR_GREATER
+                ValueTask
+#else
+                Task
+#endif
+                    .CompletedTask;
         }
 #endif
 
@@ -314,8 +332,11 @@ namespace Org.BouncyCastle.Utilities.IO
             return size;
         }
     }
+}
 
 #if !NETFRAMEWORK && (!NETCOREAPP3_1_OR_GREATER && !NETSTANDARD2_1_OR_GREATER)
+namespace System.IO
+{
     /// <summary>
     /// Extension methods for Stream to support Span&lt;byte&gt; on platforms that don't natively support it.
     /// </summary>
@@ -341,7 +362,7 @@ namespace Org.BouncyCastle.Utilities.IO
             }
             finally
             {
-                ArrayPool<byte>.Shared.Return(tmp);
+                ArrayPool<byte>.Shared.Return(tmp, clearArray: true);
             }
         }
 
@@ -362,9 +383,10 @@ namespace Org.BouncyCastle.Utilities.IO
             }
             finally
             {
-                ArrayPool<byte>.Shared.Return(tmp);
+                ArrayPool<byte>.Shared.Return(tmp, clearArray: true);
             }
         }
     }
-#endif
 }
+#endif
+

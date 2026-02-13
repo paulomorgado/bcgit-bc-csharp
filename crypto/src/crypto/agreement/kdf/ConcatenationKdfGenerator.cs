@@ -96,7 +96,7 @@ namespace Org.BouncyCastle.Crypto.Agreement.Kdf
                 Pack.UInt32_To_BE(counter++, m_buffer.AsSpan());
 
                 m_digest.BlockUpdate(m_buffer.AsSpan(0, hashPos));
-                m_digest.DoFinal(output[pos..]);
+                m_digest.DoFinal(output.Slice(pos));
 
                 pos += m_hLen;
             }
@@ -107,7 +107,7 @@ namespace Org.BouncyCastle.Crypto.Agreement.Kdf
 
                 m_digest.BlockUpdate(m_buffer.AsSpan(0, hashPos));
                 m_digest.DoFinal(m_buffer.AsSpan(hashPos));
-                m_buffer.AsSpan(hashPos, length - pos).CopyTo(output[pos..]);
+                m_buffer.AsSpan(hashPos, length - pos).CopyTo(output.Slice(pos));
             }
 
             return length;

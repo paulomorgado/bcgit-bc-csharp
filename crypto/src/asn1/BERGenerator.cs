@@ -88,11 +88,11 @@ namespace Org.BouncyCastle.Asn1
             Span<byte> data = stackalloc byte[4]{ 0x00, 0x00, 0x00, 0x00 };
             if (_tagged && _isExplicit)  // write extra end for tag header
             {
-                OutStream.Write(data[..4]);
+                OutStream.Write(data);
             }
             else
             {
-                OutStream.Write(data[..2]);
+                OutStream.Write(data.Slice(0, 2));
             }
 #else
             OutStream.WriteByte(0x00);

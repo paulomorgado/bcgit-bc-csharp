@@ -105,8 +105,8 @@ namespace Org.BouncyCastle.Crypto.Digests
 
             if (m_bufPos > 0)
             {
-                input[..available].CopyTo(m_buf.AsSpan(m_bufPos));
-                input = input[available..];
+                input.Slice(0, available).CopyTo(m_buf.AsSpan(m_bufPos));
+                input = input.Slice(available);
 
                 Down(m_buf);
                 Up();
@@ -115,11 +115,11 @@ namespace Org.BouncyCastle.Crypto.Digests
 
             while (input.Length >= Rabsorb)
             {
-                Down(input[..Rabsorb]);
+                Down(input.Slice(0, Rabsorb));
                 Up();
                 m_updated = true;
 
-                input = input[Rabsorb..];
+                input = input.Slice(Rabsorb);
             }
 
             input.CopyTo(m_buf);
@@ -168,7 +168,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             m_state[0] ^= 0x01;
             Up();
 
-            m_state.AsSpan(0, TAGLEN).CopyTo(output[TAGLEN..]);
+            m_state.AsSpan(0, TAGLEN).CopyTo(output.Slice(TAGLEN));
 
             Reset();
             return 32;

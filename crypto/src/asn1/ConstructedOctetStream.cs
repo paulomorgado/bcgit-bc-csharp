@@ -24,7 +24,7 @@ namespace Org.BouncyCastle.Asn1
 			Streams.ValidateBufferArguments(buffer, offset, count);
 
 #if !NETFRAMEWORK
-			return Read(buffer.AsSpan(offset, count));
+			return this.Read(buffer.AsSpan(offset, count));
 #else
 			if (count < 1)
                 return 0;

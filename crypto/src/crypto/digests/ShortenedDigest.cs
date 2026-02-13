@@ -1,4 +1,7 @@
 using System;
+#if NET6_0_OR_GREATER
+using System.Buffers;
+#endif
 
 namespace Org.BouncyCastle.Crypto.Digests
 {
@@ -85,7 +88,7 @@ namespace Org.BouncyCastle.Crypto.Digests
 
             baseDigest.DoFinal(tmp);
 
-            tmp[..length].CopyTo(output);
+            tmp.AsSpan(0, length).CopyTo(output);
 
             return length;
         }

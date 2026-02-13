@@ -5,6 +5,9 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 #endif
+#if !NETFRAMEWORK
+using System.Buffers;
+#endif
 
 using Org.BouncyCastle.Utilities.IO;
 
@@ -133,7 +136,7 @@ namespace Org.BouncyCastle.Crypto.IO
 
         public override ValueTask<int> ReadAsync(Memory<byte> buffer, CancellationToken cancellationToken = default)
         {
-            return Streams.ReadAsync(ReadSource, buffer, cancellationToken);
+            return ReadSource.ReadAsync(buffer, cancellationToken);
         }
 #endif
 
@@ -257,19 +260,30 @@ namespace Org.BouncyCastle.Crypto.IO
                 if (cancellationToken.IsCancellationRequested)
                     return ValueTask.FromCanceled(cancellationToken);
 
-                int outputSize = m_writeCipher.GetUpdateOutputSize(buffer.Length);
-
-                byte[] output = new byte[outputSize];
-
-                int length = m_writeCipher.ProcessBytes(buffer.Span, output.AsSpan());
-                if (length > 0)
-                {
-                    var writeTask = m_stream.WriteAsync(output.AsMemory(0, length), cancellationToken);
-                    return Streams.WriteAsyncCompletion(writeTask, localBuffer: output);
-                }
+                return WriteCoreAsync(buffer, cancellationToken);
             }
 
             return ValueTask.CompletedTask;
+
+            async ValueTask WriteCoreAsync(ReadOnlyMemory<byte> buffer, CancellationToken cancellationToken)
+            {
+                int outputSize = m_writeCipher.GetUpdateOutputSize(buffer.Length);
+
+                byte[] output = ArrayPool<byte>.Shared.Rent(outputSize);
+
+                try
+                {
+                    int length = m_writeCipher.ProcessBytes(buffer.Span, output.AsSpan());
+                    if (length > 0)
+                    {
+                        await m_stream.WriteAsync(output.AsMemory(0, length), cancellationToken);
+                    }
+                }
+                finally
+                {
+                    ArrayPool<byte>.Shared.Return(output, clearArray: true);
+                }
+            }
         }
 #endif
 

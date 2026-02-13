@@ -265,11 +265,11 @@ namespace Org.BouncyCastle.Crypto
                 Debug.Assert(updateOutputSize >= blockSize);
                 Check.OutputLength(output, updateOutputSize, "output buffer too short");
 
-                input[..available].CopyTo(buf.AsSpan(bufOff));
-                input = input[available..];
+                input.Slice(0, available).CopyTo(buf.AsSpan(bufOff));
+                input = input.Slice(available);
 
                 // Handle destructive overlap by copying the remaining input
-                if (output[..blockSize].Overlaps(input))
+                if (output.Slice(0, blockSize).Overlaps(input))
                 {
                     byte[] tmp = new byte[input.Length];
                     input.CopyTo(tmp);
@@ -281,8 +281,8 @@ namespace Org.BouncyCastle.Crypto
 
                 while (input.Length >= blockSize)
                 {
-                    resultLen += m_cipherMode.ProcessBlock(input, output[resultLen..]);
-                    input = input[blockSize..];
+                    resultLen += m_cipherMode.ProcessBlock(input, output.Slice(resultLen));
+                    input = input.Slice(blockSize);
                 }
             }
 

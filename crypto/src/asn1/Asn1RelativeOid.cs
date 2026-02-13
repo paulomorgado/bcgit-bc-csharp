@@ -398,7 +398,7 @@ namespace Org.BouncyCastle.Asn1
                 result[--pos] = (byte)((int)fieldValue | 0x80);
             }
 #if !NETFRAMEWORK
-            outputStream.Write(result[pos..]);
+            outputStream.Write(result.Slice(pos));
 #else
             outputStream.Write(result, pos, 9 - pos);
 #endif

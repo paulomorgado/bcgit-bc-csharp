@@ -120,7 +120,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             while (inputLengthBits >= rate)
             {
                 Nat.XorTo64(rate64, input, state);
-                input = input[rate64..];
+                input = input.Slice(rate64);
                 inputLengthBits -= rate;
 
                 KeccakPermutation(state);
@@ -148,10 +148,10 @@ namespace Org.BouncyCastle.Crypto.Digests
 
             Debug.Assert(outputLengthBits <= rate);
             int count64 = outputLengthBits >> 6;
-            Pack.UInt64_To_LE(state[..count64], output);
+            Pack.UInt64_To_LE(state.Slice(0, count64), output);
             if ((outputLengthBits & 32) != 0)
             {
-                Pack.UInt32_To_LE((uint)state[count64], output[(count64 << 3)..]);
+                Pack.UInt32_To_LE((uint)state[count64], output.Slice(count64 << 3));
             }
         }
 #endif

@@ -109,8 +109,8 @@ namespace Org.BouncyCastle.Crypto.Digests
             s2[0] = new byte[16];
             s2[1] = new byte[16];
 
-            msg[  ..16].CopyTo(s1[0]);
-            msg[16..32].CopyTo(s1[1]);
+            msg.Slice(0, 16).CopyTo(s1[0]);
+            msg.Slice(16, 16).CopyTo(s1[1]);
 
             s1[0] = AesEnc(s1[0], RC[0]);
             s1[1] = AesEnc(s1[1], RC[1]);
@@ -142,8 +142,8 @@ namespace Org.BouncyCastle.Crypto.Digests
             s1[1] = AesEnc(s1[1], RC[19]);
             Mix256(s1, s2);
 
-            Bytes.Xor(16, s2[0], msg      , output);
-            Bytes.Xor(16, s2[1], msg[16..], output[16..]);
+            Bytes.Xor(16, s2[0], msg.Slice(0, 16), output);
+            Bytes.Xor(16, s2[1], msg.Slice(16), output.Slice(16));
 
             return DIGEST_SIZE;
         }

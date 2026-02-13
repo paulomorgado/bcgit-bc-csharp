@@ -116,12 +116,12 @@ namespace Org.BouncyCastle.Asn1
                 return;
             }
 
-#if !NETFRAMEWORK
+#if NET6_0_OR_GREATER
             Span<byte> encoding = stackalloc byte[5];
-            BinaryPrimitives.WriteUInt32BigEndian(encoding[1..], (uint)dl);
+            BinaryPrimitives.WriteUInt32BigEndian(encoding.Slice(1), (uint)dl);
             int leadingZeroBytes = BitOperations.LeadingZeroCount((uint)dl) / 8;
             encoding[leadingZeroBytes] = (byte)(0x84 - leadingZeroBytes);
-            Write(encoding[leadingZeroBytes..]);
+            this.Write(encoding.Slice(leadingZeroBytes));
 #else
             byte[] stack = new byte[5];
             int pos = stack.Length;
@@ -165,7 +165,7 @@ namespace Org.BouncyCastle.Asn1
             stack[--pos] = (byte)(flags | 0x1F);
 
 #if !NETFRAMEWORK
-            Write(stack[pos..]);
+            this.Write(stack.Slice(pos));
 #else
             Write(stack, pos, stack.Length - pos);
 #endif

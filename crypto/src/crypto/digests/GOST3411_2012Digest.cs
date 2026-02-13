@@ -169,22 +169,22 @@ namespace Org.BouncyCastle.Crypto.Digests
             while (bOff != 64 && input.Length > 0)
             {
                 Update(input[0]);
-                input = input[1..];
+                input = input.Slice(1);
             }
             while (input.Length >= 64)
             {
-                input[..64].CopyTo(tmp.AsSpan());
+                input.Slice(0, 64).CopyTo(tmp.AsSpan());
                 reverse(tmp, block);
                 g_N(h, N, block);
                 addMod512(N, 512);
                 addMod512(Sigma, block);
 
-                input = input[64..];
+                input = input.Slice(64);
             }
             while (input.Length > 0)
             {
                 Update(input[0]);
-                input = input[1..];
+                input = input.Slice(1);
             }
         }
 #endif

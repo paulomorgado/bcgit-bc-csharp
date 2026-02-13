@@ -94,17 +94,17 @@ namespace Org.BouncyCastle.Crypto.Digests
 
             if (m_bufPos > 0)
             {
-                input[..available].CopyTo(m_buf.AsSpan(m_bufPos));
+                input.Slice(0, available).CopyTo(m_buf.AsSpan(m_bufPos));
                 x0 ^= Pack.BE_To_UInt64(m_buf);
                 P12();
-                input = input[available..];
+                input = input.Slice(available);
             }
 
             while (input.Length >= 8)
             {
                 x0 ^= Pack.BE_To_UInt64(input);
                 P12();
-                input = input[8..];
+                input = input.Slice(8);
             }
 
             input.CopyTo(m_buf);
@@ -142,7 +142,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             for (int i = 0; i < 4; ++i)
             {
                 P12();
-                Pack.UInt64_To_BE(x0, output[(i << 3)..]);
+                Pack.UInt64_To_BE(x0, output.Slice(i << 3));
             }
 
             Reset();

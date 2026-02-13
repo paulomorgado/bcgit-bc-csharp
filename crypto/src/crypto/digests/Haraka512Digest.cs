@@ -113,10 +113,10 @@ namespace Org.BouncyCastle.Crypto.Digests
             s2[2] = new byte[16];
             s2[3] = new byte[16];
 
-            msg[  ..16].CopyTo(s1[0]);
-            msg[16..32].CopyTo(s1[1]);
-            msg[32..48].CopyTo(s1[2]);
-            msg[48..64].CopyTo(s1[3]);
+            msg.Slice(0, 16).CopyTo(s1[0]);
+            msg.Slice(16, 16).CopyTo(s1[1]);
+            msg.Slice(32, 16).CopyTo(s1[2]);
+            msg.Slice(48, 16).CopyTo(s1[3]);
 
             s1[0] = AesEnc(s1[0], RC[0]);
             s1[1] = AesEnc(s1[1], RC[1]);
@@ -168,15 +168,15 @@ namespace Org.BouncyCastle.Crypto.Digests
             s1[3] = AesEnc(s1[3], RC[39]);
             Mix512(s1, s2);
 
-            Bytes.Xor(16, s2[0], msg      , s1[0]);
-            Bytes.Xor(16, s2[1], msg[16..], s1[1]);
-            Bytes.Xor(16, s2[2], msg[32..], s1[2]);
-            Bytes.Xor(16, s2[3], msg[48..], s1[3]);
+            Bytes.Xor(16, s2[0], msg.Slice(0, 16), s1[0]);
+            Bytes.Xor(16, s2[1], msg.Slice(16, 16), s1[1]);
+            Bytes.Xor(16, s2[2], msg.Slice(32, 16), s1[2]);
+            Bytes.Xor(16, s2[3], msg.Slice(48, 16), s1[3]);
 
             s1[0].AsSpan(8, 8).CopyTo(output);
-            s1[1].AsSpan(8, 8).CopyTo(output[8..]);
-            s1[2].AsSpan(0, 8).CopyTo(output[16..]);
-            s1[3].AsSpan(0, 8).CopyTo(output[24..]);
+            s1[1].AsSpan(8, 8).CopyTo(output.Slice(8));
+            s1[2].AsSpan(0, 8).CopyTo(output.Slice(16));
+            s1[3].AsSpan(0, 8).CopyTo(output.Slice(24));
 
             return DIGEST_SIZE;
         }

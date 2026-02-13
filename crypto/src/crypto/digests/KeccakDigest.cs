@@ -96,7 +96,7 @@ namespace Org.BouncyCastle.Crypto.Digests
         public virtual int DoFinal(Span<byte> output)
         {
             int digestSize = GetDigestSize();
-            Squeeze(output[..digestSize]);
+            Squeeze(output.Slice(0, digestSize));
 
             Reset();
 
@@ -253,7 +253,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             int count = 0;
             if (bytesInQueue > 0)
             {
-                data[..available].CopyTo(dataQueue.AsSpan(bytesInQueue));
+                data.Slice(0, available).CopyTo(dataQueue.AsSpan(bytesInQueue));
                 count += available;
                 KeccakAbsorb(dataQueue);
             }
@@ -261,11 +261,11 @@ namespace Org.BouncyCastle.Crypto.Digests
             int remaining;
             while ((remaining = len - count) >= rateBytes)
             {
-                KeccakAbsorb(data[count..]);
+                KeccakAbsorb(data.Slice(count));
                 count += rateBytes;
             }
 
-            data[count..].CopyTo(dataQueue.AsSpan());
+            data.Slice(count).CopyTo(dataQueue.AsSpan());
             this.bitsInQueue = remaining << 3;
         }
 #endif
@@ -388,16 +388,16 @@ namespace Org.BouncyCastle.Crypto.Digests
                     return;
                 }
 
-                output[..available].CopyFrom(dataQueue.AsSpan(dataQueuePos));
-                output = output[available..];
+                output.Slice(0, available).CopyFrom(dataQueue.AsSpan(dataQueuePos));
+                output = output.Slice(available);
                 bitsInQueue = 0;
             }
 
             while (output.Length >= rateBytes)
             {
                 KeccakPermutation(state);
-                Pack.UInt64_To_LE(state[..(rate >> 6)], output);
-                output = output[rateBytes..];
+                Pack.UInt64_To_LE(state.AsSpan(0, rate >> 6), output);
+                output = output.Slice(rateBytes);
             }
 
             if (!output.IsEmpty)
@@ -416,7 +416,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             int count = rate >> 6, off = 0;
             for (int i = 0; i < count; ++i)
             {
-                state[i] ^= Pack.LE_To_UInt64(data[off..]);
+                state[i] ^= Pack.LE_To_UInt64(data.Slice(off));
                 off += 8;
             }
 

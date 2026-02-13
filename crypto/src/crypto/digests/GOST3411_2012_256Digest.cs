@@ -52,7 +52,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             Span<byte> result = stackalloc byte[64];
             base.DoFinal(result);
 
-            result[32..].CopyTo(output);
+            result.Slice(32).CopyTo(output);
 
             return 32;
         }

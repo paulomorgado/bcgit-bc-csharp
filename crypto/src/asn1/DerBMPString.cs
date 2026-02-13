@@ -101,7 +101,7 @@ namespace Org.BouncyCastle.Asn1
 
             int charLen = byteLen / 2;
 
-#if !NETFRAMEWORK
+#if NET6_0_OR_GREATER
             m_str = string.Create(charLen, contents, (chars, bytes) =>
             {
                 for (int i = 0; i < chars.Length; ++i)
@@ -198,7 +198,7 @@ namespace Org.BouncyCastle.Asn1
             return new DerBmpString(contents);
         }
 
-#if !NETFRAMEWORK
+#if NET6_0_OR_GREATER
         internal static DerBmpString CreatePrimitive<TState>(int length, TState state, SpanAction<char, TState> action)
         {
             return new DerBmpString(string.Create(length, state, action));

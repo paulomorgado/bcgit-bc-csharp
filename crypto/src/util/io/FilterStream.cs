@@ -64,7 +64,7 @@ namespace Org.BouncyCastle.Utilities.IO
         }
         public override ValueTask<int> ReadAsync(Memory<byte> buffer, CancellationToken cancellationToken = default)
         {
-            return Streams.ReadAsync(s, buffer, cancellationToken);
+            return s.ReadAsync(buffer, cancellationToken);
         }
 #endif
         public override int ReadByte()
@@ -90,7 +90,7 @@ namespace Org.BouncyCastle.Utilities.IO
         }
         public override ValueTask WriteAsync(ReadOnlyMemory<byte> buffer, CancellationToken cancellationToken = default)
         {
-            return Streams.WriteAsync(s, buffer, cancellationToken);
+            return base.WriteAsync(buffer, cancellationToken);
         }
 #endif
         public override void WriteByte(byte value)
