@@ -142,7 +142,8 @@ namespace Org.BouncyCastle.Crypto.Macs
             // change over the input block.
             //
             Array.Copy(cfbV, blockSize, cfbV, 0, cfbV.Length - blockSize);
-            output[..blockSize].CopyTo(cfbV.AsSpan(cfbV.Length - blockSize));
+            output.Slice(0, blockSize).CopyTo(cfbV.AsSpan(cfbV.Length - blockSize));
+ze));
 
             return blockSize;
         }
@@ -332,17 +333,17 @@ namespace Org.BouncyCastle.Crypto.Macs
 
             if (input.Length > gapLen)
             {
-                input[..gapLen].CopyTo(Buffer.AsSpan(bufOff));
+                input.Slice(0, gapLen).CopyTo(Buffer.AsSpan(bufOff));
 
                 resultLen += cipher.ProcessBlock(Buffer, mac);
 
                 bufOff = 0;
-                input = input[gapLen..];
+                input = input.Slice(gapLen);
 
                 while (input.Length > blockSize)
                 {
                     resultLen += cipher.ProcessBlock(input, mac);
-                    input = input[blockSize..];
+                    input = input.Slice(blockSize);
                 }
             }
 

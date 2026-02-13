@@ -29,7 +29,7 @@ namespace Org.BouncyCastle.Utilities
             n.ToUInt32ArrayLittleEndian(buf);
 
             int sign = (int)buf[uintsLength - 1] >> 31;
-            buf[uintsLength..].Fill((uint)sign);
+            buf.Slice(uintsLength).Fill((uint)sign);
         }
 #endif
 
@@ -116,8 +116,8 @@ namespace Org.BouncyCastle.Utilities
             if (bytesLength > buf.Length)
                 throw new ArgumentException("standard length exceeded", nameof(n));
 
-            buf[..^bytesLength].Fill(0x00);
-            n.ToByteArrayUnsigned(buf[^bytesLength..]);
+            buf.Slice(0, buf.Length - bytesLength).Fill(0x00);
+            n.ToByteArrayUnsigned(buf.Slice(buf.Length - bytesLength));
         }
 #endif
 

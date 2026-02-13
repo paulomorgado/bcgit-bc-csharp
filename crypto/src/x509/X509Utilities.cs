@@ -173,7 +173,7 @@ namespace Org.BouncyCastle.X509
                 ? stackalloc byte[maxResultLength]
                 : new byte[maxResultLength];
             int resultLength = result.Collect(data);
-            data = data[..resultLength];
+            data = data.Slice(0, resultLength);
 #else
             var data = result.Collect();
 #endif

@@ -149,7 +149,7 @@ namespace Org.BouncyCastle.Crypto.Kems.MLKem
         {
             pk = new byte[m_engine.IndCpaPublicKeyBytes];
             pkpv.ToBytes(pk);
-            seed[..MLKemEngine.SymBytes].CopyTo(pk.AsSpan(m_engine.PolyVecBytes));
+            seed.Slice(0, MLKemEngine.SymBytes).CopyTo(pk.AsSpan(m_engine.PolyVecBytes));
         }
 
         private void UnpackSecretKey(PolyVec skpv, ReadOnlySpan<byte> sk)
@@ -224,13 +224,13 @@ namespace Org.BouncyCastle.Crypto.Kems.MLKem
         private void PackCipherText(Span<byte> r, PolyVec b, Poly v)
         {
             b.CompressPolyVec(r);
-            v.CompressPoly(r[m_engine.PolyVecCompressedBytes..]);
+            v.CompressPoly(r.Slice(m_engine.PolyVecCompressedBytes));
         }
 
         private void UnpackCipherText(PolyVec b, Poly v, ReadOnlySpan<byte> c)
         {
             b.DecompressPolyVec(c);
-            v.DecompressPoly(c[m_engine.PolyVecCompressedBytes..]);
+            v.DecompressPoly(c.Slice(m_engine.PolyVecCompressedBytes));
         }
 #else
         private void PackPublicKey(out byte[] pk, PolyVec pkpv, byte[] seed)
@@ -343,7 +343,7 @@ namespace Org.BouncyCastle.Crypto.Kems.MLKem
         {
             byte[] buf = new byte[m_engine.IndCpaPublicKeyBytes];
             polyVec.ToBytes(buf);
-            seed[..MLKemEngine.SymBytes].CopyTo(buf.AsSpan(m_engine.PolyVecBytes));
+            seed.Slice(0, MLKemEngine.SymBytes).CopyTo(buf.AsSpan(m_engine.PolyVecBytes));
             return buf;
         }
 

@@ -153,9 +153,9 @@ namespace Org.BouncyCastle.Utilities.Encoders
             while (!data.IsEmpty)
             {
                 int inLen = System.Math.Min(36, data.Length);
-                int outLen = Encode(data[..inLen], tmp);
-                outStream.Write(tmp[..outLen]);
-                data = data[inLen..];
+                int outLen = Encode(data.Slice(0, inLen), tmp);
+                outStream.Write(tmp.Slice(0, outLen));
+                data = data.Slice(inLen);
             }
             return result;
         }
@@ -281,7 +281,7 @@ namespace Org.BouncyCastle.Utilities.Encoders
 
             if (bufOff > 0)
             {
-                outStream.Write(buf[..bufOff]);
+                outStream.Write(buf.Slice(0, bufOff));
             }
 
             return outLen;
@@ -352,7 +352,7 @@ namespace Org.BouncyCastle.Utilities.Encoders
             if (bufOff > 0)
             {
 #if !NETFRAMEWORK
-                outStream.Write(buf[..bufOff]);
+                outStream.Write(buf.Slice(0, bufOff));
 #else
                 outStream.Write(buf, 0, bufOff);
 #endif

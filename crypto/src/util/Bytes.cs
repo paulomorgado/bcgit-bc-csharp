@@ -1,5 +1,6 @@
 ﻿using System;
 #if !NETFRAMEWORK
+using System.Buffers;
 using System.Numerics;
 using System.Runtime.InteropServices;
 #endif
@@ -44,9 +45,9 @@ namespace Org.BouncyCastle.Utilities
                 int limit = len - Vector<byte>.Count;
                 while (i <= limit)
                 {
-                    var vx = new Vector<byte>(x[i..]);
-                    var vy = new Vector<byte>(y[i..]);
-                    (vx ^ vy).CopyTo(z[i..]);
+                    var vx = new Vector<byte>(x.Slice(i));
+                    var vy = new Vector<byte>(y.Slice(i));
+                    (vx ^ vy).CopyTo(z.Slice(i));
                     i += Vector<byte>.Count;
                 }
             }
@@ -54,13 +55,13 @@ namespace Org.BouncyCastle.Utilities
                 int limit = len - 8;
                 while (i <= limit)
                 {
-                    ulong x64 = MemoryMarshal.Read<ulong>(x[i..]);
-                    ulong y64 = MemoryMarshal.Read<ulong>(y[i..]);
+                    ulong x64 = MemoryMarshal.Read<ulong>(x.Slice(i));
+                    ulong y64 = MemoryMarshal.Read<ulong>(y.Slice(i));
                     ulong z64 = x64 ^ y64;
 #if NET8_0_OR_GREATER
-                    MemoryMarshal.Write(z[i..], in z64);
+                    MemoryMarshal.Write(z.Slice(i), in z64);
 #else
-                    MemoryMarshal.Write(z[i..], ref z64);
+                    MemoryMarshal.Write(z.Slice(i), ref z64);
 #endif
                     i += 8;
                 }
@@ -108,9 +109,9 @@ namespace Org.BouncyCastle.Utilities
                 int limit = len - Vector<byte>.Count;
                 while (i <= limit)
                 {
-                    var vx = new Vector<byte>(x[i..]);
-                    var vz = new Vector<byte>(z[i..]);
-                    (vx ^ vz).CopyTo(z[i..]);
+                    var vx = new Vector<byte>(x.Slice(i));
+                    var vz = new Vector<byte>(z.Slice(i));
+                    (vx ^ vz).CopyTo(z.Slice(i));
                     i += Vector<byte>.Count;
                 }
             }
@@ -118,13 +119,13 @@ namespace Org.BouncyCastle.Utilities
                 int limit = len - 8;
                 while (i <= limit)
                 {
-                    ulong x64 = MemoryMarshal.Read<ulong>(x[i..]);
-                    ulong z64 = MemoryMarshal.Read<ulong>(z[i..]);
+                    ulong x64 = MemoryMarshal.Read<ulong>(x.Slice(i));
+                    ulong z64 = MemoryMarshal.Read<ulong>(z.Slice(i));
                     z64 ^= x64;
 #if NET8_0_OR_GREATER
-                    MemoryMarshal.Write(z[i..], in z64);
+                    MemoryMarshal.Write(z.Slice(i), in z64);
 #else
-                    MemoryMarshal.Write(z[i..], ref z64);
+                    MemoryMarshal.Write(z.Slice(i), ref z64);
 #endif
                     i += 8;
                 }

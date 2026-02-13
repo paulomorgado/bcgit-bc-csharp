@@ -3,7 +3,7 @@ using System.Diagnostics;
 #if NETSTANDARD1_0_OR_GREATER || NETCOREAPP1_0_OR_GREATER
 using System.Runtime.CompilerServices;
 #endif
-#if NETSTANDARD2_0_OR_GREATER || NET6_0_OR_GREATER
+#if !NETFRAMEWORK
 using System.Buffers;
 #endif
 
@@ -435,7 +435,7 @@ namespace Org.BouncyCastle.Crypto.Engines
                 // NOTE: Need 'while' here because ASCON_AEAD_RATE < CRYPTO_ABYTES in some parameter sets
                 while (m_bufPos >= ASCON_AEAD_RATE)
                 {
-                    ProcessBufferDecrypt(m_buf, output[resultLength..]);
+                    ProcessBufferDecrypt(m_buf, output.Slice(resultLength));
                     m_bufPos -= ASCON_AEAD_RATE;
                     m_buf.AsSpan(0, m_bufPos).CopyFrom(m_buf.AsSpan(ASCON_AEAD_RATE));
                     resultLength += ASCON_AEAD_RATE;
@@ -452,7 +452,7 @@ namespace Org.BouncyCastle.Crypto.Engines
                 available = ASCON_AEAD_RATE - m_bufPos;
                 input.Slice(0, available).CopyTo(m_buf.AsSpan(m_bufPos));
                 input = input.Slice(available);
-                ProcessBufferDecrypt(m_buf, output[resultLength..]);
+                ProcessBufferDecrypt(m_buf, output.Slice(resultLength));
                 resultLength += ASCON_AEAD_RATE;
                 //m_bufPos = 0;
 

@@ -156,7 +156,7 @@ namespace Org.BouncyCastle.Crypto.Generators
                 int toCopy = System.Math.Min(hashLen - posInT, output.Length);
                 currentT.AsSpan(posInT, toCopy).CopyTo(output);
                 generatedBytes += toCopy;
-                output = output[toCopy..];
+                output = output.Slice(toCopy);
             }
 
             while (!output.IsEmpty)
@@ -165,7 +165,7 @@ namespace Org.BouncyCastle.Crypto.Generators
                 int toCopy = System.Math.Min(hashLen, output.Length);
                 currentT.AsSpan(0, toCopy).CopyTo(output);
                 generatedBytes += toCopy;
-                output = output[toCopy..];
+                output = output.Slice(toCopy);
             }
 
             return length;

@@ -167,11 +167,11 @@ namespace Org.BouncyCastle.Crypto.Generators
                 if (remaining > digestSize)
                 {
                     dig.CopyTo(output);
-                    output = output[digestSize..];
+                    output = output.Slice(digestSize);
                 }
                 else
                 {
-                    dig[..remaining].CopyTo(output);
+                    dig.Slice(0, remaining).CopyTo(output);
                 }
 
                 if (++C[3] == 0)

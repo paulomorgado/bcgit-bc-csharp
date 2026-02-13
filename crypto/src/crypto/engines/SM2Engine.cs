@@ -179,7 +179,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 
             if (mMode == Mode.C1C3C2)
             {
-                input[(c1Length + digestSize)..].CopyTo(c2);
+                input.Slice(c1Length + digestSize).CopyTo(c2);
             }
             else
             {

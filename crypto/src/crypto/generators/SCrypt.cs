@@ -131,7 +131,7 @@ namespace Org.BouncyCastle.Crypto.Generators
                         BlockMix(V.AsSpan(off, BCount), V.AsSpan(off + BCount));
                         off += BCount;
                     }
-                    BlockMix(V.AsSpan()[^BCount..], X);
+                    BlockMix(V.AsSpan(V.Length - BCount), X);
                 }
 
                 uint mask = (uint)N - 1;
@@ -155,17 +155,17 @@ namespace Org.BouncyCastle.Crypto.Generators
 		{
             int BCount = B.Length;
             int half = BCount >> 1;
-            var y1 = B[^16..];
+            var y1 = B.Slice(B.Length - 16);
 
             for (int pos = 0; pos < BCount; pos += 32)
             {
-                var b0 = B[pos..];
-                var y0 = Y[(pos >> 1)..];
+                var b0 = B.Slice(pos);
+                var y0 = Y.Slice(pos >> 1);
                 Nat512.Xor(y1, b0, y0);
                 Salsa20Engine.SalsaCore(8, y0, y0);
 
-                var b1 = b0[16..];
-                    y1 = y0[half..];
+                var b1 = b0.Slice(16);
+                    y1 = y0.Slice(half);
                 Nat512.Xor(y0, b1, y1);
                 Salsa20Engine.SalsaCore(8, y1, y1);
             }

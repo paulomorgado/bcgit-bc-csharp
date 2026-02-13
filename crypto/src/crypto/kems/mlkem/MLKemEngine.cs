@@ -137,22 +137,22 @@ namespace Org.BouncyCastle.Crypto.Kems.MLKem
             Span<byte> implicit_rejection = stackalloc byte[SymBytes + CipherTextBytes];
 
             m_indCpa.Decrypt(buf, encapsulation, secretKey);
-            secretKey.AsSpan(SecretKeyBytes - 2 * SymBytes, SymBytes).CopyTo(buf[SymBytes..]);
+            secretKey.AsSpan(SecretKeyBytes - 2 * SymBytes, SymBytes).CopyTo(buf.Slice(SymBytes));
 
             Symmetric.Hash_g(buf, kr);
 
-            m_indCpa.Encrypt(cmp, buf[..SymBytes], pk, kr[SymBytes..]);
+            m_indCpa.Encrypt(cmp, buf.Slice(0, SymBytes), pk, kr.Slice(SymBytes));
 
             int fail = ~FixedTimeEquals(cmp, encapsulation);
 
-            Symmetric.Hash_h(encapsulation, kr[SymBytes..]);
+            Symmetric.Hash_h(encapsulation, kr.Slice(SymBytes));
             secretKey.AsSpan(SecretKeyBytes - SymBytes, SymBytes).CopyTo(implicit_rejection);
-            encapsulation.CopyTo(implicit_rejection[SymBytes..]);
+            encapsulation.CopyTo(implicit_rejection.Slice(SymBytes));
             Symmetric.Kdf(implicit_rejection, implicit_rejection);
 
             CMov(kr, implicit_rejection, SymBytes, fail);
 
-            kr[..SharedSecretBytes].CopyTo(secret);
+            kr.Slice(0, SharedSecretBytes).CopyTo(secret);
         }
 
         internal void KemEncrypt(Span<byte> encapsulation, Span<byte> secret, MLKemPublicKeyParameters publicKey,
@@ -163,15 +163,15 @@ namespace Org.BouncyCastle.Crypto.Kems.MLKem
             Span<byte> buf = stackalloc byte[2 * SymBytes];
             Span<byte> kr = stackalloc byte[2 * SymBytes];
 
-            randBytes[..SymBytes].CopyTo(buf);
+            randBytes.Slice(0, SymBytes).CopyTo(buf);
 
-            Symmetric.Hash_h(pk, buf[SymBytes..]);
+            Symmetric.Hash_h(pk, buf.Slice(SymBytes));
 
             Symmetric.Hash_g(buf, kr);
 
-            m_indCpa.Encrypt(encapsulation, buf[..SymBytes], pk, kr[SymBytes..]);
+            m_indCpa.Encrypt(encapsulation, buf.Slice(0, SymBytes), pk, kr.Slice(SymBytes));
 
-            kr[..SharedSecretBytes].CopyTo(secret);
+            kr.Slice(0, SharedSecretBytes).CopyTo(secret);
         }
 
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]

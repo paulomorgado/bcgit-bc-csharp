@@ -452,9 +452,9 @@ namespace Org.BouncyCastle.Crypto.Engines
         private void EncryptBlock(ReadOnlySpan<byte> input, Span<byte> output)
         {
             int x0 = (int)Pack.LE_To_UInt32(input) ^ gSubKeys[INPUT_WHITEN];
-            int x1 = (int)Pack.LE_To_UInt32(input[4..]) ^ gSubKeys[INPUT_WHITEN + 1];
-            int x2 = (int)Pack.LE_To_UInt32(input[8..]) ^ gSubKeys[INPUT_WHITEN + 2];
-            int x3 = (int)Pack.LE_To_UInt32(input[12..]) ^ gSubKeys[INPUT_WHITEN + 3];
+            int x1 = (int)Pack.LE_To_UInt32(input.Slice(4)) ^ gSubKeys[INPUT_WHITEN + 1];
+            int x2 = (int)Pack.LE_To_UInt32(input.Slice(8)) ^ gSubKeys[INPUT_WHITEN + 2];
+            int x3 = (int)Pack.LE_To_UInt32(input.Slice(12)) ^ gSubKeys[INPUT_WHITEN + 3];
 
             int k = ROUND_SUBKEYS;
             int t0, t1;
@@ -474,9 +474,9 @@ namespace Org.BouncyCastle.Crypto.Engines
             }
 
             Pack.UInt32_To_LE((uint)(x2 ^ gSubKeys[OUTPUT_WHITEN]), output);
-            Pack.UInt32_To_LE((uint)(x3 ^ gSubKeys[OUTPUT_WHITEN + 1]), output[4..]);
-            Pack.UInt32_To_LE((uint)(x0 ^ gSubKeys[OUTPUT_WHITEN + 2]), output[8..]);
-            Pack.UInt32_To_LE((uint)(x1 ^ gSubKeys[OUTPUT_WHITEN + 3]), output[12..]);
+            Pack.UInt32_To_LE((uint)(x3 ^ gSubKeys[OUTPUT_WHITEN + 1]), output.Slice(4));
+            Pack.UInt32_To_LE((uint)(x0 ^ gSubKeys[OUTPUT_WHITEN + 2]), output.Slice(8));
+            Pack.UInt32_To_LE((uint)(x1 ^ gSubKeys[OUTPUT_WHITEN + 3]), output.Slice(12));
         }
 
         /**
@@ -487,9 +487,9 @@ namespace Org.BouncyCastle.Crypto.Engines
         private void DecryptBlock(ReadOnlySpan<byte> input, Span<byte> output)
         {
             int x2 = (int)Pack.LE_To_UInt32(input) ^ gSubKeys[OUTPUT_WHITEN];
-            int x3 = (int)Pack.LE_To_UInt32(input[4..]) ^ gSubKeys[OUTPUT_WHITEN + 1];
-            int x0 = (int)Pack.LE_To_UInt32(input[8..]) ^ gSubKeys[OUTPUT_WHITEN + 2];
-            int x1 = (int)Pack.LE_To_UInt32(input[12..]) ^ gSubKeys[OUTPUT_WHITEN + 3];
+            int x3 = (int)Pack.LE_To_UInt32(input.Slice(4)) ^ gSubKeys[OUTPUT_WHITEN + 1];
+            int x0 = (int)Pack.LE_To_UInt32(input.Slice(8)) ^ gSubKeys[OUTPUT_WHITEN + 2];
+            int x1 = (int)Pack.LE_To_UInt32(input.Slice(12)) ^ gSubKeys[OUTPUT_WHITEN + 3];
 
             int k = ROUND_SUBKEYS + 2 * ROUNDS -1 ;
             int t0, t1;
@@ -509,9 +509,9 @@ namespace Org.BouncyCastle.Crypto.Engines
             }
 
             Pack.UInt32_To_LE((uint)(x0 ^ gSubKeys[INPUT_WHITEN]), output);
-            Pack.UInt32_To_LE((uint)(x1 ^ gSubKeys[INPUT_WHITEN + 1]), output[4..]);
-            Pack.UInt32_To_LE((uint)(x2 ^ gSubKeys[INPUT_WHITEN + 2]), output[8..]);
-            Pack.UInt32_To_LE((uint)(x3 ^ gSubKeys[INPUT_WHITEN + 3]), output[12..]);
+            Pack.UInt32_To_LE((uint)(x1 ^ gSubKeys[INPUT_WHITEN + 1]), output.Slice(4));
+            Pack.UInt32_To_LE((uint)(x2 ^ gSubKeys[INPUT_WHITEN + 2]), output.Slice(8));
+            Pack.UInt32_To_LE((uint)(x3 ^ gSubKeys[INPUT_WHITEN + 3]), output.Slice(12));
         }
 #else
         /**

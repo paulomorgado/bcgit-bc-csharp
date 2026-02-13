@@ -3,6 +3,7 @@
 using System.Runtime.CompilerServices;
 #endif
 #if !NETFRAMEWORK
+using System.Buffers;
 using System.Runtime.InteropServices;
 #endif
 using System.Threading.Tasks;
@@ -444,7 +445,7 @@ namespace Org.BouncyCastle.Crypto.Generators
                 digest.BlockUpdate(outLenBytes);
                 digest.BlockUpdate(input);
                 digest.DoFinal(outBuffer);
-                outBuffer[0..halfLen].CopyTo(output);
+                outBuffer.AsSpan(0, halfLen).CopyTo(output);
 #else
                 digest.BlockUpdate(outLenBytes, 0, outLenBytes.Length);
                 digest.BlockUpdate(input, 0, input.Length);
@@ -462,7 +463,7 @@ namespace Org.BouncyCastle.Crypto.Generators
                     digest.DoFinal(outBuffer, 0);
 
 #if !NETFRAMEWORK
-                    outBuffer[0..halfLen].CopyTo(output[outPos..]);
+                    outBuffer.AsSpan(0, halfLen).CopyTo(output.AsSpan(outPos));
 #else
                     Array.Copy(outBuffer, 0, output, outPos, halfLen);
 #endif
@@ -476,7 +477,7 @@ namespace Org.BouncyCastle.Crypto.Generators
                 digest.BlockUpdate(outBuffer, 0, outBuffer.Length);
 
 #if !NETFRAMEWORK
-                digest.DoFinal(output[outPos..]);
+                digest.DoFinal(output.AsSpan(outPos));
 #else
                 digest.DoFinal(output, outPos);
 #endif

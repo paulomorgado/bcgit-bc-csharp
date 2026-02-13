@@ -132,7 +132,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 		{
 			// Pack bytes into integers
 			uint v0 = Pack.BE_To_UInt32(input);
-			uint v1 = Pack.BE_To_UInt32(input[4..]);
+			uint v1 = Pack.BE_To_UInt32(input.Slice(4));
 
 			for (int i = 0; i < rounds; i++)
 			{

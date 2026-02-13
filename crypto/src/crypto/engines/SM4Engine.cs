@@ -1,4 +1,7 @@
 ﻿using System;
+#if !NETFRAMEWORK
+using System.Buffers;
+#endif
 
 using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Crypto.Utilities;
@@ -202,7 +205,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             Pack.UInt32_To_BE(X3, output);
             Pack.UInt32_To_BE(X2, output.Slice(4));
             Pack.UInt32_To_BE(X1, output.Slice(8));
-            Pack.UInt32_To_BE(X0, output[12..]);
+            Pack.UInt32_To_BE(X0, output.Slice(12));
 
             return BlockSize;
         }

@@ -177,9 +177,9 @@ namespace Org.BouncyCastle.Utilities.Encoders
             while (!data.IsEmpty)
             {
                 int inLen = System.Math.Min(54, data.Length);
-                int outLen = Encode(data[..inLen], tmp);
-                outStream.Write(tmp[..outLen]);
-                data = data[inLen..];
+                int outLen = Encode(data.Slice(0, inLen), tmp);
+                outStream.Write(tmp.Slice(0, outLen));
+                data = data.Slice(inLen);
             }
             return result;
         }
@@ -324,7 +324,7 @@ namespace Org.BouncyCastle.Utilities.Encoders
 
             if (bufOff > 0)
             {
-                outStream.Write(outBuffer[..bufOff]);
+                outStream.Write(outBuffer.Slice(0, bufOff));
             }
 
             int e0 = NextI(data, i, end);

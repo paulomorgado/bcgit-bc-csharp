@@ -1,5 +1,5 @@
 using System;
-#if NET6_0_OR_GREATER
+#if !NETFRAMEWORK
 using System.Buffers;
 #endif
 
