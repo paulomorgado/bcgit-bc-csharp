@@ -4,7 +4,7 @@ namespace Org.BouncyCastle.Utilities.Date
 {
 	public static class DateTimeUtilities
 	{
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static readonly DateTime UnixEpoch = DateTime.UnixEpoch;
 #else
         public static readonly DateTime UnixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);

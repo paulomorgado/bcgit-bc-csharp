@@ -91,7 +91,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.Lms
 
             public void BlockUpdate(byte[] input, int inOff, int inLen) => m_digest.BlockUpdate(input, inOff, inLen);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             public void BlockUpdate(ReadOnlySpan<byte> input) => m_digest.BlockUpdate(input);
 #endif
 
@@ -104,7 +104,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.Lms
                 return m_length;
             }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             public int DoFinal(Span<byte> output) 
             {
                 int digestSize = m_digest.GetDigestSize();

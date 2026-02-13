@@ -268,7 +268,7 @@ namespace Org.BouncyCastle.Crypto.Engines
                 {
                 case 2:
                 {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                     EncryptBlock_128(input.AsSpan(inOff), output.AsSpan(outOff));
 #else
                     EncryptBlock_128(input, inOff, output, outOff);
@@ -304,7 +304,7 @@ namespace Org.BouncyCastle.Crypto.Engines
                 {
                 case 2:
                 {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                     DecryptBlock_128(input.AsSpan(inOff), output.AsSpan(outOff));
 #else
                     DecryptBlock_128(input, inOff, output, outOff);
@@ -337,7 +337,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             return GetBlockSize();
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual int ProcessBlock(ReadOnlySpan<byte> input, Span<byte> output)
         {
             if (workingKey == null)
@@ -429,7 +429,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             InvSubBytes();
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private void DecryptBlock_128(ReadOnlySpan<byte> input, Span<byte> output)
         {
             ulong c0 = Pack.LE_To_UInt64(input);

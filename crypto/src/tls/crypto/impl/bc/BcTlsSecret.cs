@@ -70,7 +70,7 @@ namespace Org.BouncyCastle.Tls.Crypto.Impl.BC
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public override TlsSecret DeriveUsingPrf(int prfAlgorithm, ReadOnlySpan<char> label, ReadOnlySpan<byte> seed,
             int length)
         {
@@ -95,7 +95,7 @@ namespace Org.BouncyCastle.Tls.Crypto.Impl.BC
 
         public override TlsSecret HkdfExpand(int cryptoHashAlgorithm, byte[] info, int length)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return HkdfExpand(cryptoHashAlgorithm, info.AsSpan(), length);
 #else
             if (length < 1)
@@ -144,7 +144,7 @@ namespace Org.BouncyCastle.Tls.Crypto.Impl.BC
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public override TlsSecret HkdfExpand(int cryptoHashAlgorithm, ReadOnlySpan<byte> info, int length)
         {
             if (length < 1)
@@ -253,7 +253,7 @@ namespace Org.BouncyCastle.Tls.Crypto.Impl.BC
             return Prf_1_2(prfAlgorithm, labelSeed, length);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         protected virtual byte[] Prf(int prfAlgorithm, ReadOnlySpan<char> label, ReadOnlySpan<byte> seed, int length)
         {
             if (PrfAlgorithm.ssl_prf_legacy == prfAlgorithm)
@@ -277,7 +277,7 @@ namespace Org.BouncyCastle.Tls.Crypto.Impl.BC
 
         protected virtual byte[] Prf_Ssl(byte[] seed, int length)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return Prf_Ssl(seed.AsSpan(), length);
 #else
             IDigest md5 = m_crypto.CreateDigest(CryptoHashAlgorithm.md5);
@@ -320,7 +320,7 @@ namespace Org.BouncyCastle.Tls.Crypto.Impl.BC
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         protected virtual byte[] Prf_Ssl(ReadOnlySpan<byte> seed, int length)
         {
             IDigest md5 = m_crypto.CreateDigest(CryptoHashAlgorithm.md5);

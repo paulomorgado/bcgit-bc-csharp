@@ -1,6 +1,6 @@
 using System;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 #else
@@ -28,7 +28,7 @@ namespace Org.BouncyCastle.Utilities
             return bits == 0;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static bool AreAllZeroes(ReadOnlySpan<byte> buf)
         {
             uint bits = 0;
@@ -362,7 +362,7 @@ namespace Org.BouncyCastle.Utilities
             if (data == null)
                 return 0;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             HashCode hc = default;
             hc.AddBytes(data);
             return hc.ToHashCode();
@@ -385,7 +385,7 @@ namespace Org.BouncyCastle.Utilities
             if (data == null)
                 return 0;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             HashCode hc = default;
             hc.AddBytes(data.AsSpan(off, len));
             return hc.ToHashCode();
@@ -408,7 +408,7 @@ namespace Org.BouncyCastle.Utilities
             if (data == null)
                 return 0;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             HashCode hc = default;
             hc.AddBytes(MemoryMarshal.AsBytes(data.AsSpan()));
             return hc.ToHashCode();
@@ -432,7 +432,7 @@ namespace Org.BouncyCastle.Utilities
             if (data == null)
                 return 0;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             HashCode hc = default;
             hc.AddBytes(MemoryMarshal.AsBytes(data.AsSpan()));
             return hc.ToHashCode();
@@ -455,7 +455,7 @@ namespace Org.BouncyCastle.Utilities
             if (data == null)
                 return 0;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             HashCode hc = default;
             hc.AddBytes(MemoryMarshal.AsBytes(data.AsSpan(off, len)));
             return hc.ToHashCode();
@@ -479,7 +479,7 @@ namespace Org.BouncyCastle.Utilities
             if (data == null)
                 return 0;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             HashCode hc = default;
             hc.AddBytes(MemoryMarshal.AsBytes(data.AsSpan()));
             return hc.ToHashCode();
@@ -503,7 +503,7 @@ namespace Org.BouncyCastle.Utilities
             if (data == null)
                 return 0;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             HashCode hc = default;
             hc.AddBytes(MemoryMarshal.AsBytes(data.AsSpan(off, len)));
             return hc.ToHashCode();
@@ -527,7 +527,7 @@ namespace Org.BouncyCastle.Utilities
             if (data == null)
                 return 0;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             HashCode hc = default;
             hc.AddBytes(MemoryMarshal.AsBytes(data.AsSpan()));
             return hc.ToHashCode();
@@ -554,7 +554,7 @@ namespace Org.BouncyCastle.Utilities
             if (data == null)
                 return 0;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             HashCode hc = default;
             hc.AddBytes(MemoryMarshal.AsBytes(data.AsSpan(off, len)));
             return hc.ToHashCode();
@@ -582,7 +582,7 @@ namespace Org.BouncyCastle.Utilities
 
             int len = data.Length;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             HashCode hc = default;
             for (int i = 0; i < len; ++i)
             {
@@ -605,7 +605,7 @@ namespace Org.BouncyCastle.Utilities
             if (data == null)
                 return 0;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             HashCode hc = default;
             for (int i = 0; i < len; ++i)
             {
@@ -1154,7 +1154,7 @@ namespace Org.BouncyCastle.Utilities
 
         internal static T[] InternalCopySegment<T>(T[] buf, int off, int len)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return buf.AsSpan(off, len).ToArray();
 #else
             T[] result = new T[len];
@@ -1217,7 +1217,7 @@ namespace Org.BouncyCastle.Utilities
             InternalZeroMemory(buf, off, len);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static byte[] Concatenate(ReadOnlySpan<byte> a, ReadOnlySpan<byte> b)
         {
             byte[] rv = new byte[a.Length + b.Length];

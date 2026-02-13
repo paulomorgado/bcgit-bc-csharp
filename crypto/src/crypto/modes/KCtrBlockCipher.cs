@@ -130,7 +130,7 @@ namespace Org.BouncyCastle.Crypto.Modes
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void ProcessBytes(ReadOnlySpan<byte> input, Span<byte> output)
         {
             Check.OutputLength(output, input.Length, "output buffer too short");
@@ -189,7 +189,7 @@ namespace Org.BouncyCastle.Crypto.Modes
             return blockSize;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int ProcessBlock(ReadOnlySpan<byte> input, Span<byte> output)
         {
             int blockSize = GetBlockSize();

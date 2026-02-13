@@ -62,7 +62,7 @@ namespace Org.BouncyCastle.Crypto.Signers
 
         public void BlockUpdate(byte[] input, int inOff, int inLen) => m_buffer.Write(input, inOff, inLen);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void BlockUpdate(ReadOnlySpan<byte> input) => m_buffer.Write(input);
 #endif
 

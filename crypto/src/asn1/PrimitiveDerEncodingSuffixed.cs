@@ -63,7 +63,7 @@ namespace Org.BouncyCastle.Asn1
                 return length - octetsB.Length;
 
             int last = length - 1;
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             int c = octetsA.AsSpan(0, last).SequenceCompareTo(
                     octetsB.AsSpan(0, last));
             if (c != 0)

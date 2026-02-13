@@ -46,7 +46,7 @@ namespace Org.BouncyCastle.Utilities.Encoders
 
         public int Encode(byte[] inBuf, int inOff, int inLen, byte[] outBuf, int outOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return Encode(inBuf.AsSpan(inOff, inLen), outBuf.AsSpan(outOff));
 #else
             int inPos = inOff;
@@ -94,7 +94,7 @@ namespace Org.BouncyCastle.Utilities.Encoders
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int Encode(ReadOnlySpan<byte> input, Span<byte> output)
         {
             int inPos = 0;
@@ -149,7 +149,7 @@ namespace Org.BouncyCastle.Utilities.Encoders
         */
         public int Encode(byte[] buf, int off, int len, Stream outStream) 
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return Encode(buf.AsSpan(off, len), outStream);
 #else
             if (len < 0)
@@ -169,7 +169,7 @@ namespace Org.BouncyCastle.Utilities.Encoders
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int Encode(ReadOnlySpan<byte> data, Stream outStream)
         {
             Span<byte> tmp = stackalloc byte[72];
@@ -198,7 +198,7 @@ namespace Org.BouncyCastle.Utilities.Encoders
         */
         public int Decode(byte[] data, int off, int length, Stream outStream)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return Decode(data.AsSpan(off, length), outStream);
 #else
             byte b1, b2, b3, b4;
@@ -268,7 +268,7 @@ namespace Org.BouncyCastle.Utilities.Encoders
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int Decode(ReadOnlySpan<byte> data, Stream outStream)
         {
             byte b1, b2, b3, b4;
@@ -338,7 +338,7 @@ namespace Org.BouncyCastle.Utilities.Encoders
         }
 #endif
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private int NextI(ReadOnlySpan<byte> data, int i, int finish)
 #else
         private int NextI(byte[] data, int i, int finish)
@@ -379,7 +379,7 @@ namespace Org.BouncyCastle.Utilities.Encoders
 
             int finish = end - 4;
             int i = NextI(data, 0, finish);
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> buf = stackalloc byte[3];
 #endif
 
@@ -402,7 +402,7 @@ namespace Org.BouncyCastle.Utilities.Encoders
                 if ((b1 | b2 | b3 | b4) >= 0x80)
                     throw new IOException("invalid characters encountered in base64 data");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 buf[0] = (byte)((b1 << 2) | (b2 >> 4));
                 buf[1] = (byte)((b2 << 4) | (b3 >> 2));
                 buf[2] = (byte)((b3 << 6) | b4);
@@ -455,7 +455,7 @@ namespace Org.BouncyCastle.Utilities.Encoders
                 if ((b1 | b2 | b3) >= 0x80)
                     throw new IOException("invalid characters encountered at end of base64 data");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 Span<byte> buf = stackalloc byte[2] {
                     (byte)((b1 << 2) | (b2 >> 4)),
                     (byte)((b2 << 4) | (b3 >> 2)),
@@ -478,7 +478,7 @@ namespace Org.BouncyCastle.Utilities.Encoders
                 if ((b1 | b2 | b3 | b4) >= 0x80)
                     throw new IOException("invalid characters encountered at end of base64 data");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 Span<byte> buf = stackalloc byte[3] {
                     (byte)((b1 << 2) | (b2 >> 4)),
                     (byte)((b2 << 4) | (b3 >> 2)),

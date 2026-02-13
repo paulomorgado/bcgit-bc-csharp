@@ -33,7 +33,7 @@ namespace Org.BouncyCastle.Utilities
                 throw new ArgumentNullException(nameof(bs));
 
             int len = bs.Length;
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return string.Create(len, bs, (chars, bytes) =>
             {
                 for (int i = 0; i < chars.Length; ++i)
@@ -55,7 +55,7 @@ namespace Org.BouncyCastle.Utilities
         {
             Arrays.ValidateSegment(buf, off, len);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return string.Create(len, buf.AsMemory(off, len), (chars, bytes) =>
             {
                 var span = bytes.Span;
@@ -94,7 +94,7 @@ namespace Org.BouncyCastle.Utilities
             return bs;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static byte[] ToByteArray(ReadOnlySpan<char> cs)
         {
             byte[] bs = new byte[cs.Length];
@@ -130,7 +130,7 @@ namespace Org.BouncyCastle.Utilities
 
         public static byte[] ToUtf8ByteArray(string s) => Encoding.UTF8.GetBytes(s);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static byte[] ToUtf8ByteArray(ReadOnlySpan<char> cs)
         {
             int count = Encoding.UTF8.GetByteCount(cs);

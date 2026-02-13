@@ -22,7 +22,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         private static readonly int MaxStackAlloc = Platform.Is64BitProcess ? 4096 : 1024;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void CheckedModOddInverse(ReadOnlySpan<uint> m, ReadOnlySpan<uint> x, Span<uint> z)
 #else
         public static void CheckedModOddInverse(uint[] m, uint[] x, uint[] z)
@@ -32,7 +32,7 @@ namespace Org.BouncyCastle.Math.Raw
                 throw new ArithmeticException("Inverse does not exist.");
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void CheckedModOddInverseVar(ReadOnlySpan<uint> m, ReadOnlySpan<uint> x, Span<uint> z)
 #else
         public static void CheckedModOddInverseVar(uint[] m, uint[] x, uint[] z)
@@ -71,7 +71,7 @@ namespace Org.BouncyCastle.Math.Raw
             return x;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static uint ModOddInverse(ReadOnlySpan<uint> m, ReadOnlySpan<uint> x, Span<uint> z)
 #else
         public static uint ModOddInverse(uint[] m, uint[] x, uint[] z)
@@ -85,7 +85,7 @@ namespace Org.BouncyCastle.Math.Raw
             int bits = (len32 << 5) - Integers.NumberOfLeadingZeros((int)m[len32 - 1]);
             int len30 = (bits + 29) / 30;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             int allocSize = len30 * 5;
             Span<int> alloc = (allocSize * Integers.NumBytes <= MaxStackAlloc)
                 ? stackalloc int[allocSize]
@@ -110,7 +110,7 @@ namespace Org.BouncyCastle.Math.Raw
             Encode30(bits, x, G);
             Encode30(bits, m, M);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             M.CopyTo(F);
 #else
             Array.Copy(M, 0, F, 0, len30);
@@ -139,7 +139,7 @@ namespace Org.BouncyCastle.Math.Raw
             return (uint)(EqualTo(len30, F, 1) & EqualTo(len30, G, 0));
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static bool ModOddInverseVar(ReadOnlySpan<uint> m, ReadOnlySpan<uint> x, Span<uint> z)
 #else
         public static bool ModOddInverseVar(uint[] m, uint[] x, uint[] z)
@@ -156,7 +156,7 @@ namespace Org.BouncyCastle.Math.Raw
             int clz = bits - Nat.GetBitLength(len32, x);
             Debug.Assert(clz >= 0);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             int allocSize = len30 * 5;
             Span<int> alloc = (allocSize * Integers.NumBytes <= MaxStackAlloc)
                 ? stackalloc int[allocSize]
@@ -181,7 +181,7 @@ namespace Org.BouncyCastle.Math.Raw
             Encode30(bits, x, G);
             Encode30(bits, m, M);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             M.CopyTo(F);
 #else
             Array.Copy(M, 0, F, 0, len30);
@@ -242,7 +242,7 @@ namespace Org.BouncyCastle.Math.Raw
             return true;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static uint ModOddIsCoprime(ReadOnlySpan<uint> m, ReadOnlySpan<uint> x)
 #else
         public static uint ModOddIsCoprime(uint[] m, uint[] x)
@@ -256,7 +256,7 @@ namespace Org.BouncyCastle.Math.Raw
             int bits = (len32 << 5) - Integers.NumberOfLeadingZeros((int)m[len32 - 1]);
             int len30 = (bits + 29) / 30;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             int allocSize = len30 * 3;
             Span<int> alloc = (allocSize * Integers.NumBytes <= MaxStackAlloc)
                 ? stackalloc int[allocSize]
@@ -276,7 +276,7 @@ namespace Org.BouncyCastle.Math.Raw
             Encode30(bits, x, G);
             Encode30(bits, m, M);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             M.CopyTo(F);
 #else
             Array.Copy(M, 0, F, 0, len30);
@@ -298,7 +298,7 @@ namespace Org.BouncyCastle.Math.Raw
             return (uint)(EqualTo(len30, F, 1) & EqualTo(len30, G, 0));
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static bool ModOddIsCoprimeVar(ReadOnlySpan<uint> m, ReadOnlySpan<uint> x)
 #else
         public static bool ModOddIsCoprimeVar(uint[] m, uint[] x)
@@ -315,7 +315,7 @@ namespace Org.BouncyCastle.Math.Raw
             int clz = bits - Nat.GetBitLength(len32, x);
             Debug.Assert(clz >= 0);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             int allocSize = len30 * 3;
             Span<int> alloc = (allocSize * Integers.NumBytes <= MaxStackAlloc)
                 ? stackalloc int[allocSize]
@@ -335,7 +335,7 @@ namespace Org.BouncyCastle.Math.Raw
             Encode30(bits, x, G);
             Encode30(bits, m, M);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             M.CopyTo(F);
 #else
             Array.Copy(M, 0, F, 0, len30);
@@ -394,7 +394,7 @@ namespace Org.BouncyCastle.Math.Raw
             return s;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void Random(SecureRandom random, ReadOnlySpan<uint> p, Span<uint> z)
         {
             int len = p.Length;
@@ -425,7 +425,7 @@ namespace Org.BouncyCastle.Math.Raw
         }
 #endif
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static int Add30(int len30, Span<int> D, ReadOnlySpan<int> M)
 #else
         private static int Add30(int len30, int[] D, int[] M)
@@ -446,7 +446,7 @@ namespace Org.BouncyCastle.Math.Raw
             return c;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static void CNegate30(int len30, int cond, Span<int> D)
 #else
         private static void CNegate30(int len30, int cond, int[] D)
@@ -465,7 +465,7 @@ namespace Org.BouncyCastle.Math.Raw
             D[last] = c;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static void CNormalize30(int len30, int condNegate, Span<int> D, ReadOnlySpan<int> M)
 #else
         private static void CNormalize30(int len30, int condNegate, int[] D, int[] M)
@@ -513,7 +513,7 @@ namespace Org.BouncyCastle.Math.Raw
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static void Decode30(int bits, ReadOnlySpan<int> x, Span<uint> z)
 #else
         private static void Decode30(int bits, int[] x, uint[] z)
@@ -539,7 +539,7 @@ namespace Org.BouncyCastle.Math.Raw
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static int Divsteps30Var(int eta, int f0, int g0, Span<int> t)
 #else
         private static int Divsteps30Var(int eta, int f0, int g0, int[] t)
@@ -606,7 +606,7 @@ namespace Org.BouncyCastle.Math.Raw
             return eta;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static void Encode30(int bits, ReadOnlySpan<uint> x, Span<int> z)
 #else
         private static void Encode30(int bits, uint[] x, int[] z)
@@ -632,7 +632,7 @@ namespace Org.BouncyCastle.Math.Raw
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static int EqualTo(int len, ReadOnlySpan<int> x, int y)
 #else
         private static int EqualTo(int len, int[] x, int y)
@@ -647,7 +647,7 @@ namespace Org.BouncyCastle.Math.Raw
             return (d - 1) >> 31;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static bool EqualToVar(int len, ReadOnlySpan<int> x, int y)
 #else
         private static bool EqualToVar(int len, int[] x, int y)
@@ -676,7 +676,7 @@ namespace Org.BouncyCastle.Math.Raw
             return (int)((150964L * bits + 99243) >> 16);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static int HDDivsteps30(int theta, int f0, int g0, Span<int> t)
 #else
         private static int HDDivsteps30(int theta, int f0, int g0, int[] t)
@@ -722,7 +722,7 @@ namespace Org.BouncyCastle.Math.Raw
             return theta;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static int Negate30(int len30, Span<int> D)
 #else
         private static int Negate30(int len30, int[] D)
@@ -742,7 +742,7 @@ namespace Org.BouncyCastle.Math.Raw
             return c;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static int TrimFG30Var(int len30, Span<int> F, Span<int> G)
 #else
         private static int TrimFG30Var(int len30, int[] F, int[] G)
@@ -769,7 +769,7 @@ namespace Org.BouncyCastle.Math.Raw
             return len30;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static void UpdateDE30(int len30, Span<int> D, Span<int> E, ReadOnlySpan<int> t, int m0Inv32,
             ReadOnlySpan<int> M)
 #else
@@ -838,7 +838,7 @@ namespace Org.BouncyCastle.Math.Raw
             E[len30 - 1] = (int)ce;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static void UpdateFG30(int len30, Span<int> F, Span<int> G, ReadOnlySpan<int> t)
 #else
         private static void UpdateFG30(int len30, int[] F, int[] G, int[] t)

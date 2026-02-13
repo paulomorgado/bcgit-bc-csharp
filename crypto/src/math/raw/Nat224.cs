@@ -171,7 +171,7 @@ namespace Org.BouncyCastle.Math.Raw
             return (uint)c;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static uint AddTo(ReadOnlySpan<uint> x, Span<uint> z, uint cIn)
         {
             ulong c = cIn;
@@ -234,7 +234,7 @@ namespace Org.BouncyCastle.Math.Raw
             return (uint)c;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static uint AddToEachOther(Span<uint> u, Span<uint> v)
         {
             ulong c = 0;
@@ -316,7 +316,7 @@ namespace Org.BouncyCastle.Math.Raw
             return pos;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static bool Diff(ReadOnlySpan<uint> x, ReadOnlySpan<uint> y, Span<uint> z)
         {
             bool pos = Gte(x, y);
@@ -383,7 +383,7 @@ namespace Org.BouncyCastle.Math.Raw
             return true;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static bool Gte(ReadOnlySpan<uint> x, ReadOnlySpan<uint> y)
         {
             for (int i = 6; i >= 0; --i)
@@ -555,7 +555,7 @@ namespace Org.BouncyCastle.Math.Raw
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void Mul(ReadOnlySpan<uint> x, ReadOnlySpan<uint> y, Span<uint> zz)
         {
             ulong y_0 = y[0];
@@ -1173,7 +1173,7 @@ namespace Org.BouncyCastle.Math.Raw
             zz[zzOff + 13] = (w << 1) | c;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void Square(ReadOnlySpan<uint> x, Span<uint> zz)
         {
             ulong x_0 = x[0];
@@ -1368,7 +1368,7 @@ namespace Org.BouncyCastle.Math.Raw
             return (int)c;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static int Sub(ReadOnlySpan<uint> x, ReadOnlySpan<uint> y, Span<uint> z)
         {
             long c = 0;

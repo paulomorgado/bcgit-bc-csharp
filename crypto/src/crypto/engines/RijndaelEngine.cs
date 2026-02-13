@@ -381,7 +381,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 		*/
 		private long[][] GenerateWorkingKey(KeyParameter keyParameter)
 		{
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             var key = keyParameter.InternalKey;
 #else
             byte[] key = keyParameter.GetKey();
@@ -605,7 +605,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             Check.DataLength(input, inOff, (BC / 2), "input buffer too short");
             Check.OutputLength(output, outOff, (BC / 2), "output buffer too short");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 			UnPackBlock(input.AsSpan(inOff));
 #else
 			UnPackBlock(input, inOff);
@@ -620,7 +620,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 				DecryptBlock(workingKey);
 			}
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 			PackBlock(output.AsSpan(outOff));
 #else
 			PackBlock(output, outOff);
@@ -629,7 +629,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 			return BC / 2;
 		}
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 		public virtual int ProcessBlock(ReadOnlySpan<byte> input, Span<byte> output)
 		{
 			if (workingKey == null)
@@ -655,7 +655,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 		}
 #endif
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 		private void UnPackBlock(ReadOnlySpan<byte> input)
 		{
 			int index = 0;

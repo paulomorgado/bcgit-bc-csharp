@@ -1,6 +1,6 @@
 using System;
 using System.Diagnostics;
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 using System.Buffers.Binary;
 #endif
 using System.IO;

@@ -271,7 +271,7 @@ namespace Org.BouncyCastle.Tls
         /// <exception cref="IOException"/>
         internal void WriteRecord(short contentType, byte[] plaintext, int plaintextOffset, int plaintextLength)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             WriteRecord(contentType, plaintext.AsSpan(plaintextOffset, plaintextLength));
 #else
             // Never send anything until a valid ClientHello has been received
@@ -317,7 +317,7 @@ namespace Org.BouncyCastle.Tls
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         /// <exception cref="IOException"/>
         internal void WriteRecord(short contentType, ReadOnlySpan<byte> plaintext)
         {

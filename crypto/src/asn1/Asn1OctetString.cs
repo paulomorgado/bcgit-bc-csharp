@@ -100,7 +100,7 @@ namespace Org.BouncyCastle.Asn1
 			this.contents = contents ?? throw new ArgumentNullException(nameof(contents));
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal Asn1OctetString(ReadOnlySpan<byte> contents)
         {
             this.contents = contents.ToArray();
@@ -124,7 +124,7 @@ namespace Org.BouncyCastle.Asn1
 
         public virtual int GetOctetsLength() => GetOctets().Length;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal ReadOnlyMemory<byte> GetOctetsMemory()
         {
             return GetOctets().AsMemory();

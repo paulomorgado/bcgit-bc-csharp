@@ -7,7 +7,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
     public class ParametersWithSBox
         : ICipherParameters
     {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static ParametersWithSBox Create<TState>(ICipherParameters parameters, int sBoxLength, TState state,
             System.Buffers.SpanAction<byte, TState> action)
         {
@@ -37,7 +37,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
             m_sBox = Arrays.CopySegment(sBox, sBoxOff, sBoxLen);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public ParametersWithSBox(ICipherParameters parameters, ReadOnlySpan<byte> sBox)
         {
             // NOTE: 'parameters' may be null to imply key re-use
@@ -46,7 +46,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
         }
 #endif
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private ParametersWithSBox(ICipherParameters parameters, int sBoxLength)
         {
             // NOTE: 'parameters' may be null to imply key re-use
@@ -59,7 +59,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
 
         public byte[] GetSBox() => Arrays.InternalCopyBuffer(m_sBox);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal ReadOnlySpan<byte> InternalSBox => m_sBox;
 #endif
 

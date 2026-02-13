@@ -54,7 +54,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
 
             byte[] enc = new byte[engine.CryptoCipherTextBytes];
             byte[] sec = new byte[engine.CryptoBytes];
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             engine.KemEncrypt(enc.AsSpan(), sec.AsSpan(), this, randBytes.AsSpan());
 #else
             engine.KemEncrypt(enc, 0, sec, 0, this, randBytes);

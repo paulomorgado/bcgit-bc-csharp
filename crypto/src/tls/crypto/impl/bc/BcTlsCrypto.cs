@@ -174,7 +174,7 @@ namespace Org.BouncyCastle.Tls.Crypto.Impl.BC
             //if (additionalSeedMaterial == null)
             //    throw new ArgumentNullException(nameof(additionalSeedMaterial));
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             var seed = additionalSeedMaterial == null ? Span<byte>.Empty : additionalSeedMaterial.AsSpan();
 
             return CreateNonceGenerator(seed);
@@ -194,7 +194,7 @@ namespace Org.BouncyCastle.Tls.Crypto.Impl.BC
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public override TlsNonceGenerator CreateNonceGenerator(ReadOnlySpan<byte> additionalSeedMaterial)
         {
             int cryptoHashAlgorithm = CryptoHashAlgorithm.sha256;

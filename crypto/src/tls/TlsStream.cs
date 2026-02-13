@@ -78,7 +78,7 @@ namespace Org.BouncyCastle.Tls
             return m_handler.ReadApplicationData(buffer, offset, count);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if NET6_0_OR_GREATER
         public override int Read(Span<byte> buffer)
         {
             return m_handler.ReadApplicationData(buffer);
@@ -112,7 +112,7 @@ namespace Org.BouncyCastle.Tls
             m_handler.WriteApplicationData(buffer, offset, count);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if NET6_0_OR_GREATER
         public override void Write(ReadOnlySpan<byte> buffer)
         {
             m_handler.WriteApplicationData(buffer);

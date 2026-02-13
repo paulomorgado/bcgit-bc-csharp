@@ -106,7 +106,7 @@ namespace Org.BouncyCastle.Security
             return GetNextBytes(MasterRandom, length);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual void GenerateSeed(Span<byte> seed)
         {
             MasterRandom.NextBytes(seed);
@@ -118,7 +118,7 @@ namespace Org.BouncyCastle.Security
             generator.AddSeedMaterial(seed);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual void SetSeed(Span<byte> seed)
         {
             generator.AddSeedMaterial(seed);
@@ -198,8 +198,14 @@ namespace Org.BouncyCastle.Security
             generator.NextBytes(buf, off, len);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
-        public override void NextBytes(Span<byte> buffer)
+#if !NETFRAMEWORK
+        public
+#if NETSTANDARD2_0
+            virtual
+#else
+            override
+#endif
+            void NextBytes(Span<byte> buffer)
         {
             if (generator != null)
             {
@@ -225,7 +231,7 @@ namespace Org.BouncyCastle.Security
 
         public virtual int NextInt()
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> bytes = stackalloc byte[4];
 #else
             byte[] bytes = new byte[4];
@@ -236,7 +242,7 @@ namespace Org.BouncyCastle.Security
 
         public virtual long NextLong()
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> bytes = stackalloc byte[8];
 #else
             byte[] bytes = new byte[8];
@@ -249,7 +255,7 @@ namespace Org.BouncyCastle.Security
         {
             generator.AddSeedMaterial(NextCounterValue());
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> seed = seedLength <= 128
                 ? stackalloc byte[seedLength]
                 : new byte[seedLength];

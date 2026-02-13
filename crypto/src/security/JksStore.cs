@@ -55,7 +55,7 @@ namespace Org.BouncyCastle.Security
             if (password == null)
                 throw new ArgumentNullException(nameof(password));
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return GetKey(alias, password.AsSpan());
 #else
             if (alias == null)
@@ -96,7 +96,7 @@ namespace Org.BouncyCastle.Security
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         /// <exception cref="IOException"/>
         public AsymmetricKeyParameter GetKey(string alias, ReadOnlySpan<char> password)
         {
@@ -138,7 +138,7 @@ namespace Org.BouncyCastle.Security
         }
 #endif
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private byte[] GetKeyChecksum(IDigest digest, ReadOnlySpan<char> password, ReadOnlySpan<byte> pkcs8Key)
         {
             AddPassword(digest, password);
@@ -154,7 +154,7 @@ namespace Org.BouncyCastle.Security
         }
 #endif
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private byte[] CalculateKeyStream(IDigest digest, ReadOnlySpan<char> password, ReadOnlySpan<byte> salt,
             int count)
         {
@@ -240,7 +240,7 @@ namespace Org.BouncyCastle.Security
             if (password == null)
                 throw new ArgumentNullException(nameof(password));
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             SetKeyEntry(alias, key, password.AsSpan(), chain);
 #else
             alias = ConvertAlias(alias);
@@ -278,7 +278,7 @@ namespace Org.BouncyCastle.Security
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         /// <exception cref="IOException"/>
         public void SetKeyEntry(string alias, AsymmetricKeyParameter key, ReadOnlySpan<char> password,
             X509Certificate[] chain)
@@ -394,7 +394,7 @@ namespace Org.BouncyCastle.Security
             if (password == null)
                 throw new ArgumentNullException(nameof(password));
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Save(stream, password.AsSpan());
 #else
             if (stream == null)
@@ -406,7 +406,7 @@ namespace Org.BouncyCastle.Security
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         /// <exception cref="IOException"/>
         public void Save(Stream stream, ReadOnlySpan<char> password)
         {
@@ -482,7 +482,7 @@ namespace Org.BouncyCastle.Security
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         /// <exception cref="IOException"/>
         public void Load(Stream stream, ReadOnlySpan<char> password)
         {
@@ -585,7 +585,7 @@ namespace Org.BouncyCastle.Security
 
             if (password != null)
             {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 byte[] checksum = CalculateChecksum(password, rawStore.AsSpan(0, checksumPos));
 #else
                 byte[] checksum = CalculateChecksum(password, rawStore, 0, checksumPos);
@@ -601,7 +601,7 @@ namespace Org.BouncyCastle.Security
             return new ErasableByteStream(rawStore, 0, checksumPos);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         /// <exception cref="IOException"/>
         private ErasableByteStream ValidateStream(Stream inputStream, ReadOnlySpan<char> password)
         {
@@ -620,7 +620,7 @@ namespace Org.BouncyCastle.Security
         }
 #endif
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static void AddPassword(IDigest digest, ReadOnlySpan<char> password)
         {
             // Encoding.BigEndianUnicode
@@ -642,7 +642,7 @@ namespace Org.BouncyCastle.Security
         }
 #endif
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static byte[] CalculateChecksum(ReadOnlySpan<char> password, ReadOnlySpan<byte> buffer)
         {
             IDigest checksumDigest = CreateChecksumDigest(password);
@@ -668,7 +668,7 @@ namespace Org.BouncyCastle.Security
             return alias.ToLowerInvariant();
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static IDigest CreateChecksumDigest(ReadOnlySpan<char> password)
         {
             IDigest digest = DigestUtilities.GetDigest("SHA-1");

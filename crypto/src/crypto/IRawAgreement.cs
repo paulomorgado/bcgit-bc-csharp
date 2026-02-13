@@ -10,7 +10,7 @@ namespace Org.BouncyCastle.Crypto
 
         void CalculateAgreement(ICipherParameters publicKey, byte[] buf, int off);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         void CalculateAgreement(ICipherParameters publicKey, Span<byte> output);
 #endif
     }

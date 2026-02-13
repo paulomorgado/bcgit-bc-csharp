@@ -122,7 +122,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             firstOutput = true;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual void BlockUpdate(ReadOnlySpan<byte> input)
         {
             XofUtilities.EncodeTo(cshake, input);

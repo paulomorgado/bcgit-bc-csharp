@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 using System.Numerics;
 using System.Runtime.InteropServices;
 #endif
@@ -26,7 +26,7 @@ namespace Org.BouncyCastle.Math.Raw
             return (uint)c;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static uint Add(int len, ReadOnlySpan<uint> x, ReadOnlySpan<uint> y, Span<uint> z)
         {
             ulong c = 0UL;
@@ -64,7 +64,7 @@ namespace Org.BouncyCastle.Math.Raw
             return c == 0 ? 0 : IncAt(len, z, zOff, zPos + 2);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static uint Add33At(int len, uint x, Span<uint> z, int zPos)
         {
             Debug.Assert(zPos <= (len - 2));
@@ -100,7 +100,7 @@ namespace Org.BouncyCastle.Math.Raw
             return c == 0 ? 0 : IncAt(len, z, zOff, 2);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static uint Add33To(int len, uint x, Span<uint> z)
         {
             ulong c = (ulong)z[0] + x;
@@ -137,7 +137,7 @@ namespace Org.BouncyCastle.Math.Raw
             return (uint)c;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static uint AddBothTo(int len, ReadOnlySpan<uint> x, ReadOnlySpan<uint> y, Span<uint> z)
         {
             ulong c = 0;
@@ -175,7 +175,7 @@ namespace Org.BouncyCastle.Math.Raw
             return c == 0 ? 0 : IncAt(len, z, zOff, zPos + 2);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static uint AddDWordAt(int len, ulong x, Span<uint> z, int zPos)
         {
             Debug.Assert(zPos <= (len - 2));
@@ -211,7 +211,7 @@ namespace Org.BouncyCastle.Math.Raw
             return c == 0 ? 0 : IncAt(len, z, zOff, 2);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static uint AddDWordTo(int len, ulong x, Span<uint> z)
         {
             ulong c = z[0] + (x & M);
@@ -248,7 +248,7 @@ namespace Org.BouncyCastle.Math.Raw
             return (uint)c;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static uint AddTo(int len, ReadOnlySpan<uint> x, Span<uint> z)
         {
             ulong c = 0;
@@ -274,7 +274,7 @@ namespace Org.BouncyCastle.Math.Raw
             return (uint)c;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static uint AddTo(int len, ReadOnlySpan<uint> x, Span<uint> z, uint cIn)
         {
             ulong c = cIn;
@@ -301,7 +301,7 @@ namespace Org.BouncyCastle.Math.Raw
             return (uint)c;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static uint AddToEachOther(int len, Span<uint> u, Span<uint> v)
         {
             ulong c = 0;
@@ -334,7 +334,7 @@ namespace Org.BouncyCastle.Math.Raw
             return c == 0 ? 0 : IncAt(len, z, zOff, zPos + 1);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static uint AddWordAt(int len, uint x, Span<uint> z, int zPos)
         {
             Debug.Assert(zPos <= (len - 1));
@@ -361,7 +361,7 @@ namespace Org.BouncyCastle.Math.Raw
             return c == 0 ? 0 : IncAt(len, z, zOff, 1);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static uint AddWordTo(int len, uint x, Span<uint> z)
         {
             ulong c = (ulong)x + z[0];
@@ -385,7 +385,7 @@ namespace Org.BouncyCastle.Math.Raw
             return (uint)c;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static uint CAdd(int len, int mask, ReadOnlySpan<uint> x, ReadOnlySpan<uint> y, Span<uint> z)
         {
             uint MASK = (uint)-(mask & 1);
@@ -415,7 +415,7 @@ namespace Org.BouncyCastle.Math.Raw
             return (uint)c;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static uint CAddTo(int len, int mask, ReadOnlySpan<uint> x, Span<uint> z)
         {
             uint MASK = (uint)-(mask & 1);
@@ -453,7 +453,7 @@ namespace Org.BouncyCastle.Math.Raw
             //}
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void CMov(int len, int mask, ReadOnlySpan<uint> x, Span<uint> z)
         {
             uint MASK = (uint)-(mask & 1);
@@ -505,7 +505,7 @@ namespace Org.BouncyCastle.Math.Raw
             return 0;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static int Compare(int len, ReadOnlySpan<uint> x, ReadOnlySpan<uint> y)
         {
             for (int i = len - 1; i >= 0; --i)
@@ -538,7 +538,7 @@ namespace Org.BouncyCastle.Math.Raw
             Array.Copy(x, xOff, z, zOff, len);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void Copy(int len, ReadOnlySpan<uint> x, Span<uint> z)
         {
             x[..len].CopyTo(z);
@@ -562,7 +562,7 @@ namespace Org.BouncyCastle.Math.Raw
             Array.Copy(x, xOff, z, zOff, len);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void Copy64(int len, ReadOnlySpan<ulong> x, Span<ulong> z)
         {
             x[..len].CopyTo(z);
@@ -605,7 +605,7 @@ namespace Org.BouncyCastle.Math.Raw
             return (int)c;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static int CSub(int len, int mask, ReadOnlySpan<uint> x, ReadOnlySpan<uint> y, Span<uint> z)
         {
             long MASK = (uint)-(mask & 1);
@@ -630,7 +630,7 @@ namespace Org.BouncyCastle.Math.Raw
             return -1;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static int Dec(int len, Span<uint> z)
         {
             for (int i = 0; i < len; ++i)
@@ -663,7 +663,7 @@ namespace Org.BouncyCastle.Math.Raw
             return -1;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static int Dec(int len, ReadOnlySpan<uint> x, Span<uint> z)
         {
             int i = 0;
@@ -708,7 +708,7 @@ namespace Org.BouncyCastle.Math.Raw
             return -1;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static int DecAt(int len, Span<uint> z, int zPos)
         {
             Debug.Assert(zPos <= len);
@@ -731,7 +731,7 @@ namespace Org.BouncyCastle.Math.Raw
             return true;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static bool Eq(int len, ReadOnlySpan<uint> x, ReadOnlySpan<uint> y)
         {
             for (int i = len - 1; i >= 0; --i)
@@ -743,7 +743,7 @@ namespace Org.BouncyCastle.Math.Raw
         }
 #endif
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static uint EqualTo(int len, ReadOnlySpan<uint> x, uint y)
 #else
         public static uint EqualTo(int len, uint[] x, uint y)
@@ -769,7 +769,7 @@ namespace Org.BouncyCastle.Math.Raw
             return (uint)(((int)d - 1) >> 31);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static uint EqualTo(int len, ReadOnlySpan<uint> x, ReadOnlySpan<uint> y)
 #else
         public static uint EqualTo(int len, uint[] x, uint[] y)
@@ -796,7 +796,7 @@ namespace Org.BouncyCastle.Math.Raw
         }
 
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static uint EqualToZero(int len, ReadOnlySpan<uint> x)
 #else
         public static uint EqualToZero(int len, uint[] x)
@@ -830,7 +830,7 @@ namespace Org.BouncyCastle.Math.Raw
             int len = GetLengthForBits(bits);
             uint[] z = Create(len);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             int xLen = x.GetLengthofUInt32ArrayUnsigned();
             x.ToUInt32ArrayLittleEndianUnsigned(z.AsSpan(0, xLen));
             //z.AsSpan(xLen).Fill(0x00);
@@ -847,7 +847,7 @@ namespace Org.BouncyCastle.Math.Raw
             return z;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void FromBigInteger(int bits, BigInteger x, Span<uint> z)
         {
             if (x.SignValue < 0 || x.BitLength > bits)
@@ -881,7 +881,7 @@ namespace Org.BouncyCastle.Math.Raw
             return z;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void FromBigInteger64(int bits, BigInteger x, Span<ulong> z)
         {
             if (x.SignValue < 0 || x.BitLength > bits)
@@ -914,7 +914,7 @@ namespace Org.BouncyCastle.Math.Raw
             return (x[w] >> b) & 1;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static uint GetBit(ReadOnlySpan<uint> x, int bit)
         {
             if (bit == 0)
@@ -929,7 +929,7 @@ namespace Org.BouncyCastle.Math.Raw
         }
 #endif
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static int GetBitLength(int len, ReadOnlySpan<uint> x)
 #else
         public static int GetBitLength(int len, uint[] x)
@@ -984,7 +984,7 @@ namespace Org.BouncyCastle.Math.Raw
             return true;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static bool Gte(int len, ReadOnlySpan<uint> x, ReadOnlySpan<uint> y)
         {
             for (int i = len - 1; i >= 0; --i)
@@ -1009,7 +1009,7 @@ namespace Org.BouncyCastle.Math.Raw
             return 1;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static uint Inc(int len, Span<uint> z)
         {
             for (int i = 0; i < len; ++i)
@@ -1042,7 +1042,7 @@ namespace Org.BouncyCastle.Math.Raw
             return 1;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static uint Inc(int len, ReadOnlySpan<uint> x, Span<uint> z)
         {
             int i = 0;
@@ -1087,7 +1087,7 @@ namespace Org.BouncyCastle.Math.Raw
             return 1;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static uint IncAt(int len, Span<uint> z, int zPos)
         {
             Debug.Assert(zPos <= len);
@@ -1113,7 +1113,7 @@ namespace Org.BouncyCastle.Math.Raw
             return true;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static bool IsOne(int len, ReadOnlySpan<uint> x)
         {
             if (x[0] != 1)
@@ -1141,7 +1141,7 @@ namespace Org.BouncyCastle.Math.Raw
             return true;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static bool IsZero(int len, ReadOnlySpan<uint> x)
         {
             if (x[0] != 0)
@@ -1180,7 +1180,7 @@ namespace Org.BouncyCastle.Math.Raw
             return (int)c;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static int LessThan(int len, ReadOnlySpan<uint> x, ReadOnlySpan<uint> y)
         {
             long c = 0;
@@ -1214,7 +1214,7 @@ namespace Org.BouncyCastle.Math.Raw
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void Mul(int len, ReadOnlySpan<uint> x, ReadOnlySpan<uint> y, Span<uint> zz)
         {
             zz[len] = MulWord(len, x[0], y, zz);
@@ -1236,7 +1236,7 @@ namespace Org.BouncyCastle.Math.Raw
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void Mul(ReadOnlySpan<uint> x, ReadOnlySpan<uint> y, Span<uint> zz)
         {
             int xLen = x.Length, yLen = y.Length;
@@ -1276,7 +1276,7 @@ namespace Org.BouncyCastle.Math.Raw
             return (uint)zc;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static uint MulAddTo(int len, ReadOnlySpan<uint> x, ReadOnlySpan<uint> y, Span<uint> zz)
         {
             ulong zc = 0;
@@ -1305,7 +1305,7 @@ namespace Org.BouncyCastle.Math.Raw
             return (uint)c;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static uint Mul31BothAdd(int len, uint a, ReadOnlySpan<uint> x, uint b, ReadOnlySpan<uint> y,
             Span<uint> z)
         {
@@ -1350,7 +1350,7 @@ namespace Org.BouncyCastle.Math.Raw
             return (uint)c;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static uint MulWord(int len, uint x, ReadOnlySpan<uint> y, Span<uint> z)
         {
             ulong c = 0, xVal = x;
@@ -1380,7 +1380,7 @@ namespace Org.BouncyCastle.Math.Raw
             return (uint)c;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static uint MulWordAddTo(int len, uint x, ReadOnlySpan<uint> y, Span<uint> z)
         {
             ulong c = 0, xVal = x;
@@ -1412,7 +1412,7 @@ namespace Org.BouncyCastle.Math.Raw
             return c == 0 ? 0 : IncAt(len, z, zPos + 3);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static uint MulWordDwordAddAt(int len, uint x, ulong y, Span<uint> z, int zPos)
         {
             Debug.Assert(zPos <= (len - 3));
@@ -1442,7 +1442,7 @@ namespace Org.BouncyCastle.Math.Raw
             return (int)c;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static int Negate(int len, ReadOnlySpan<uint> x, Span<uint> z)
         {
             long c = 0L;
@@ -1480,7 +1480,7 @@ namespace Org.BouncyCastle.Math.Raw
             return c << 31;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static uint ShiftDownBit(int len, Span<uint> z, uint c)
         {
             int i = len;
@@ -1518,7 +1518,7 @@ namespace Org.BouncyCastle.Math.Raw
             return c << 31;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static uint ShiftDownBit(int len, ReadOnlySpan<uint> x, uint c, Span<uint> z)
         {
             int i = len;
@@ -1558,7 +1558,7 @@ namespace Org.BouncyCastle.Math.Raw
             return c << -bits;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static uint ShiftDownBits(int len, Span<uint> z, int bits, uint c)
         {
             Debug.Assert(bits > 0 && bits < 32);
@@ -1599,7 +1599,7 @@ namespace Org.BouncyCastle.Math.Raw
             return c << -bits;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static uint ShiftDownBits(int len, ReadOnlySpan<uint> x, int bits, uint c, Span<uint> z)
         {
             Debug.Assert(bits > 0 && bits < 32);
@@ -1639,7 +1639,7 @@ namespace Org.BouncyCastle.Math.Raw
             return c;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static uint ShiftDownWord(int len, Span<uint> z, uint c)
         {
             int i = len;
@@ -1655,7 +1655,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static uint ShiftUpBit(int len, uint[] z, uint c)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return ShiftUpBit(len, z.AsSpan(0, len), c);
 #else
             int i = 0, limit4 = len - 4;
@@ -1685,7 +1685,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static uint ShiftUpBit(int len, uint[] z, int zOff, uint c)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return ShiftUpBit(len, z.AsSpan(zOff, len), c);
 #else
             int i = 0, limit4 = len - 4;
@@ -1713,7 +1713,7 @@ namespace Org.BouncyCastle.Math.Raw
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static uint ShiftUpBit(int len, Span<uint> z, uint c)
         {
             int i = 0, limit4 = len - 4;
@@ -1743,7 +1743,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static uint ShiftUpBit(int len, uint[] x, uint c, uint[] z)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return ShiftUpBit(len, x.AsSpan(0, len), c, z.AsSpan(0, len));
 #else
             int i = 0, limit4 = len - 4;
@@ -1773,7 +1773,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static uint ShiftUpBit(int len, uint[] x, int xOff, uint c, uint[] z, int zOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return ShiftUpBit(len, x.AsSpan(xOff, len), c, z.AsSpan(zOff, len));
 #else
             int i = 0, limit4 = len - 4;
@@ -1801,7 +1801,7 @@ namespace Org.BouncyCastle.Math.Raw
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static uint ShiftUpBit(int len, ReadOnlySpan<uint> x, uint c, Span<uint> z)
         {
             int i = 0, limit4 = len - 4;
@@ -1831,7 +1831,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static ulong ShiftUpBit64(int len, ulong[] x, ulong c, ulong[] z)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return ShiftUpBit64(len, x.AsSpan(0, len), c, z.AsSpan(0, len));
 #else
             int i = 0, limit4 = len - 4;
@@ -1861,7 +1861,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static ulong ShiftUpBit64(int len, ulong[] x, int xOff, ulong c, ulong[] z, int zOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return ShiftUpBit64(len, x.AsSpan(xOff, len), c, z.AsSpan(zOff, len));
 #else
             int i = 0, limit4 = len - 4;
@@ -1889,7 +1889,7 @@ namespace Org.BouncyCastle.Math.Raw
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static ulong ShiftUpBit64(int len, ReadOnlySpan<ulong> x, ulong c, Span<ulong> z)
         {
             int i = 0, limit4 = len - 4;
@@ -1919,7 +1919,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static uint ShiftUpBits(int len, uint[] z, int bits, uint c)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return ShiftUpBits(len, z.AsSpan(0, len), bits, c);
 #else
             Debug.Assert(bits > 0 && bits < 32);
@@ -1950,7 +1950,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static uint ShiftUpBits(int len, uint[] z, int zOff, int bits, uint c)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return ShiftUpBits(len, z.AsSpan(zOff, len), bits, c);
 #else
             Debug.Assert(bits > 0 && bits < 32);
@@ -1979,7 +1979,7 @@ namespace Org.BouncyCastle.Math.Raw
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static uint ShiftUpBits(int len, Span<uint> z, int bits, uint c)
         {
             Debug.Assert(bits > 0 && bits < 32);
@@ -2010,7 +2010,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static uint ShiftUpBits(int len, uint[] x, int bits, uint c, uint[] z)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return ShiftUpBits(len, x.AsSpan(0, len), bits, c, z.AsSpan(0, len));
 #else
             Debug.Assert(bits > 0 && bits < 32);
@@ -2041,7 +2041,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static uint ShiftUpBits(int len, uint[] x, int xOff, int bits, uint c, uint[] z, int zOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return ShiftUpBits(len, x.AsSpan(xOff, len), bits, c, z.AsSpan(zOff, len));
 #else
             Debug.Assert(bits > 0 && bits < 32);
@@ -2070,7 +2070,7 @@ namespace Org.BouncyCastle.Math.Raw
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static uint ShiftUpBits(int len, ReadOnlySpan<uint> x, int bits, uint c, Span<uint> z)
         {
             Debug.Assert(bits > 0 && bits < 32);
@@ -2101,7 +2101,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static ulong ShiftUpBits64(int len, ulong[] z, int bits, ulong c)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return ShiftUpBits64(len, z.AsSpan(0, len), bits, c);
 #else
             Debug.Assert(bits > 0 && bits < 64);
@@ -2132,7 +2132,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static ulong ShiftUpBits64(int len, ulong[] z, int zOff, int bits, ulong c)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return ShiftUpBits64(len, z.AsSpan(zOff, len), bits, c);
 #else
             Debug.Assert(bits > 0 && bits < 64);
@@ -2161,7 +2161,7 @@ namespace Org.BouncyCastle.Math.Raw
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static ulong ShiftUpBits64(int len, Span<ulong> z, int bits, ulong c)
         {
             Debug.Assert(bits > 0 && bits < 64);
@@ -2192,7 +2192,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static ulong ShiftUpBits64(int len, ulong[] x, int bits, ulong c, ulong[] z)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return ShiftUpBits64(len, x.AsSpan(0, len), bits, c, z.AsSpan(0, len));
 #else
             Debug.Assert(bits > 0 && bits < 64);
@@ -2223,7 +2223,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static ulong ShiftUpBits64(int len, ulong[] x, int xOff, int bits, ulong c, ulong[] z, int zOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return ShiftUpBits64(len, x.AsSpan(xOff, len), bits, c, z.AsSpan(zOff, len));
 #else
             Debug.Assert(bits > 0 && bits < 64);
@@ -2252,7 +2252,7 @@ namespace Org.BouncyCastle.Math.Raw
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static ulong ShiftUpBits64(int len, ReadOnlySpan<ulong> x, int bits, ulong c, Span<ulong> z)
         {
             Debug.Assert(bits > 0 && bits < 64);
@@ -2343,7 +2343,7 @@ namespace Org.BouncyCastle.Math.Raw
             ShiftUpBit(extLen, zz, zzOff, x[xOff] << 31);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void Square(int len, ReadOnlySpan<uint> x, Span<uint> zz)
         {
             int extLen = len << 1;
@@ -2405,7 +2405,7 @@ namespace Org.BouncyCastle.Math.Raw
             return (uint)c;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static uint SquareWordAddTo(ReadOnlySpan<uint> x, int xPos, Span<uint> z)
         {
             ulong c = 0, xVal = x[xPos];
@@ -2445,7 +2445,7 @@ namespace Org.BouncyCastle.Math.Raw
             return (int)c;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static int Sub(int len, ReadOnlySpan<uint> x, ReadOnlySpan<uint> y, Span<uint> z)
         {
             long c = 0;
@@ -2483,7 +2483,7 @@ namespace Org.BouncyCastle.Math.Raw
             return c == 0 ? 0 : DecAt(len, z, zOff, zPos + 2);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static int Sub33At(int len, uint x, Span<uint> z, int zPos)
         {
             Debug.Assert(zPos <= (len - 2));
@@ -2519,7 +2519,7 @@ namespace Org.BouncyCastle.Math.Raw
             return c == 0 ? 0 : DecAt(len, z, zOff, 2);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static int Sub33From(int len, uint x, Span<uint> z)
         {
             long c = (long)z[0] - x;
@@ -2556,7 +2556,7 @@ namespace Org.BouncyCastle.Math.Raw
             return (int)c;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static int SubBothFrom(int len, ReadOnlySpan<uint> x, ReadOnlySpan<uint> y, Span<uint> z)
         {
             long c = 0;
@@ -2594,7 +2594,7 @@ namespace Org.BouncyCastle.Math.Raw
             return c == 0 ? 0 : DecAt(len, z, zOff, zPos + 2);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static int SubDWordAt(int len, ulong x, Span<uint> z, int zPos)
         {
             Debug.Assert(zPos <= (len - 2));
@@ -2630,7 +2630,7 @@ namespace Org.BouncyCastle.Math.Raw
             return c == 0 ? 0 : DecAt(len, z, zOff, 2);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static int SubDWordFrom(int len, ulong x, Span<uint> z)
         {
             long c = z[0] - (long)(x & M);
@@ -2667,7 +2667,7 @@ namespace Org.BouncyCastle.Math.Raw
             return (int)c;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static int SubFrom(int len, ReadOnlySpan<uint> x, Span<uint> z)
         {
             long c = 0;
@@ -2681,7 +2681,7 @@ namespace Org.BouncyCastle.Math.Raw
         }
 #endif
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static int SubInt32From(int len, int x, Span<uint> z)
         {
             long c = (long)z[0] - x;
@@ -2718,7 +2718,7 @@ namespace Org.BouncyCastle.Math.Raw
             return c == 0 ? 0 : DecAt(len, z, zOff, zPos + 1);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static int SubWordAt(int len, uint x, Span<uint> z, int zPos)
         {
             Debug.Assert(zPos <= (len - 1));
@@ -2745,7 +2745,7 @@ namespace Org.BouncyCastle.Math.Raw
             return c == 0 ? 0 : DecAt(len, z, zOff, 1);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static int SubWordFrom(int len, uint x, Span<uint> z)
         {
             long c = (long)z[0] - x;
@@ -2757,7 +2757,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static BigInteger ToBigInteger(int len, uint[] x)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return ToBigInteger(len, x.AsSpan());
 #else
             byte[] bs = new byte[len << 2];
@@ -2771,7 +2771,7 @@ namespace Org.BouncyCastle.Math.Raw
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static BigInteger ToBigInteger(int len, ReadOnlySpan<uint> x)
         {
             if (BitConverter.IsLittleEndian)
@@ -2790,7 +2790,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static void Xor(int len, uint[] x, uint[] y, uint[] z)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Xor(len, x.AsSpan(0, len), y.AsSpan(0, len), z.AsSpan(0, len));
 #else
             for (int i = 0; i < len; ++i)
@@ -2802,7 +2802,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static void Xor(int len, uint[] x, int xOff, uint[] y, int yOff, uint[] z, int zOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Xor(len, x.AsSpan(xOff, len), y.AsSpan(yOff, len), z.AsSpan(zOff, len));
 #else
             for (int i = 0; i < len; ++i)
@@ -2812,7 +2812,7 @@ namespace Org.BouncyCastle.Math.Raw
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void Xor(int len, ReadOnlySpan<uint> x, ReadOnlySpan<uint> y, Span<uint> z)
         {
             int i = 0, limit16 = len - 16;
@@ -2831,7 +2831,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static void Xor64(int len, ulong[] x, ulong y, ulong[] z)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Xor64(len, x.AsSpan(0, len), y, z.AsSpan(0, len));
 #else
             for (int i = 0; i < len; ++i)
@@ -2843,7 +2843,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static void Xor64(int len, ulong[] x, int xOff, ulong y, ulong[] z, int zOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Xor64(len, x.AsSpan(xOff, len), y, z.AsSpan(zOff, len));
 #else
             for (int i = 0; i < len; ++i)
@@ -2853,7 +2853,7 @@ namespace Org.BouncyCastle.Math.Raw
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void Xor64(int len, ReadOnlySpan<ulong> x, ulong y, Span<ulong> z)
         {
             int i = 0;
@@ -2891,7 +2891,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static void Xor64(int len, ulong[] x, ulong[] y, ulong[] z)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Xor64(len, x.AsSpan(0, len), y.AsSpan(0, len), z.AsSpan(0, len));
 #else
             for (int i = 0; i < len; ++i)
@@ -2903,7 +2903,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static void Xor64(int len, ulong[] x, int xOff, ulong[] y, int yOff, ulong[] z, int zOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Xor64(len, x.AsSpan(xOff, len), y.AsSpan(yOff, len), z.AsSpan(zOff, len));
 #else
             for (int i = 0; i < len; ++i)
@@ -2913,7 +2913,7 @@ namespace Org.BouncyCastle.Math.Raw
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void Xor64(int len, ReadOnlySpan<ulong> x, ReadOnlySpan<ulong> y, Span<ulong> z)
         {
             int i = 0, limit8 = len - 8;
@@ -2932,7 +2932,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static void XorBothTo(int len, uint[] x, uint[] y, uint[] z)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             XorBothTo(len, x.AsSpan(0, len), y.AsSpan(0, len), z.AsSpan(0, len));
 #else
             for (int i = 0; i < len; ++i)
@@ -2944,7 +2944,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static void XorBothTo(int len, uint[] x, int xOff, uint[] y, int yOff, uint[] z, int zOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             XorBothTo(len, x.AsSpan(xOff, len), y.AsSpan(yOff, len), z.AsSpan(zOff, len));
 #else
             for (int i = 0; i < len; ++i)
@@ -2954,7 +2954,7 @@ namespace Org.BouncyCastle.Math.Raw
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void XorBothTo(int len, ReadOnlySpan<uint> x, ReadOnlySpan<uint> y, Span<uint> z)
         {
             int i = 0, limit16 = len - 16;
@@ -2973,7 +2973,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static void XorBothTo64(int len, ulong[] x, ulong[] y, ulong[] z)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             XorBothTo64(len, x.AsSpan(0, len), y.AsSpan(0, len), z.AsSpan(0, len));
 #else
             for (int i = 0; i < len; ++i)
@@ -2985,7 +2985,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static void XorBothTo64(int len, ulong[] x, int xOff, ulong[] y, int yOff, ulong[] z, int zOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             XorBothTo64(len, x.AsSpan(xOff, len), y.AsSpan(yOff, len), z.AsSpan(zOff, len));
 #else
             for (int i = 0; i < len; ++i)
@@ -2995,7 +2995,7 @@ namespace Org.BouncyCastle.Math.Raw
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void XorBothTo64(int len, ReadOnlySpan<ulong> x, ReadOnlySpan<ulong> y, Span<ulong> z)
         {
             int i = 0, limit8 = len - 8;
@@ -3014,7 +3014,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static void XorTo(int len, uint[] x, uint[] z)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             XorTo(len, x.AsSpan(0, len), z.AsSpan(0, len));
 #else
             for (int i = 0; i < len; ++i)
@@ -3026,7 +3026,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static void XorTo(int len, uint[] x, int xOff, uint[] z, int zOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             XorTo(len, x.AsSpan(xOff, len), z.AsSpan(zOff, len));
 #else
             for (int i = 0; i < len; ++i)
@@ -3036,7 +3036,7 @@ namespace Org.BouncyCastle.Math.Raw
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void XorTo(int len, ReadOnlySpan<uint> x, Span<uint> z)
         {
             int i = 0, limit16 = len - 16;
@@ -3055,7 +3055,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static void XorTo64(int len, ulong[] x, ulong[] z)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             XorTo64(len, x.AsSpan(0, len), z.AsSpan(0, len));
 #else
             for (int i = 0; i < len; ++i)
@@ -3067,7 +3067,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static void XorTo64(int len, ulong[] x, int xOff, ulong[] z, int zOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             XorTo64(len, x.AsSpan(xOff, len), z.AsSpan(zOff, len));
 #else
             for (int i = 0; i < len; ++i)
@@ -3077,7 +3077,7 @@ namespace Org.BouncyCastle.Math.Raw
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void XorTo64(int len, ReadOnlySpan<ulong> x, Span<ulong> z)
         {
             int i = 0, limit8 = len - 8;
@@ -3096,7 +3096,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static void Zero(int len, uint[] z)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             z.AsSpan(0, len).Fill(0U);
 #else
             for (int i = 0; i < len; ++i)
@@ -3106,7 +3106,7 @@ namespace Org.BouncyCastle.Math.Raw
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void Zero(int len, Span<uint> z)
         {
             z[..len].Fill(0U);
@@ -3115,7 +3115,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static void Zero64(int len, ulong[] z)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             z.AsSpan(0, len).Fill(0UL);
 #else
             for (int i = 0; i < len; ++i)
@@ -3125,7 +3125,7 @@ namespace Org.BouncyCastle.Math.Raw
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void Zero64(int len, Span<ulong> z)
         {
             z[..len].Fill(0UL);

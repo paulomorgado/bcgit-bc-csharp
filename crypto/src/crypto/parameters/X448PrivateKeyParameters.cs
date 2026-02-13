@@ -33,7 +33,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
             Array.Copy(buf, off, data, 0, KeySize);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public X448PrivateKeyParameters(ReadOnlySpan<byte> buf)
             : base(true)
         {
@@ -56,7 +56,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
             Array.Copy(data, 0, buf, off, KeySize);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void Encode(Span<byte> buf)
         {
             data.CopyTo(buf);
@@ -68,7 +68,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
             return Arrays.Clone(data);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal ReadOnlySpan<byte> DataSpan => data;
 
         internal ReadOnlyMemory<byte> DataMemory => data;
@@ -76,7 +76,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
 
         public X448PublicKeyParameters GeneratePublicKey()
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> publicKey = stackalloc byte[X448.PointSize];
             X448.GeneratePublicKey(data, publicKey);
             return new X448PublicKeyParameters(publicKey);
@@ -89,7 +89,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
 
         public void GenerateSecret(X448PublicKeyParameters publicKey, byte[] buf, int off)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             GenerateSecret(publicKey, buf.AsSpan(off));
 #else
             byte[] encoded = new byte[X448.PointSize];
@@ -99,7 +99,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void GenerateSecret(X448PublicKeyParameters publicKey, Span<byte> buf)
         {
             Span<byte> encoded = stackalloc byte[X448.PointSize];

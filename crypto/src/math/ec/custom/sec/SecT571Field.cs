@@ -17,7 +17,7 @@ namespace Org.BouncyCastle.Math.EC.Custom.Sec
             0xCAF84657C232BE11UL, 0x657C232BE1195F08UL, 0xF84657C2308CAF84UL, 0x7C232BE1195F08CAUL,
             0xBE1195F08CAF8465UL, 0x5F08CAF84657C232UL, 0x784657C232BE119UL };
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void Add(ReadOnlySpan<ulong> x, ReadOnlySpan<ulong> y, Span<ulong> z)
 #else
         public static void Add(ulong[] x, ulong[] y, ulong[] z)
@@ -31,7 +31,7 @@ namespace Org.BouncyCastle.Math.EC.Custom.Sec
             Nat.Xor64(9, x, xOff, y, yOff, z, zOff);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void AddBothTo(ReadOnlySpan<ulong> x, ReadOnlySpan<ulong> y, Span<ulong> z)
 #else
         public static void AddBothTo(ulong[] x, ulong[] y, ulong[] z)
@@ -51,7 +51,7 @@ namespace Org.BouncyCastle.Math.EC.Custom.Sec
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void AddExt(ReadOnlySpan<ulong> xx, ReadOnlySpan<ulong> yy, Span<ulong> zz)
 #else
         public static void AddExt(ulong[] xx, ulong[] yy, ulong[] zz)
@@ -60,7 +60,7 @@ namespace Org.BouncyCastle.Math.EC.Custom.Sec
             Nat.Xor64(18, xx, yy, zz);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void AddOne(ReadOnlySpan<ulong> x, Span<ulong> z)
 #else
         public static void AddOne(ulong[] x, ulong[] z)
@@ -73,7 +73,7 @@ namespace Org.BouncyCastle.Math.EC.Custom.Sec
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void AddTo(ReadOnlySpan<ulong> x, Span<ulong> z)
 #else
         public static void AddTo(ulong[] x, ulong[] z)
@@ -87,13 +87,13 @@ namespace Org.BouncyCastle.Math.EC.Custom.Sec
             return Nat.FromBigInteger64(571, x);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void HalfTrace(ReadOnlySpan<ulong> x, Span<ulong> z)
 #else
         public static void HalfTrace(ulong[] x, ulong[] z)
 #endif
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<ulong> tt = stackalloc ulong[18];
 #else
             ulong[] tt = Nat576.CreateExt64();
@@ -110,7 +110,7 @@ namespace Org.BouncyCastle.Math.EC.Custom.Sec
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void Invert(ReadOnlySpan<ulong> x, Span<ulong> z)
 #else
         public static void Invert(ulong[] x, ulong[] z)
@@ -121,7 +121,7 @@ namespace Org.BouncyCastle.Math.EC.Custom.Sec
 
             // Itoh-Tsujii inversion with bases { 2, 3, 5 }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<ulong> t0 = stackalloc ulong[9];
             Span<ulong> t1 = stackalloc ulong[9];
             Span<ulong> t2 = stackalloc ulong[9];
@@ -171,13 +171,13 @@ namespace Org.BouncyCastle.Math.EC.Custom.Sec
             Multiply(t0, t2, z);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void Multiply(ReadOnlySpan<ulong> x, ReadOnlySpan<ulong> y, Span<ulong> z)
 #else
         public static void Multiply(ulong[] x, ulong[] y, ulong[] z)
 #endif
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<ulong> tt = stackalloc ulong[18];
 #else
             ulong[] tt = Nat576.CreateExt64();
@@ -186,13 +186,13 @@ namespace Org.BouncyCastle.Math.EC.Custom.Sec
             Reduce(tt, z);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void MultiplyAddToExt(ReadOnlySpan<ulong> x, ReadOnlySpan<ulong> y, Span<ulong> zz)
 #else
         public static void MultiplyAddToExt(ulong[] x, ulong[] y, ulong[] zz)
 #endif
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<ulong> tt = stackalloc ulong[18];
 #else
             ulong[] tt = Nat576.CreateExt64();
@@ -201,13 +201,13 @@ namespace Org.BouncyCastle.Math.EC.Custom.Sec
             AddExt(zz, tt, zz);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void MultiplyExt(ReadOnlySpan<ulong> x, ReadOnlySpan<ulong> y, Span<ulong> zz)
 #else
         public static void MultiplyExt(ulong[] x, ulong[] y, ulong[] zz)
 #endif
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             zz[..18].Fill(0UL);
 #else
             Array.Clear(zz, 0, 18);
@@ -215,13 +215,13 @@ namespace Org.BouncyCastle.Math.EC.Custom.Sec
             ImplMultiply(x, y, zz);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void MultiplyPrecomp(ReadOnlySpan<ulong> x, ulong[] precomp, Span<ulong> z)
 #else
         public static void MultiplyPrecomp(ulong[] x, ulong[] precomp, ulong[] z)
 #endif
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<ulong> tt = stackalloc ulong[18];
 #else
             ulong[] tt = Nat576.CreateExt64();
@@ -230,13 +230,13 @@ namespace Org.BouncyCastle.Math.EC.Custom.Sec
             Reduce(tt, z);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void MultiplyPrecompAddToExt(ReadOnlySpan<ulong> x, ulong[] precomp, Span<ulong> zz)
 #else
         public static void MultiplyPrecompAddToExt(ulong[] x, ulong[] precomp, ulong[] zz)
 #endif
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<ulong> tt = stackalloc ulong[18];
 #else
             ulong[] tt = Nat576.CreateExt64();
@@ -245,7 +245,7 @@ namespace Org.BouncyCastle.Math.EC.Custom.Sec
             AddExt(zz, tt, zz);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static ulong[] PrecompMultiplicand(ReadOnlySpan<ulong> x)
 #else
         public static ulong[] PrecompMultiplicand(ulong[] x)
@@ -261,7 +261,7 @@ namespace Org.BouncyCastle.Math.EC.Custom.Sec
              */
             int len = 9 << 4;
             ulong[] t = new ulong[len << 1];
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             x[..9].CopyTo(t.AsSpan(9));
 #else
             Array.Copy(x, 0, t, 9, 9);
@@ -285,7 +285,7 @@ namespace Org.BouncyCastle.Math.EC.Custom.Sec
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void Reduce(ReadOnlySpan<ulong> xx, Span<ulong> z)
 #else
         public static void Reduce(ulong[] xx, ulong[] z)
@@ -321,13 +321,13 @@ namespace Org.BouncyCastle.Math.EC.Custom.Sec
             z[zOff + 8]  = z8 & M59;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void Sqrt(ReadOnlySpan<ulong> x, Span<ulong> z)
 #else
         public static void Sqrt(ulong[] x, ulong[] z)
 #endif
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<ulong> evn = stackalloc ulong[9], odd = stackalloc ulong[9];
 #else
             ulong[] evn = Nat576.Create64(), odd = Nat576.Create64();
@@ -343,13 +343,13 @@ namespace Org.BouncyCastle.Math.EC.Custom.Sec
             Add(z, evn, z);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void Square(ReadOnlySpan<ulong> x, Span<ulong> z)
 #else
         public static void Square(ulong[] x, ulong[] z)
 #endif
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<ulong> tt = stackalloc ulong[18];
 #else
             ulong[] tt = Nat576.CreateExt64();
@@ -358,13 +358,13 @@ namespace Org.BouncyCastle.Math.EC.Custom.Sec
             Reduce(tt, z);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void SquareAddToExt(ReadOnlySpan<ulong> x, Span<ulong> zz)
 #else
         public static void SquareAddToExt(ulong[] x, ulong[] zz)
 #endif
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<ulong> tt = stackalloc ulong[18];
 #else
             ulong[] tt = Nat576.CreateExt64();
@@ -373,7 +373,7 @@ namespace Org.BouncyCastle.Math.EC.Custom.Sec
             AddExt(zz, tt, zz);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void SquareExt(ReadOnlySpan<ulong> x, Span<ulong> zz)
 #else
         public static void SquareExt(ulong[] x, ulong[] zz)
@@ -382,7 +382,7 @@ namespace Org.BouncyCastle.Math.EC.Custom.Sec
             ImplSquare(x, zz);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void SquareN(ReadOnlySpan<ulong> x, int n, Span<ulong> z)
 #else
         public static void SquareN(ulong[] x, int n, ulong[] z)
@@ -390,7 +390,7 @@ namespace Org.BouncyCastle.Math.EC.Custom.Sec
         {
             Debug.Assert(n > 0);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<ulong> tt = stackalloc ulong[18];
 #else
             ulong[] tt = Nat576.CreateExt64();
@@ -405,7 +405,7 @@ namespace Org.BouncyCastle.Math.EC.Custom.Sec
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static uint Trace(ReadOnlySpan<ulong> x)
 #else
         public static uint Trace(ulong[] x)
@@ -415,7 +415,7 @@ namespace Org.BouncyCastle.Math.EC.Custom.Sec
             return (uint)(x[0] ^ (x[8] >> 49) ^ (x[8] >> 57)) & 1U;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static void ImplMultiply(ReadOnlySpan<ulong> x, ReadOnlySpan<ulong> y, Span<ulong> zz)
         {
             //ulong[] precomp = PrecompMultiplicand(y);
@@ -587,7 +587,7 @@ namespace Org.BouncyCastle.Math.EC.Custom.Sec
         }
 #endif
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static void ImplMultiplyPrecomp(ReadOnlySpan<ulong> x, ulong[] precomp, Span<ulong> zz)
 #else
         private static void ImplMultiplyPrecomp(ulong[] x, ulong[] precomp, ulong[] zz)
@@ -609,13 +609,13 @@ namespace Org.BouncyCastle.Math.EC.Custom.Sec
                     uint aVal = (uint)(x[j] >> k);
                     uint u = aVal & MASK;
                     uint v = (aVal >> 4) & MASK;
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                     AddBothTo(precomp.AsSpan((int)(9 * u)), precomp.AsSpan((int)(9 * (v + 16))), zz[(j - 1)..]);
 #else
                     AddBothTo(precomp, (int)(9 * u), precomp, (int)(9 * (v + 16)), zz, j - 1);
 #endif
                 }
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 Nat.ShiftUpBits64(16, zz, 8, 0UL);
 #else
                 Nat.ShiftUpBits64(16, zz, 0, 8, 0UL);
@@ -629,7 +629,7 @@ namespace Org.BouncyCastle.Math.EC.Custom.Sec
                     uint aVal = (uint)(x[j] >> k);
                     uint u = aVal & MASK;
                     uint v = (aVal >> 4) & MASK;
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                     AddBothTo(precomp.AsSpan((int)(9 * u)), precomp.AsSpan((int)(9 * (v + 16))), zz[j..]);
 #else
                     AddBothTo(precomp, (int)(9 * u), precomp, (int)(9 * (v + 16)), zz, j);
@@ -637,7 +637,7 @@ namespace Org.BouncyCastle.Math.EC.Custom.Sec
                 }
                 if (k > 0)
                 {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                     Nat.ShiftUpBits64(18, zz, 8, 0UL);
 #else
                     Nat.ShiftUpBits64(18, zz, 0, 8, 0UL);
@@ -647,7 +647,7 @@ namespace Org.BouncyCastle.Math.EC.Custom.Sec
 #endif
             }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static void ImplMulwAcc(Span<ulong> u, ulong x, ulong y, Span<ulong> z)
 #else
         private static void ImplMulwAcc(ulong[] u, ulong x, ulong y, ulong[] z, int zOff)
@@ -695,7 +695,7 @@ namespace Org.BouncyCastle.Math.EC.Custom.Sec
 
             Debug.Assert(h >> 63 == 0);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             z[0] ^= l;
             z[1] ^= h;
 #else
@@ -704,7 +704,7 @@ namespace Org.BouncyCastle.Math.EC.Custom.Sec
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static void ImplSquare(ReadOnlySpan<ulong> x, Span<ulong> zz)
 #else
         private static void ImplSquare(ulong[] x, ulong[] zz)
@@ -735,7 +735,7 @@ namespace Org.BouncyCastle.Math.EC.Custom.Sec
             }
 #endif
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Interleave.Expand64To128(x[..9], zz[..18]);
 #else
             Interleave.Expand64To128(x, 0, 9, zz, 0);

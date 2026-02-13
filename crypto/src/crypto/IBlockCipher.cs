@@ -25,7 +25,7 @@ namespace Org.BouncyCastle.Crypto
 		/// <returns>The number of bytes processed and produced.</returns>
 		int ProcessBlock(byte[] inBuf, int inOff, byte[] outBuf, int outOff);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 
 		/// <summary>Process a block.</summary>
 		/// <param name="input">The input block as a span.</param>

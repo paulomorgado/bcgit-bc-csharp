@@ -94,7 +94,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual void ProcessBytes(ReadOnlySpan<byte> input, Span<byte> output)
         {
             if (!initialised)

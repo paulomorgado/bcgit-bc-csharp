@@ -122,7 +122,7 @@ namespace Org.BouncyCastle.Tls.Crypto.Impl.BC
             m_cipher.Init(m_isEncrypting, new ParametersWithIV(cipherKey, Zeroes, 0, 12));
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void SetKey(ReadOnlySpan<byte> key)
         {
             KeyParameter cipherKey = new KeyParameter(key);
@@ -132,7 +132,7 @@ namespace Org.BouncyCastle.Tls.Crypto.Impl.BC
 
         private void InitMac()
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> firstBlock = stackalloc byte[64];
             m_cipher.ProcessBytes(firstBlock, firstBlock);
             m_mac.Init(new KeyParameter(firstBlock[..32]));

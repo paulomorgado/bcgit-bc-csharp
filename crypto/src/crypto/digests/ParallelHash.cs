@@ -132,7 +132,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual void BlockUpdate(ReadOnlySpan<byte> input)
         {
             //
@@ -184,7 +184,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             nCount++;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private void Compress(ReadOnlySpan<byte> input, int pos, int len)
         {
             compressor.BlockUpdate(input.Slice(pos, len));
@@ -225,7 +225,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             return rv;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual int DoFinal(Span<byte> output)
         {
             if (firstOutput)
@@ -255,7 +255,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             return rv;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual int OutputFinal(Span<byte> output)
         {
             if (firstOutput)
@@ -281,7 +281,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             return cshake.Output(outBuf, outOff, outLen);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual int Output(Span<byte> output)
         {
             if (firstOutput)

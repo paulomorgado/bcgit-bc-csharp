@@ -176,7 +176,7 @@ namespace Org.BouncyCastle.Math.EC.Custom.Sec
                     SecT571Field.MultiplyPrecomp(Z3.x, Z2Precomp, Z3.x);
                 }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 Span<ulong> tt = stackalloc ulong[18];
 #else
                 ulong[] tt = Nat576.CreateExt64();
@@ -241,7 +241,7 @@ namespace Org.BouncyCastle.Math.EC.Custom.Sec
                 return new SecT571R1Point(curve, new SecT571FieldElement(T), SecT571R1Curve.SecT571R1_B_SQRT);
             }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<ulong> tt = stackalloc ulong[18];
 #else
             ulong[] tt = Nat576.CreateExt64();

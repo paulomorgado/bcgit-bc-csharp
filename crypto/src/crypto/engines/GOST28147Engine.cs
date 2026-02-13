@@ -201,7 +201,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             Check.DataLength(input, inOff, BlockSize, "input buffer too short");
             Check.OutputLength(output, outOff, BlockSize, "output buffer too short");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 			Gost28147Func(workingKey, input.AsSpan(inOff), output.AsSpan(outOff));
 #else
 			Gost28147Func(workingKey, input, inOff, output, outOff);
@@ -210,7 +210,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 			return BlockSize;
 		}
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 		public virtual int ProcessBlock(ReadOnlySpan<byte> input, Span<byte> output)
 		{
 			if (workingKey == null)
@@ -263,7 +263,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 			return omLeft | omRight;
 		}
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 		private void Gost28147Func(int[] workingKey, ReadOnlySpan<byte> input, Span<byte> output)
 		{
 			int N1 = (int)Pack.LE_To_UInt32(input);

@@ -41,7 +41,7 @@ namespace Org.BouncyCastle.Crypto.Modes
             return m_cipher.ProcessBlock(inBuf, inOff, outBuf, outOff);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int ProcessBlock(ReadOnlySpan<byte> input, Span<byte> output)
         {
             return m_cipher.ProcessBlock(input, output);

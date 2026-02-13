@@ -17,7 +17,7 @@ namespace Org.BouncyCastle.Crypto.Kems.MLKem
 
         internal short[] Coeffs => m_coeffs;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal void GetNoiseEta1(ReadOnlySpan<byte> seed, byte nonce)
         {
             Span<byte> buf = stackalloc byte[m_engine.Eta1 * MLKemEngine.N / 4];
@@ -106,7 +106,7 @@ namespace Org.BouncyCastle.Crypto.Kems.MLKem
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal void CompressPoly(Span<byte> rBuf)
         {
             int pos = 0;
@@ -167,7 +167,7 @@ namespace Org.BouncyCastle.Crypto.Kems.MLKem
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal void DecompressPoly(ReadOnlySpan<byte> cBuf)
         {
             int pos = 0;
@@ -212,7 +212,7 @@ namespace Org.BouncyCastle.Crypto.Kems.MLKem
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal void FromBytes(ReadOnlySpan<byte> a)
         {
             for (int i = 0; i < MLKemEngine.N / 2; i++)
@@ -266,7 +266,7 @@ namespace Org.BouncyCastle.Crypto.Kems.MLKem
         }
 #endif
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal void ToMsg(Span<byte> msg)
 #else
         internal void ToMsg(byte[] msg)
@@ -294,7 +294,7 @@ namespace Org.BouncyCastle.Crypto.Kems.MLKem
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal void FromMsg(ReadOnlySpan<byte> m)
 #else
         internal void FromMsg(byte[] m)
@@ -321,7 +321,7 @@ namespace Org.BouncyCastle.Crypto.Kems.MLKem
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static int CheckModulus(ReadOnlySpan<byte> a)
         {
             int result = -1;

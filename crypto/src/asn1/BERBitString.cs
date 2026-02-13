@@ -82,7 +82,7 @@ namespace Org.BouncyCastle.Asn1
         {
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public BerBitString(ReadOnlySpan<byte> data)
             : this(data, 0)
         {

@@ -61,7 +61,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             return 64;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual int DoFinal(Span<byte> output)
         {
             int lenM = 64 - bOff;
@@ -163,7 +163,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void BlockUpdate(ReadOnlySpan<byte> input)
         {
             while (bOff != 64 && input.Length > 0)

@@ -114,7 +114,7 @@ namespace Org.BouncyCastle.X509
                 {
                     var algParams = ecKey.Parameters.ToX962Parameters();
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                     int encodedLength = q.GetEncodedLength(false);
                     Span<byte> pubKey = encodedLength <= 512
                         ? stackalloc byte[encodedLength]
@@ -146,7 +146,7 @@ namespace Org.BouncyCastle.X509
             if (publicKey is X448PublicKeyParameters x448Key)
             {
                 var algID = new AlgorithmIdentifier(EdECObjectIdentifiers.id_X448);
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 return new SubjectPublicKeyInfo(algID, x448Key.DataSpan);
 #else
                 return new SubjectPublicKeyInfo(algID, x448Key.GetEncoded());
@@ -156,7 +156,7 @@ namespace Org.BouncyCastle.X509
             if (publicKey is X25519PublicKeyParameters x25519Key)
             {
                 var algID = new AlgorithmIdentifier(EdECObjectIdentifiers.id_X25519);
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 return new SubjectPublicKeyInfo(algID, x25519Key.DataSpan);
 #else
                 return new SubjectPublicKeyInfo(algID, x25519Key.GetEncoded());

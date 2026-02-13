@@ -47,7 +47,7 @@ namespace Org.BouncyCastle.Crypto.Prng
 			}
 		}
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void AddSeedMaterial(ReadOnlySpan<byte> inSeed)
         {
             lock (this)
@@ -79,7 +79,7 @@ namespace Org.BouncyCastle.Crypto.Prng
 
 		public void NextBytes(byte[] bytes, int start, int len)
 		{
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 			NextBytes(bytes.AsSpan(start, len));
 #else
 			lock (this)
@@ -102,7 +102,7 @@ namespace Org.BouncyCastle.Crypto.Prng
 #endif
 		}
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 		public void NextBytes(Span<byte> bytes)
 		{
 			lock (this)
@@ -144,7 +144,7 @@ namespace Org.BouncyCastle.Crypto.Prng
 			}
 		}
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private void DigestAddCounter(long seedVal)
         {
             Span<byte> bytes = stackalloc byte[8];

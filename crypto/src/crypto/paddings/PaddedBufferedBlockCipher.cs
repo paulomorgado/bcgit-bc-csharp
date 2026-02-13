@@ -110,7 +110,7 @@ namespace Org.BouncyCastle.Crypto.Paddings
 		*/
         public override int ProcessByte(byte input, byte[] output, int outOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return ProcessByte(input, Spans.FromNullable(output, outOff));
 #else
 			int resultLen = 0;
@@ -129,7 +129,7 @@ namespace Org.BouncyCastle.Crypto.Paddings
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public override int ProcessByte(byte input, Span<byte> output)
         {
             int resultLen = 0;
@@ -170,7 +170,7 @@ namespace Org.BouncyCastle.Crypto.Paddings
                 return 0;
             }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return ProcessBytes(input.AsSpan(inOff, length), Spans.FromNullable(output, outOff));
 #else
             int resultLen = 0;
@@ -212,7 +212,7 @@ namespace Org.BouncyCastle.Crypto.Paddings
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public override int ProcessBytes(ReadOnlySpan<byte> input, Span<byte> output)
         {
             int resultLen = 0;
@@ -268,7 +268,7 @@ namespace Org.BouncyCastle.Crypto.Paddings
 		*/
         public override int DoFinal(byte[] output, int outOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return DoFinal(Spans.FromNullable(output, outOff));
 #else
 			try
@@ -317,7 +317,7 @@ namespace Org.BouncyCastle.Crypto.Paddings
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public override int DoFinal(Span<byte> output)
         {
             try

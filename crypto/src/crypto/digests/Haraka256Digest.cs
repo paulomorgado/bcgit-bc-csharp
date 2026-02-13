@@ -37,7 +37,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             m_bufPos += len;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public override void BlockUpdate(ReadOnlySpan<byte> input)
         {
             if (m_bufPos > 32 - input.Length)
@@ -50,7 +50,7 @@ namespace Org.BouncyCastle.Crypto.Digests
 
         public override int DoFinal(byte[] output, int outOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return DoFinal(output.AsSpan(outOff));
 #else
             if (m_bufPos != 32)
@@ -67,7 +67,7 @@ namespace Org.BouncyCastle.Crypto.Digests
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public override int DoFinal(Span<byte> output)
         {
             if (m_bufPos != 32)
@@ -99,7 +99,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             Array.Clear(m_buf, 0, 32);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static int Haraka256256(ReadOnlySpan<byte> msg, Span<byte> output)
         {
             byte[][] s1 = new byte[2][];

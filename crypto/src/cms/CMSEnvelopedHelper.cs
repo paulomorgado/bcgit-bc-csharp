@@ -225,7 +225,7 @@ namespace Org.BouncyCastle.Cms
                             || alg.Equals(CmsEnvelopedGenerator.IdeaCbc)
                             || alg.Equals(CmsEnvelopedGenerator.Cast5Cbc))
                         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                             cipherParameters = ParametersWithIV.Create<byte>(cipherParameters, 8, 0,
                                 (bytes, state) => bytes.Fill(state));
 #else

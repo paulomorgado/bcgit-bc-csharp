@@ -93,7 +93,7 @@ namespace Org.BouncyCastle.Crypto.Signers
             digest.BlockUpdate(input, inOff, inLen);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual void BlockUpdate(ReadOnlySpan<byte> input)
         {
             digest.BlockUpdate(input);
@@ -148,7 +148,7 @@ namespace Org.BouncyCastle.Crypto.Signers
 
             CreateSignatureBlock();
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             int fBlockSize = block.Length;
             Span<byte> fBlock = fBlockSize <= 512
                 ? stackalloc byte[fBlockSize]

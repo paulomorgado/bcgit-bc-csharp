@@ -1,5 +1,5 @@
 using System;
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 using System.Numerics;
 using System.Runtime.InteropServices;
 #endif
@@ -1506,7 +1506,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.Cmce
 
                     int c = 0;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                     if (Vector.IsHardwareAccelerated)
                     {
                         var vm = new Vector<byte>((byte)-mask);
@@ -1577,7 +1577,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.Cmce
 
                         int c = 0;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                         if (Vector.IsHardwareAccelerated)
                         {
                             var vm = new Vector<byte>((byte)-mask);

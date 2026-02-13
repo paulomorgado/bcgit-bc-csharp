@@ -351,7 +351,7 @@ namespace Org.BouncyCastle.X509
         {
             int byteLength = (id.Length + 7) / 8;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> bytes = byteLength <= 512
                 ? stackalloc byte[byteLength]
                 : new byte[byteLength];

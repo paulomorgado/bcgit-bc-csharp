@@ -12,7 +12,7 @@ namespace Org.BouncyCastle.Crypto
 
         int GenerateBytes(byte[] output, int outOff, int length);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         int GenerateBytes(Span<byte> output);
 #endif
     }

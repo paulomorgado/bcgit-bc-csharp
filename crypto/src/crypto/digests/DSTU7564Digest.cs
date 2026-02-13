@@ -143,7 +143,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual void BlockUpdate(ReadOnlySpan<byte> input)
         {
             while (bufOff != 0 && input.Length > 0)
@@ -223,7 +223,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             return hashSize;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual int DoFinal(Span<byte> output)
         {
             // Apply padding: terminator byte and 96-bit length field
@@ -311,7 +311,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         protected virtual void ProcessBlock(ReadOnlySpan<byte> input)
         {
             for (int col = 0; col < columns; ++col)

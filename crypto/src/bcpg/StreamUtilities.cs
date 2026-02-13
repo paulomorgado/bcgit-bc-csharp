@@ -79,7 +79,7 @@ namespace Org.BouncyCastle.Bcpg
                 throw new EndOfStreamException();
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static void RequireBytes(Stream s, Span<byte> buffer)
         {
             if (Streams.ReadFully(s, buffer) != buffer.Length)
@@ -89,7 +89,7 @@ namespace Org.BouncyCastle.Bcpg
 
         internal static ushort RequireUInt16BE(Stream s)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> buf = stackalloc byte[2];
 #else
             byte[] buf = new byte[2];
@@ -100,7 +100,7 @@ namespace Org.BouncyCastle.Bcpg
 
         internal static uint RequireUInt32BE(Stream s)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> buf = stackalloc byte[4];
 #else
             byte[] buf = new byte[4];
@@ -111,7 +111,7 @@ namespace Org.BouncyCastle.Bcpg
 
         internal static ulong RequireUInt64BE(Stream s)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> buf = stackalloc byte[8];
 #else
             byte[] buf = new byte[8];
@@ -124,7 +124,7 @@ namespace Org.BouncyCastle.Bcpg
         {
             if (longLength || bodyLen > 8383)
             {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 Span<byte> buf = stackalloc byte[5];
                 buf[0] = 0xFF;
                 Pack.UInt32_To_BE((uint)bodyLen, buf, 1);
@@ -145,7 +145,7 @@ namespace Org.BouncyCastle.Bcpg
             {
                 bodyLen -= 192;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 Span<byte> buf = stackalloc byte[2];
                 buf[0] = (byte)(((bodyLen >> 8) & 0xFF) + 192);
                 buf[1] = (byte)bodyLen;
@@ -159,7 +159,7 @@ namespace Org.BouncyCastle.Bcpg
 
         internal static void WriteUInt16BE(Stream s, ushort n)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> buf = stackalloc byte[2];
             Pack.UInt16_To_BE(n, buf);
             s.Write(buf);
@@ -171,7 +171,7 @@ namespace Org.BouncyCastle.Bcpg
 
         internal static void WriteUInt32BE(Stream s, uint n)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> buf = stackalloc byte[4];
             Pack.UInt32_To_BE(n, buf);
             s.Write(buf);
@@ -184,7 +184,7 @@ namespace Org.BouncyCastle.Bcpg
 
         internal static void WriteUInt64BE(Stream s, ulong n)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> buf = stackalloc byte[8];
             Pack.UInt64_To_BE(n, buf);
             s.Write(buf);

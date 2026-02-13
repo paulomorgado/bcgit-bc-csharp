@@ -12,7 +12,7 @@ namespace Org.BouncyCastle.Crypto
 
         void Decapsulate(byte[] encBuf, int encOff, int encLen, byte[] secBuf, int secOff, int secLen);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         void Decapsulate(ReadOnlySpan<byte> encapsulation, Span<byte> secret);
 #endif
     }

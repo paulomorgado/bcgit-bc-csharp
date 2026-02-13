@@ -61,7 +61,7 @@ namespace Org.BouncyCastle.Tls.Crypto.Impl
             return master_secret.DeriveUsingPrf(prfAlgorithm, ExporterLabel.key_expansion, seed, length).Extract();
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void CalculateKeyBlock(TlsCryptoParameters cryptoParams, Span<byte> keyBlock)
         {
             SecurityParameters securityParameters = cryptoParams.SecurityParameters;

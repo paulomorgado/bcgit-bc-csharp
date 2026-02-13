@@ -138,7 +138,7 @@ namespace Org.BouncyCastle.OpenSsl
             return new PemObject(type, encoding);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static PemObject CreatePemObject(object obj, string algorithm, ReadOnlySpan<char> password,
             SecureRandom random)
         {

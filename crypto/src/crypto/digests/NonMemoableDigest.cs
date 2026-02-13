@@ -44,7 +44,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             mBaseDigest.BlockUpdate(input, inOff, len);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual void BlockUpdate(ReadOnlySpan<byte> input)
         {
             mBaseDigest.BlockUpdate(input);
@@ -56,7 +56,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             return mBaseDigest.DoFinal(output, outOff);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual int DoFinal(Span<byte> output)
         {
             return mBaseDigest.DoFinal(output);

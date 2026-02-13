@@ -31,7 +31,7 @@ namespace Org.BouncyCastle.Crypto
                 ThrowOutputLengthException(message);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static void DataLength<T>(ReadOnlySpan<T> input, int len, string message)
         {
             if (input.Length < len)

@@ -11,13 +11,13 @@ namespace Org.BouncyCastle.Utilities.Encoders
 	{
 		int Encode(byte[] data, int off, int length, Stream outStream);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 		int Encode(ReadOnlySpan<byte> data, Stream outStream);
 #endif
 
 		int Decode(byte[] data, int off, int length, Stream outStream);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 		int Decode(ReadOnlySpan<byte> data, Stream outStream);
 #endif
 

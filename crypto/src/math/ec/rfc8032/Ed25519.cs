@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 using System.Runtime.InteropServices;
 #endif
 #if NET9_0_OR_GREATER
@@ -151,7 +151,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
 
         private static byte[] CalculateS(byte[] r, byte[] k, byte[] s)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             byte[] S = new byte[ScalarBytes];
             CalculateS(r, k, s, S);
             return S;
@@ -168,7 +168,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static void CalculateS(ReadOnlySpan<byte> r, ReadOnlySpan<byte> k, ReadOnlySpan<byte> s, Span<byte> S)
         {
             Span<uint> t = stackalloc uint[ScalarUints * 2];    Scalar25519.Decode(r, t);
@@ -239,7 +239,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
             return F.IsZero(t) & ~F.IsZero(v) & ~F.IsZero(w);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static bool CheckPointFullVar(ReadOnlySpan<byte> p)
         {
             uint y7 = Codec.Decode32(p[28..]) & 0x7FFFFFFFU;
@@ -320,7 +320,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
             return NormalizeToNeutralElementVar(ref r);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static bool CheckPointVar(ReadOnlySpan<byte> p)
         {
             if ((Codec.Decode32(p[28..]) & 0x7FFFFFFFU) < P[7])
@@ -366,7 +366,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
             return CreateDigest();
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static bool DecodePointVar(ReadOnlySpan<byte> p, bool negate, ref PointAffine r)
 #else
         private static bool DecodePointVar(byte[] p, bool negate, ref PointAffine r)
@@ -406,7 +406,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
 
             int n = Dom2Prefix.Length;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> t = stackalloc byte[n + 2 + ctx.Length];
             Dom2Prefix.CopyTo(t);
             t[n] = phflag;
@@ -431,7 +431,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
             r[rOff + PointBytes - 1] |= (byte)((p.x[0] & 1) << 7);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static void EncodePoint(ref PointAffine p, Span<byte> r)
         {
             F.Encode(p.y, r);
@@ -445,7 +445,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
             pk[pkOff + PointBytes - 1] |= (byte)((publicPoint.m_data[0] & 1) << 7);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void EncodePublicPoint(PublicPoint publicPoint, Span<byte> pk)
         {
             // TODO[api] Restrict to exact length
@@ -459,7 +459,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
 
         private static int EncodeResult(ref PointAccum p, byte[] r, int rOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return EncodeResult(ref p, r.AsSpan(rOff));
 #else
             Init(out PointAffine q);
@@ -473,7 +473,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static int EncodeResult(ref PointAccum p, Span<byte> r)
         {
             Init(out PointAffine q);
@@ -505,7 +505,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
             random.NextBytes(k);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         // TODO[api] Rename k to sk
         public static void GeneratePrivateKey(SecureRandom random, Span<byte> k)
         {
@@ -518,7 +518,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
 
         public static void GeneratePublicKey(byte[] sk, int skOff, byte[] pk, int pkOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             GeneratePublicKey(sk.AsSpan(skOff), pk.AsSpan(pkOff));
 #else
             IDigest d = CreateDigest();
@@ -534,7 +534,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void GeneratePublicKey(ReadOnlySpan<byte> sk, Span<byte> pk)
         {
             IDigest d = CreateDigest();
@@ -552,7 +552,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
 
         public static PublicPoint GeneratePublicKey(byte[] sk, int skOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return GeneratePublicKey(sk.AsSpan(skOff));
 #else
             IDigest d = CreateDigest();
@@ -577,7 +577,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static PublicPoint GeneratePublicKey(ReadOnlySpan<byte> sk)
         {
             IDigest d = CreateDigest();
@@ -602,7 +602,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
         }
 #endif
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static uint GetWindow4(ReadOnlySpan<uint> x, int n)
 #else
         private static uint GetWindow4(uint[] x, int n)
@@ -612,7 +612,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
             return (x[w] >> b) & 15U;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static void GroupCombBits(Span<uint> n)
 #else
         private static void GroupCombBits(uint[] n)
@@ -628,7 +628,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static void ImplSign(IDigest d, Span<byte> h, ReadOnlySpan<byte> s, ReadOnlySpan<byte> pk, byte[] ctx,
             byte phflag, ReadOnlySpan<byte> m, Span<byte> sig)
         {
@@ -697,7 +697,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
         private static void ImplSign(byte[] sk, int skOff, byte[] ctx, byte phflag, byte[] m, int mOff, int mLen,
             byte[] sig, int sigOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             ImplSign(sk.AsSpan(skOff, SecretKeySize), ctx, phflag, m.AsSpan(mOff, mLen),
                 sig.AsSpan(sigOff, SignatureSize));
 #else
@@ -720,7 +720,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static void ImplSign(ReadOnlySpan<byte> sk, byte[] ctx, byte phflag, ReadOnlySpan<byte> m,
             Span<byte> sig)
         {
@@ -746,7 +746,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
         private static void ImplSign(byte[] sk, int skOff, byte[] pk, int pkOff, byte[] ctx, byte phflag, byte[] m,
             int mOff, int mLen, byte[] sig, int sigOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             ImplSign(sk.AsSpan(skOff, SecretKeySize), pk.AsSpan(pkOff, PublicKeySize), ctx, phflag,
                 m.AsSpan(mOff, mLen), sig.AsSpan(sigOff, SignatureSize));
 #else
@@ -766,7 +766,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static void ImplSign(ReadOnlySpan<byte> sk, ReadOnlySpan<byte> pk, byte[] ctx, byte phflag,
             ReadOnlySpan<byte> m, Span<byte> sig)
         {
@@ -789,7 +789,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
         private static bool ImplVerify(byte[] sig, int sigOff, byte[] pk, int pkOff, byte[] ctx, byte phflag, byte[] m,
             int mOff, int mLen)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return ImplVerify(sig.AsSpan(sigOff, SignatureSize), pk.AsSpan(pkOff, PublicKeySize), ctx, phflag,
                 m.AsSpan(mOff, mLen));
 #else
@@ -849,7 +849,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static bool ImplVerify(ReadOnlySpan<byte> sig, ReadOnlySpan<byte> pk, byte[] ctx, byte phflag,
             ReadOnlySpan<byte> m)
         {
@@ -914,7 +914,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
         private static bool ImplVerify(byte[] sig, int sigOff, PublicPoint publicPoint, byte[] ctx, byte phflag,
             byte[] m, int mOff, int mLen)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return ImplVerify(sig.AsSpan(sigOff, SignatureSize), publicPoint, ctx, phflag, m.AsSpan(mOff, mLen));
 #else
             if (!CheckContextVar(ctx, phflag))
@@ -972,7 +972,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static bool ImplVerify(ReadOnlySpan<byte> sig, PublicPoint publicPoint, byte[] ctx, byte phflag,
             ReadOnlySpan<byte> m)
         {
@@ -1337,7 +1337,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static void PointLookupZ(ReadOnlySpan<uint> x, int n, ReadOnlySpan<int> table, ref PointPrecompZ r)
         {
             // TODO This method is currently hard-coded to 4-bit windows and 8 precomputed points
@@ -1647,7 +1647,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
             r[ScalarBytes - 1] |= 0x40;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static void PruneScalar(ReadOnlySpan<byte> n, Span<byte> r)
         {
             n[..ScalarBytes].CopyTo(r);
@@ -1658,13 +1658,13 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
         }
 #endif
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static void ScalarMult(ReadOnlySpan<byte> k, ref PointAffine p, ref PointAccum r)
 #else
         private static void ScalarMult(byte[] k, ref PointAffine p, ref PointAccum r)
 #endif
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<uint> n = stackalloc uint[ScalarUints];
 #else
             uint[] n = new uint[ScalarUints];
@@ -1695,7 +1695,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static void ScalarMultBase(ReadOnlySpan<byte> k, ref PointAccum r)
 #else
         private static void ScalarMultBase(byte[] k, ref PointAccum r)
@@ -1709,7 +1709,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
 
             Precompute();
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<uint> n = stackalloc uint[ScalarUints];
 #else
             uint[] n = new uint[ScalarUints];
@@ -1758,7 +1758,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
 
         private static void ScalarMultBaseEncoded(byte[] k, byte[] r, int rOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             ScalarMultBaseEncoded(k.AsSpan(), r.AsSpan(rOff));
 #else
             Init(out PointAccum p);
@@ -1768,7 +1768,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static void ScalarMultBaseEncoded(ReadOnlySpan<byte> k, Span<byte> r)
         {
             Init(out PointAccum p);
@@ -1780,7 +1780,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
 
         internal static void ScalarMultBaseYZ(byte[] k, int kOff, int[] y, int[] z)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             ScalarMultBaseYZ(k.AsSpan(kOff), y.AsSpan(), z.AsSpan());
 #else
             byte[] n = new byte[ScalarBytes];
@@ -1797,7 +1797,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static void ScalarMultBaseYZ(ReadOnlySpan<byte> k, Span<int> y, Span<int> z)
         {
             Span<byte> n = stackalloc byte[ScalarBytes];
@@ -1816,7 +1816,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
 
         private static void ScalarMultOrderVar(ref PointAffine p, ref PointAccum r)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<sbyte> ws_p = stackalloc sbyte[253];
 #else
             sbyte[] ws_p = new sbyte[253];
@@ -1848,7 +1848,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static void ScalarMultStraus128Var(ReadOnlySpan<uint> nb, ReadOnlySpan<uint> np, ref PointAffine p,
             ReadOnlySpan<uint> nq, ref PointAffine q, ref PointAccum r)
 #else
@@ -1863,7 +1863,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
 
             Precompute();
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<sbyte> ws_b = stackalloc sbyte[256];
             Span<sbyte> ws_p = stackalloc sbyte[128];
             Span<sbyte> ws_q = stackalloc sbyte[128];
@@ -1963,7 +1963,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
             ImplSign(sk, skOff, pk, pkOff, ctx, phflag, m, mOff, mLen, sig, sigOff);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void Sign(ReadOnlySpan<byte> sk, ReadOnlySpan<byte> m, Span<byte> sig)
         {
             if (sk.Length != SecretKeySize)
@@ -2048,7 +2048,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
             ImplSign(sk, skOff, pk, pkOff, ctx, phflag, m, 0, m.Length, sig, sigOff);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void SignPrehash(ReadOnlySpan<byte> sk, byte[] ctx, ReadOnlySpan<byte> ph, Span<byte> sig)
         {
             if (sk.Length != SecretKeySize)
@@ -2110,7 +2110,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
 
         public static bool ValidatePublicKeyFull(byte[] pk, int pkOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return ValidatePublicKeyFull(pk.AsSpan(pkOff));
 #else
             byte[] A = Copy(pk, pkOff, PublicKeySize);
@@ -2126,7 +2126,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static bool ValidatePublicKeyFull(ReadOnlySpan<byte> pk)
         {
             Span<byte> A = stackalloc byte[PublicKeySize];
@@ -2145,7 +2145,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
 
         public static PublicPoint ValidatePublicKeyFullExport(byte[] pk, int pkOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return ValidatePublicKeyFullExport(pk.AsSpan(pkOff));
 #else
             byte[] A = Copy(pk, pkOff, PublicKeySize);
@@ -2164,7 +2164,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static PublicPoint ValidatePublicKeyFullExport(ReadOnlySpan<byte> pk)
         {
             Span<byte> A = stackalloc byte[PublicKeySize];
@@ -2186,7 +2186,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
 
         public static bool ValidatePublicKeyPartial(byte[] pk, int pkOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return ValidatePublicKeyPartial(pk.AsSpan(pkOff));
 #else
             byte[] A = Copy(pk, pkOff, PublicKeySize);
@@ -2199,7 +2199,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static bool ValidatePublicKeyPartial(ReadOnlySpan<byte> pk)
         {
             Span<byte> A = stackalloc byte[PublicKeySize];
@@ -2215,7 +2215,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
 
         public static PublicPoint ValidatePublicKeyPartialExport(byte[] pk, int pkOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return ValidatePublicKeyPartialExport(pk.AsSpan(pkOff));
 #else
             byte[] A = Copy(pk, pkOff, PublicKeySize);
@@ -2231,7 +2231,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static PublicPoint ValidatePublicKeyPartialExport(ReadOnlySpan<byte> pk)
         {
             Span<byte> A = stackalloc byte[PublicKeySize];
@@ -2280,7 +2280,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
             return ImplVerify(sig, sigOff, publicPoint, ctx, phflag, m, mOff, mLen);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static bool Verify(ReadOnlySpan<byte> sig, ReadOnlySpan<byte> pk, ReadOnlySpan<byte> m)
         {
             if (sig.Length != SignatureSize)
@@ -2355,7 +2355,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
             return ImplVerify(sig, sigOff, publicPoint, ctx, phflag, m, 0, m.Length);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static bool VerifyPrehash(ReadOnlySpan<byte> sig, ReadOnlySpan<byte> pk, byte[] ctx,
             ReadOnlySpan<byte> ph)
         {

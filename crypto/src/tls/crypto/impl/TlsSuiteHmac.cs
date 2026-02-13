@@ -65,7 +65,7 @@ namespace Org.BouncyCastle.Tls.Crypto.Impl
         public virtual byte[] CalculateMac(long seqNo, short type, byte[] connectionID, byte[] msg, int msgOff,
             int msgLen)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             var connIDSpan = connectionID == null ? Span<byte>.Empty : connectionID.AsSpan();
 
             return CalculateMac(seqNo, type, connIDSpan, msg.AsSpan(msgOff, msgLen));
@@ -113,7 +113,7 @@ namespace Org.BouncyCastle.Tls.Crypto.Impl
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual byte[] CalculateMac(long seqNo, short type, ReadOnlySpan<byte> message)
         {
             return CalculateMac(seqNo, type, ReadOnlySpan<byte>.Empty, message);

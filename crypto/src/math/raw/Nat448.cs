@@ -29,7 +29,7 @@ namespace Org.BouncyCastle.Math.Raw
             z[zOff + 6] = x[xOff + 6];
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void Copy64(ReadOnlySpan<ulong> x, Span<ulong> z)
         {
             z[0] = x[0];
@@ -80,7 +80,7 @@ namespace Org.BouncyCastle.Math.Raw
             return true;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static bool IsZero64(ReadOnlySpan<ulong> x)
 #else
         public static bool IsZero64(ulong[] x)
@@ -115,7 +115,7 @@ namespace Org.BouncyCastle.Math.Raw
             Nat.AddWordAt(28, c21, zz, 21);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void Mul(ReadOnlySpan<uint> x, ReadOnlySpan<uint> y, Span<uint> zz)
         {
             Nat224.Mul(x, y, zz);
@@ -156,7 +156,7 @@ namespace Org.BouncyCastle.Math.Raw
             Nat.AddWordAt(28, c21, zz, 21);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void Square(ReadOnlySpan<uint> x, Span<uint> zz)
         {
             Nat224.Square(x, zz);

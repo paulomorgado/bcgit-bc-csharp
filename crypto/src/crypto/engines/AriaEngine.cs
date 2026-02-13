@@ -190,7 +190,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             return BlockSize;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual int ProcessBlock(ReadOnlySpan<byte> input, Span<byte> output)
         {
             if (m_roundKeys == null)

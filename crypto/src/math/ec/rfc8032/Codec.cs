@@ -1,5 +1,5 @@
 ﻿using System;
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 using System.Buffers.Binary;
 #endif
 
@@ -9,7 +9,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
     {
         internal static uint Decode16(byte[] bs, int off)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return BinaryPrimitives.ReadUInt16LittleEndian(bs.AsSpan(off));
 #else
             uint n = bs[off];
@@ -18,7 +18,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static uint Decode16(ReadOnlySpan<byte> bs)
         {
             return BinaryPrimitives.ReadUInt16LittleEndian(bs);
@@ -33,7 +33,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
             return n;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static uint Decode24(ReadOnlySpan<byte> bs)
         {
             uint n = bs[0];
@@ -45,7 +45,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
 
         internal static uint Decode32(byte[] bs, int off)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return BinaryPrimitives.ReadUInt32LittleEndian(bs.AsSpan(off));
 #else
             uint n = bs[off];
@@ -56,7 +56,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static uint Decode32(ReadOnlySpan<byte> bs)
         {
             return BinaryPrimitives.ReadUInt32LittleEndian(bs);
@@ -71,7 +71,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static void Decode32(ReadOnlySpan<byte> bs, Span<uint> n)
         {
             for (int i = 0; i < n.Length; ++i)
@@ -88,7 +88,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
             bs[++off] = (byte)(n >> 16);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static void Encode24(uint n, Span<byte> bs)
         {
             bs[0] = (byte)(n);
@@ -99,7 +99,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
 
         internal static void Encode32(uint n, byte[] bs, int off)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             BinaryPrimitives.WriteUInt32LittleEndian(bs.AsSpan(off), n);
 #else
             bs[  off] = (byte)(n      );
@@ -109,7 +109,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static void Encode32(uint n, Span<byte> bs)
         {
             BinaryPrimitives.WriteUInt32LittleEndian(bs, n);
@@ -124,7 +124,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static void Encode32(ReadOnlySpan<uint> n, Span<byte> bs)
         {
             for (int i = 0; i < n.Length; ++i)
@@ -140,7 +140,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
             Encode24((uint)(n >> 32), bs, off + 4);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static void Encode56(ulong n, Span<byte> bs)
         {
             Encode32((uint)n, bs);

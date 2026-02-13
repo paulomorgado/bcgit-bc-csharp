@@ -77,7 +77,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual void ProcessBytes(ReadOnlySpan<byte> input, Span<byte> output)
         {
             Check.OutputLength(output, input.Length, "output buffer too short");
@@ -112,7 +112,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             return output;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static void KsaRound(byte[] P, ref byte S, ReadOnlySpan<byte> input)
 #else
         internal static void KsaRound(byte[] P, ref byte S, byte[] input)

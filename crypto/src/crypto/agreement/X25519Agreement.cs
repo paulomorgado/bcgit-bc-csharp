@@ -21,14 +21,14 @@ namespace Org.BouncyCastle.Crypto.Agreement
 
         public void CalculateAgreement(ICipherParameters publicKey, byte[] buf, int off)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             CalculateAgreement(publicKey, buf.AsSpan(off));
 #else
             m_privateKey.GenerateSecret((X25519PublicKeyParameters)publicKey, buf, off);
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void CalculateAgreement(ICipherParameters publicKey, Span<byte> buf)
         {
             m_privateKey.GenerateSecret((X25519PublicKeyParameters)publicKey, buf);

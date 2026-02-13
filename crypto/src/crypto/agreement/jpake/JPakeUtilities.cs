@@ -70,7 +70,7 @@ namespace Org.BouncyCastle.Crypto.Agreement.JPake
             return CalculateS(q, Strings.ToUtf8ByteArray(password));
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         /// <summary>Converts the given password (UTF8 encoded) to a BigInteger mod q.</summary>
         public static BigInteger CalculateS(BigInteger q, ReadOnlySpan<char> password)
         {

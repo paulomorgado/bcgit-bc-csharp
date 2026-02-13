@@ -27,7 +27,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc7748
             return !Arrays.AreAllZeroes(r, rOff, PointSize);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static bool CalculateAgreement(ReadOnlySpan<byte> k, ReadOnlySpan<byte> u, Span<byte> r)
         {
             ScalarMult(k, u, r);
@@ -44,7 +44,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc7748
             k[ScalarSize - 1] |= 0x80;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static uint Decode32(ReadOnlySpan<byte> bs)
         {
             uint n = bs[0];
@@ -96,7 +96,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc7748
             ClampPrivateKey(k);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void GeneratePrivateKey(SecureRandom random, Span<byte> k)
         {
             if (k.Length != ScalarSize)
@@ -114,7 +114,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc7748
             ScalarMultBase(k, kOff, r, rOff);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void GeneratePublicKey(ReadOnlySpan<byte> k, Span<byte> r)
         {
             ScalarMultBase(k, r);
@@ -145,7 +145,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc7748
 
         public static void ScalarMult(byte[] k, int kOff, byte[] u, int uOff, byte[] r, int rOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             ScalarMult(k.AsSpan(kOff), u.AsSpan(uOff), r.AsSpan(rOff));
 #else
             uint[] n = new uint[14];    DecodeScalar(k, kOff, n);
@@ -215,7 +215,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc7748
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void ScalarMult(ReadOnlySpan<byte> k, ReadOnlySpan<byte> u, Span<byte> r)
         {
             uint[] n = new uint[14];    DecodeScalar(k, n);
@@ -287,7 +287,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc7748
 
         public static void ScalarMultBase(byte[] k, int kOff, byte[] r, int rOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             ScalarMultBase(k.AsSpan(kOff), r.AsSpan(rOff));
 #else
             // Equivalent (but much slower)
@@ -310,7 +310,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc7748
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void ScalarMultBase(ReadOnlySpan<byte> k, Span<byte> r)
         {
             // Equivalent (but much slower)

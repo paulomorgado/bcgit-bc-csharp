@@ -121,7 +121,7 @@ namespace Org.BouncyCastle.Crypto.Signers
             digest.BlockUpdate(input, inOff, inLen);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual void BlockUpdate(ReadOnlySpan<byte> input)
         {
             CheckData();
@@ -301,7 +301,7 @@ namespace Org.BouncyCastle.Crypto.Signers
 
         private static void AddFieldElement(IDigest digest, ECFieldElement v)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> buf = stackalloc byte[v.GetEncodedLength()];
             v.EncodeTo(buf);
             digest.BlockUpdate(buf);

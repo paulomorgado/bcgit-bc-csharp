@@ -26,7 +26,7 @@ namespace Org.BouncyCastle.Crypto
         /// <param name="inLen">The length of the data.</param>
         void BlockUpdate(byte[] input, int inOff, int inLen);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         /// <summary>Update the message digest with a span of bytes.</summary>
         /// <param name="input">The span containing the data.</param>
         void BlockUpdate(ReadOnlySpan<byte> input);
@@ -39,7 +39,7 @@ namespace Org.BouncyCastle.Crypto
         /// <returns>The number of bytes written.</returns>
         int DoFinal(byte[] output, int outOff);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         /// <summary>Close the digest, producing the final digest value.</summary>
         /// <remarks>This call leaves the digest reset.</remarks>
         /// <param name="output">The span the digest is to be copied into.</param>

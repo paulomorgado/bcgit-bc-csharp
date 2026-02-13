@@ -436,7 +436,7 @@ namespace Org.BouncyCastle.Math.EC
 
         public abstract void EncodeTo(bool compressed, byte[] buf, int off);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public abstract void EncodeTo(bool compressed, Span<byte> buf);
 #endif
 
@@ -572,7 +572,7 @@ namespace Org.BouncyCastle.Math.EC
 
         public override void EncodeTo(bool compressed, byte[] buf, int off)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             EncodeTo(compressed, buf.AsSpan(off));
 #else
             if (IsInfinity)
@@ -597,7 +597,7 @@ namespace Org.BouncyCastle.Math.EC
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public override void EncodeTo(bool compressed, Span<byte> buf)
         {
             if (IsInfinity)

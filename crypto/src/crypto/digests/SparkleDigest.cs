@@ -72,7 +72,7 @@ namespace Org.BouncyCastle.Crypto.Digests
         {
             if (m_bufPos == RATE_BYTES)
             {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 ProcessBlock(m_buf, SPARKLE_STEPS_SLIM);
 #else
                 ProcessBlock(m_buf, 0, SPARKLE_STEPS_SLIM);
@@ -87,7 +87,7 @@ namespace Org.BouncyCastle.Crypto.Digests
         {
             Check.DataLength(input, inOff, inLen, "input buffer too short");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             BlockUpdate(input.AsSpan(inOff, inLen));
 #else
             if (inLen < 1)
@@ -121,7 +121,7 @@ namespace Org.BouncyCastle.Crypto.Digests
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void BlockUpdate(ReadOnlySpan<byte> input)
         {
             int available = RATE_BYTES - m_bufPos;
@@ -155,7 +155,7 @@ namespace Org.BouncyCastle.Crypto.Digests
         {
             Check.OutputLength(output, outOff, DIGEST_BYTES, "output buffer too short");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return DoFinal(output.AsSpan(outOff));
 #else
             // addition of constant M1 or M2 to the state
@@ -197,7 +197,7 @@ namespace Org.BouncyCastle.Crypto.Digests
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int DoFinal(Span<byte> output)
         {
             // addition of constant M1 or M2 to the state
@@ -250,7 +250,7 @@ namespace Org.BouncyCastle.Crypto.Digests
 #if NETSTANDARD1_0_OR_GREATER || NETCOREAPP1_0_OR_GREATER
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private void ProcessBlock(ReadOnlySpan<byte> block, int steps)
         {
             uint t0 = Pack.LE_To_UInt32(block);

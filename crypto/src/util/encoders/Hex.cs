@@ -1,4 +1,4 @@
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 using System;
 using System.Diagnostics;
 #endif
@@ -26,7 +26,7 @@ namespace Org.BouncyCastle.Utilities.Encoders
 
         public static string ToHexString(byte[] data, int off, int length, bool upperCase)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return ToHexString(data.AsMemory(off, length), upperCase);
 #else
             byte[] hex = Encode(data, off, length);
@@ -39,7 +39,7 @@ namespace Org.BouncyCastle.Utilities.Encoders
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static string ToHexString(ReadOnlyMemory<byte> data, bool upperCase = false)
         {
             if (data.Length == 0)

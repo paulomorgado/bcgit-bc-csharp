@@ -69,7 +69,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
         */
         public static bool IsWeakKey(byte[] key, int offset)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return IsWeakKey(key.AsSpan(offset));
 #else
             if (key.Length - offset < DesKeyLength)
@@ -102,7 +102,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
 			return IsWeakKey(key, 0);
 		}
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static bool IsWeakKey(ReadOnlySpan<byte> key)
         {
             if (key.Length < DesKeyLength)
@@ -163,7 +163,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void SetOddParity(Span<byte> bytes)
         {
             for (int i = 0; i < bytes.Length; i++)

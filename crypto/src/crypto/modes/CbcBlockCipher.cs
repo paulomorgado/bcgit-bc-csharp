@@ -109,7 +109,7 @@ namespace Org.BouncyCastle.Crypto.Modes
 
         public int ProcessBlock(byte[] input, int inOff, byte[] output, int outOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return encrypting
                 ? EncryptBlock(input.AsSpan(inOff), output.AsSpan(outOff))
                 : DecryptBlock(input.AsSpan(inOff), output.AsSpan(outOff));
@@ -120,7 +120,7 @@ namespace Org.BouncyCastle.Crypto.Modes
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int ProcessBlock(ReadOnlySpan<byte> input, Span<byte> output)
         {
             return encrypting
@@ -139,7 +139,7 @@ namespace Org.BouncyCastle.Crypto.Modes
 			Array.Clear(cbcNextV, 0, cbcNextV.Length);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private int EncryptBlock(ReadOnlySpan<byte> input, Span<byte> output)
         {
             Check.DataLength(input, blockSize, "input buffer too short");

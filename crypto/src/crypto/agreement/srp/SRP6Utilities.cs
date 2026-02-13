@@ -20,7 +20,7 @@ namespace Org.BouncyCastle.Crypto.Agreement.Srp
 
 		public static BigInteger CalculateX(IDigest digest, BigInteger N, byte[] salt, byte[] identity, byte[] password)
 	    {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return CalculateX(digest, N, salt.AsSpan(), identity.AsSpan(), password.AsSpan());
 #else
             byte[] output = new byte[digest.GetDigestSize()];
@@ -38,7 +38,7 @@ namespace Org.BouncyCastle.Crypto.Agreement.Srp
 #endif
 	    }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static BigInteger CalculateX(IDigest digest, BigInteger N, ReadOnlySpan<byte> salt,
             ReadOnlySpan<byte> identity, ReadOnlySpan<byte> password)
         {
@@ -124,7 +124,7 @@ namespace Org.BouncyCastle.Crypto.Agreement.Srp
             int paddedLength = (N.BitLength + 7) / 8;
             int digestSize = digest.GetDigestSize();
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> bytes = paddedLength <= 512
                 ? stackalloc byte[paddedLength]
                 : new byte[paddedLength];
@@ -152,7 +152,7 @@ namespace Org.BouncyCastle.Crypto.Agreement.Srp
             int paddedLength = (N.BitLength + 7) / 8;
             int digestSize = digest.GetDigestSize();
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> bytes = paddedLength <= 512
                 ? stackalloc byte[paddedLength]
                 : new byte[paddedLength];
@@ -188,7 +188,7 @@ namespace Org.BouncyCastle.Crypto.Agreement.Srp
 	    	int paddedLength = (N.BitLength + 7) / 8;
             int digestSize = digest.GetDigestSize();
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> bytes = paddedLength <= 512
                 ? stackalloc byte[paddedLength]
                 : new byte[paddedLength];

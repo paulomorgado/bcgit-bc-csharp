@@ -122,7 +122,7 @@ namespace Org.BouncyCastle.Crypto.Macs
 			return blockSize;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int ProcessBlock(ReadOnlySpan<byte> input, Span<byte> output)
         {
             Check.DataLength(input, blockSize, "input buffer too short");
@@ -291,7 +291,7 @@ namespace Org.BouncyCastle.Crypto.Macs
             if (len < 0)
                 throw new ArgumentException("Can't have a negative input length!");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             BlockUpdate(input.AsSpan(inOff, len));
 #else
             int blockSize = cipher.GetBlockSize();
@@ -323,7 +323,7 @@ namespace Org.BouncyCastle.Crypto.Macs
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void BlockUpdate(ReadOnlySpan<byte> input)
         {
             int blockSize = cipher.GetBlockSize();
@@ -354,7 +354,7 @@ namespace Org.BouncyCastle.Crypto.Macs
 
         public int DoFinal(byte[] output, int outOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return DoFinal(output.AsSpan(outOff));
 #else
             int blockSize = cipher.GetBlockSize();
@@ -384,7 +384,7 @@ namespace Org.BouncyCastle.Crypto.Macs
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int DoFinal(Span<byte> output)
         {
             int blockSize = cipher.GetBlockSize();

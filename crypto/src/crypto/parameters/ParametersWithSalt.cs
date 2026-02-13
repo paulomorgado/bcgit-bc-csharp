@@ -8,7 +8,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
     public class ParametersWithSalt
         : ICipherParameters
     {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static ParametersWithSalt Create<TState>(ICipherParameters parameters, int saltLength, TState state,
             System.Buffers.SpanAction<byte, TState> action)
         {
@@ -38,7 +38,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
             m_salt = Arrays.CopySegment(salt, saltOff, saltLen);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public ParametersWithSalt(ICipherParameters parameters, ReadOnlySpan<byte> salt)
         {
             // NOTE: 'parameters' may be null to imply key re-use
@@ -47,7 +47,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
         }
 #endif
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private ParametersWithSalt(ICipherParameters parameters, int saltLength)
         {
             // NOTE: 'parameters' may be null to imply key re-use
@@ -60,7 +60,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
 
         public byte[] GetSalt() => Arrays.InternalCopyBuffer(m_salt);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal ReadOnlySpan<byte> InternalSalt => m_salt;
 #endif
 

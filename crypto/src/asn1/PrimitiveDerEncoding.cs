@@ -27,7 +27,7 @@ namespace Org.BouncyCastle.Asn1
             if (length != that.m_contentsOctets.Length)
                 return length - that.m_contentsOctets.Length;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return this.m_contentsOctets.AsSpan(0, length).SequenceCompareTo(
                    that.m_contentsOctets.AsSpan(0, length));
 #else

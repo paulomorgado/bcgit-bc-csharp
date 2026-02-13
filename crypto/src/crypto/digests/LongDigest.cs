@@ -123,7 +123,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void BlockUpdate(ReadOnlySpan<byte> input)
         {
             int inOff = 0;
@@ -214,7 +214,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal void ProcessWord(ReadOnlySpan<byte> word)
         {
             W[wOff] = Pack.BE_To_UInt64(word);
@@ -403,7 +403,7 @@ namespace Org.BouncyCastle.Crypto.Digests
         public abstract string AlgorithmName { get; }
         public abstract int GetDigestSize();
         public abstract int DoFinal(byte[] output, int outOff);
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public abstract int DoFinal(Span<byte> output);
 #endif
         public abstract IMemoable Copy();

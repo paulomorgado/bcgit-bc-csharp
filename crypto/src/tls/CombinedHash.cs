@@ -43,7 +43,7 @@ namespace Org.BouncyCastle.Tls
             m_sha1.Update(input, inOff, len);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void Update(ReadOnlySpan<byte> input)
         {
             m_md5.Update(input);

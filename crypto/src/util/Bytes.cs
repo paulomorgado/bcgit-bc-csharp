@@ -1,5 +1,5 @@
 ﻿using System;
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 using System.Numerics;
 using System.Runtime.InteropServices;
 #endif
@@ -13,7 +13,7 @@ namespace Org.BouncyCastle.Utilities
 
         public static void Xor(int len, byte[] x, byte[] y, byte[] z)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Xor(len, x.AsSpan(0, len), y.AsSpan(0, len), z.AsSpan(0, len));
 #else
             for (int i = 0; i < len; ++i)
@@ -25,7 +25,7 @@ namespace Org.BouncyCastle.Utilities
 
         public static void Xor(int len, byte[] x, int xOff, byte[] y, int yOff, byte[] z, int zOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Xor(len, x.AsSpan(xOff, len), y.AsSpan(yOff, len), z.AsSpan(zOff, len));
 #else
             for (int i = 0; i < len; ++i)
@@ -35,7 +35,7 @@ namespace Org.BouncyCastle.Utilities
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void Xor(int len, ReadOnlySpan<byte> x, ReadOnlySpan<byte> y, Span<byte> z)
         {
             int i = 0;
@@ -77,7 +77,7 @@ namespace Org.BouncyCastle.Utilities
 
         public static void XorTo(int len, byte[] x, byte[] z)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             XorTo(len, x.AsSpan(0, len), z.AsSpan(0, len));
 #else
             for (int i = 0; i < len; ++i)
@@ -89,7 +89,7 @@ namespace Org.BouncyCastle.Utilities
 
         public static void XorTo(int len, byte[] x, int xOff, byte[] z, int zOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             XorTo(len, x.AsSpan(xOff, len), z.AsSpan(zOff, len));
 #else
             for (int i = 0; i < len; ++i)
@@ -99,7 +99,7 @@ namespace Org.BouncyCastle.Utilities
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void XorTo(int len, ReadOnlySpan<byte> x, Span<byte> z)
         {
             int i = 0;

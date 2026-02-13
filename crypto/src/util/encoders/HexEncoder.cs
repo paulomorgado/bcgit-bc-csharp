@@ -9,7 +9,7 @@ namespace Org.BouncyCastle.Utilities.Encoders
         private static readonly char[] CharsLower = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
         private static readonly char[] CharsUpper = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static int EncodeLower(ReadOnlySpan<byte> input, Span<char> output)
         {
             int inPos = 0;
@@ -80,7 +80,7 @@ namespace Org.BouncyCastle.Utilities.Encoders
 
         public int Encode(byte[] inBuf, int inOff, int inLen, byte[] outBuf, int outOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return Encode(inBuf.AsSpan(inOff, inLen), outBuf.AsSpan(outOff));
 #else
             int inPos = inOff;
@@ -99,7 +99,7 @@ namespace Org.BouncyCastle.Utilities.Encoders
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int Encode(ReadOnlySpan<byte> input, Span<byte> output)
         {
             int inPos = 0;
@@ -125,7 +125,7 @@ namespace Org.BouncyCastle.Utilities.Encoders
         */
         public int Encode(byte[] buf, int off, int len, Stream outStream)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return Encode(buf.AsSpan(off, len), outStream);
 #else
             if (len < 0)
@@ -145,7 +145,7 @@ namespace Org.BouncyCastle.Utilities.Encoders
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int Encode(ReadOnlySpan<byte> data, Stream outStream)
         {
             Span<byte> tmp = stackalloc byte[72];
@@ -174,7 +174,7 @@ namespace Org.BouncyCastle.Utilities.Encoders
         */
         public int Decode(byte[] data, int off, int length, Stream outStream)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return Decode(data.AsSpan(off, length), outStream);
 #else
             byte b1, b2;
@@ -231,7 +231,7 @@ namespace Org.BouncyCastle.Utilities.Encoders
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int Decode(ReadOnlySpan<byte> data, Stream outStream)
         {
             byte b1, b2;
@@ -298,7 +298,7 @@ namespace Org.BouncyCastle.Utilities.Encoders
         {
             byte b1, b2;
             int length = 0;
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> buf = stackalloc byte[36];
 #else
             byte[] buf = new byte[36];
@@ -338,7 +338,7 @@ namespace Org.BouncyCastle.Utilities.Encoders
 
                 if (bufOff == buf.Length)
                 {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                     outStream.Write(buf);
 #else
                     outStream.Write(buf, 0, bufOff);
@@ -351,7 +351,7 @@ namespace Org.BouncyCastle.Utilities.Encoders
 
             if (bufOff > 0)
             {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 outStream.Write(buf[..bufOff]);
 #else
                 outStream.Write(buf, 0, bufOff);

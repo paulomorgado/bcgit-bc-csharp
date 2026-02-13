@@ -7,7 +7,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
     public class ParametersWithID
         : ICipherParameters
     {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static ParametersWithID Create<TState>(ICipherParameters parameters, int idLength, TState state,
             System.Buffers.SpanAction<byte, TState> action)
         {
@@ -37,7 +37,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
             m_id = Arrays.CopySegment(id, idOff, idLen);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public ParametersWithID(ICipherParameters parameters, ReadOnlySpan<byte> id)
         {
             // NOTE: 'parameters' may be null to imply key re-use
@@ -46,7 +46,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
         }
 #endif
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private ParametersWithID(ICipherParameters parameters, int idLength)
         {
             // NOTE: 'parameters' may be null to imply key re-use
@@ -61,7 +61,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
 
         public int IDLength => m_id.Length;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal ReadOnlySpan<byte> InternalID => m_id;
 #endif
 

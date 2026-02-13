@@ -26,7 +26,7 @@ namespace Org.BouncyCastle.X509.Extension
         {
             var publicKey = spki.PublicKey;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             if (publicKey.IsOctetAligned())
                 return CalculateSha1(publicKey.GetOctetsSpan());
 #endif
@@ -37,7 +37,7 @@ namespace Org.BouncyCastle.X509.Extension
         private static byte[] CalculateSha1(byte[] data) =>
             DigestUtilities.CalculateDigest(OiwObjectIdentifiers.IdSha1, data);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static byte[] CalculateSha1(ReadOnlySpan<byte> data) =>
             DigestUtilities.CalculateDigest(OiwObjectIdentifiers.IdSha1, data);
 #endif

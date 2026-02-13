@@ -13,7 +13,7 @@ namespace Org.BouncyCastle.Tls.Crypto.Impl
         /// <exception cref="IOException"/>
         void SetKey(byte[] key, int keyOff, int keyLen);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         void SetKey(ReadOnlySpan<byte> key);
 #endif
 

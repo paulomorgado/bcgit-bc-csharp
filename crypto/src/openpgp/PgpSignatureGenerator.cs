@@ -132,7 +132,7 @@ namespace Org.BouncyCastle.Bcpg.OpenPgp
 
 		public void Update(byte[] b, int off, int len)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Update(b.AsSpan(off, len));
 #else
             if (signatureType == PgpSignature.CanonicalTextDocument)
@@ -152,7 +152,7 @@ namespace Org.BouncyCastle.Bcpg.OpenPgp
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void Update(ReadOnlySpan<byte> input)
         {
             if (signatureType == PgpSignature.CanonicalTextDocument)

@@ -157,7 +157,7 @@ namespace Org.BouncyCastle.Crypto.Generators
             if (!AllowedVersions.Contains(version))
                 throw new ArgumentException("Bcrypt version '" + version + "' is not supported by this implementation", "bcryptString");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             if (!int.TryParse(bcryptString.AsSpan(4, 2), out int cost))
 #else
             if (!int.TryParse(bcryptString.Substring(4, 2), out int cost))
@@ -241,7 +241,7 @@ namespace Org.BouncyCastle.Crypto.Generators
                 throw new DataLengthException("Invalid base64 salt length: " + saltString.Length + " , 22 required.");
 
             // Padding: add two '\u0000'
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<char> saltChars = stackalloc char[24];
             saltString.CopyTo(saltChars);
 #else

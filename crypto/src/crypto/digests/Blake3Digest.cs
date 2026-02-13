@@ -334,7 +334,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             if (remainingLength == 0)
             {
                 /* Process the buffer */
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 CompressBlock(m_theBuffer);
 #else
                 CompressBlock(m_theBuffer, 0);
@@ -356,7 +356,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             if (pMessage == null)
                 return;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             BlockUpdate(pMessage.AsSpan(pOffset, pLen));
 #else
             if (pLen == 0)
@@ -409,7 +409,7 @@ namespace Org.BouncyCastle.Crypto.Digests
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void BlockUpdate(ReadOnlySpan<byte> input)
         {
             if (input.IsEmpty)
@@ -479,7 +479,7 @@ namespace Org.BouncyCastle.Crypto.Digests
         {
             Check.OutputLength(pOut, pOutOffset, pOutLen, "output buffer too short");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return Output(pOut.AsSpan(pOutOffset, pOutLen));
 #else
             /* If we have not started outputting yet */
@@ -532,7 +532,7 @@ namespace Org.BouncyCastle.Crypto.Digests
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int DoFinal(Span<byte> output)
         {
             int digestSize = GetDigestSize();
@@ -646,7 +646,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             return new Blake3Digest(this);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private void CompressBlock(ReadOnlySpan<byte> block)
         {
             /* Initialise state and compress message */
@@ -741,7 +741,7 @@ namespace Org.BouncyCastle.Crypto.Digests
         {
             /* Initialise state and compress message */
             InitChunkBlock(pDataLen, true);
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             InitM(m_theBuffer);
 #else
             InitM(m_theBuffer, 0);

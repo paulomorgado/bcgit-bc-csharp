@@ -70,7 +70,7 @@ namespace Org.BouncyCastle.Crypto.Generators
         /**
          * generation of a derived key ala Pkcs12 V1.0.
          */
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private void GenerateDerivedKey(byte idByte, Span<byte> dKey)
 #else
         private void GenerateDerivedKey(byte idByte, byte[] dKey)
@@ -118,7 +118,7 @@ namespace Org.BouncyCastle.Crypto.Generators
                     Adjust(I, j_v, B);
                 }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 if (i == c)
                 {
                     dKey.Slice((i - 1) * u).CopyFrom(A);
@@ -157,7 +157,7 @@ namespace Org.BouncyCastle.Crypto.Generators
             byte[] dKey = GenerateDerivedKey(KeyMaterial, keySize);
             KeyParameter key = ParameterUtilities.CreateKeyParameter(algorithm, dKey, 0, keySize);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return ParametersWithIV.Create(key, ivSize, this,
                 (bytes, self) => self.GenerateDerivedKey(IVMaterial, bytes));
 #else
@@ -178,7 +178,7 @@ namespace Org.BouncyCastle.Crypto.Generators
         {
             keySize /= 8;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return KeyParameter.Create(keySize, this,
                 (bytes, self) => self.GenerateDerivedKey(MacMaterial, bytes));
 #else

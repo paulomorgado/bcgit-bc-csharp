@@ -138,7 +138,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.SphincsPlus
             BrAesCtOrtho(output);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal void Haraka512Perm(Span<byte> output)
 #else
         internal void Haraka512Perm(byte[] output)
@@ -193,7 +193,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.SphincsPlus
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal void Haraka256Perm(Span<byte> output)
 #else
         internal void Haraka256Perm(byte[] output)
@@ -219,7 +219,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.SphincsPlus
             BrAesCtOrtho(q);
             for (int i = 0; i < 4; i++)
             {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 Pack.UInt32_To_LE(q[i << 1], output[(i << 2)..]);
                 Pack.UInt32_To_LE(q[(i << 1) + 1], output[((i << 2) + 16)..]);
 #else
@@ -765,7 +765,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.SphincsPlus
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         protected static void Xor(ReadOnlySpan<byte> x, ReadOnlySpan<byte> y, Span<byte> z)
         {
             for (int i = 0; i < z.Length; i++)

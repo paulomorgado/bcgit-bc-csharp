@@ -51,7 +51,7 @@ namespace Org.BouncyCastle.Bcpg
 
         internal static BigInteger ToMpiBigInteger(ECPoint point)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             int encodedLength = point.GetEncodedLength(false);
             Span<byte> encoding = encodedLength <= 512
                 ? stackalloc byte[encodedLength]
@@ -68,7 +68,7 @@ namespace Org.BouncyCastle.Bcpg
             int bitLength = StreamUtilities.RequireUInt16BE(bcpgIn);
             int byteLength = (bitLength + 7) / 8;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> bytes = byteLength <= 512
                 ? stackalloc byte[byteLength]
                 : new byte[byteLength];

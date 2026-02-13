@@ -72,7 +72,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.Bike
 
         private void FunctionL(ulong[] e01, byte[] c1, int c1Off)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> hashRes = stackalloc byte[48];
             Sha3Digest.CalculateDigest(e01, 16 * R_BYTE, hashRes, 384);
             hashRes[..L_BYTE].CopyTo(c1.AsSpan(c1Off));
@@ -85,7 +85,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.Bike
 
         private void FunctionK(byte[] m, byte[] c01, byte[] result)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> hashRes = stackalloc byte[48];
 
             var digest = new Sha3Digest(384);
@@ -108,7 +108,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.Bike
 
         private void FunctionK(byte[] m, byte[] c0, byte[] c1, byte[] result)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> hashRes = stackalloc byte[48];
 
             var digest = new Sha3Digest(384);
@@ -144,7 +144,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.Bike
         internal void GenKeyPair(byte[] h0, byte[] h1, byte[] sigma, byte[] h, SecureRandom random)
         {
             // Randomly generate seeds
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> seeds = stackalloc byte[64];
 #else
             byte[] seeds = new byte[64];
@@ -152,7 +152,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.Bike
             random.NextBytes(seeds);
 
             IXof digest = new ShakeDigest(256);
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             digest.BlockUpdate(seeds[..L_BYTE]);
 #else
             digest.BlockUpdate(seeds, 0, L_BYTE);
@@ -172,7 +172,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.Bike
             bikeRing.EncodeBytes(h0Element, h);
 
             //3. Parse seed2 as sigma
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             sigma.AsSpan().CopyFrom(seeds[L_BYTE..]);
 #else
             Array.Copy(seeds, L_BYTE, sigma, 0, sigma.Length);

@@ -35,7 +35,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
             Array.Copy(buf, off, data, 0, KeySize);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public Ed448PrivateKeyParameters(ReadOnlySpan<byte> buf)
             : base(true)
         {
@@ -58,7 +58,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
             Array.Copy(data, 0, buf, off, KeySize);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void Encode(Span<byte> buf)
         {
             data.CopyTo(buf);
@@ -70,7 +70,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
             return Arrays.Clone(data);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal ReadOnlySpan<byte> DataSpan => data;
 
         internal ReadOnlyMemory<byte> DataMemory => data;
@@ -118,7 +118,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void Sign(Ed448.Algorithm algorithm, byte[] ctx, ReadOnlySpan<byte> msg, Span<byte> sig)
         {
             Ed448PublicKeyParameters publicKey = GeneratePublicKey();
@@ -157,7 +157,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
 #endif
 
         private static Ed448PublicKeyParameters CreatePublicKey(byte[] data) =>
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             new Ed448PublicKeyParameters(Ed448.GeneratePublicKey(data));
 #else
             new Ed448PublicKeyParameters(Ed448.GeneratePublicKey(data, 0));

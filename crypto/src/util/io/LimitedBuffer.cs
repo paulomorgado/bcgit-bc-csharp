@@ -20,7 +20,7 @@ namespace Org.BouncyCastle.Utilities.IO
             return m_count;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int CopyTo(Span<byte> buffer)
         {
             m_buf.AsSpan(0, m_count).CopyTo(buffer);
@@ -43,7 +43,7 @@ namespace Org.BouncyCastle.Utilities.IO
             m_count += count;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if NET6_0_OR_GREATER
         public override void Write(ReadOnlySpan<byte> buffer)
         {
             buffer.CopyTo(m_buf.AsSpan(m_count));

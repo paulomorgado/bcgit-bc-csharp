@@ -65,7 +65,7 @@ namespace Org.BouncyCastle.Crypto.Macs
         {
             if (bufOff == buf.Length)
             {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 ProcessBlock(buf);
 #else
                 ProcessBlock(buf, 0);
@@ -81,7 +81,7 @@ namespace Org.BouncyCastle.Crypto.Macs
             if (len < 0)
                 throw new ArgumentException("Can't have a negative input length!");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             BlockUpdate(input.AsSpan(inOff, len));
 #else
             int blockSize = engine.GetBlockSize();
@@ -112,7 +112,7 @@ namespace Org.BouncyCastle.Crypto.Macs
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void BlockUpdate(ReadOnlySpan<byte> input)
         {
             int blockSize = engine.GetBlockSize();
@@ -140,7 +140,7 @@ namespace Org.BouncyCastle.Crypto.Macs
         }
 #endif
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private void ProcessBlock(ReadOnlySpan<byte> input)
         {
             Xor(c, input, cTemp);
@@ -189,7 +189,7 @@ namespace Org.BouncyCastle.Crypto.Macs
             return macSize;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int DoFinal(Span<byte> output)
         {
             if (bufOff % buf.Length != 0)

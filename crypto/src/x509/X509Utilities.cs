@@ -117,7 +117,7 @@ namespace Org.BouncyCastle.X509
             return digestResult.Collect();
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static byte[] CalculateDigest(IDigestFactory digestFactory, ReadOnlySpan<byte> buf)
         {
             var digestCalculator = digestFactory.CreateCalculator();
@@ -143,7 +143,7 @@ namespace Org.BouncyCastle.X509
             return streamCalculator.GetResult();
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static TResult CalculateResult<TResult>(IStreamCalculator<TResult> streamCalculator,
             ReadOnlySpan<byte> buf)
         {
@@ -167,7 +167,7 @@ namespace Org.BouncyCastle.X509
 
         internal static DerBitString CollectDerBitString(IBlockResult result)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             var maxResultLength = result.GetMaxResultLength();
             Span<byte> data = maxResultLength <= 512
                 ? stackalloc byte[maxResultLength]
@@ -221,7 +221,7 @@ namespace Org.BouncyCastle.X509
         {
             var result = CalculateResult(macFactory.CreateCalculator(), asn1Encodable).Collect();
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return Arrays.FixedTimeEquals(result, expected.GetOctetsSpan());
 #else
             return Arrays.FixedTimeEquals(result, expected.GetOctets());

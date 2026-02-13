@@ -17,7 +17,7 @@ namespace Org.BouncyCastle.Crypto.Prng
         {
             byte[] bytes = new byte[numBytes];
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             GenerateSeed(entropySource, bytes);
 #else
             int count = 0;
@@ -33,7 +33,7 @@ namespace Org.BouncyCastle.Crypto.Prng
             return bytes;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void GenerateSeed(IEntropySource entropySource, Span<byte> seed)
         {
             while (!seed.IsEmpty)

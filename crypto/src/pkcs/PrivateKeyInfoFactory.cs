@@ -109,7 +109,7 @@ namespace Org.BouncyCastle.Pkcs
                 var pub = ECKeyPairGenerator.GetCorrespondingPublicKey(ecKey);
                 var q = pub.Q;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 int encodedLength = q.GetEncodedLength(false);
                 Span<byte> pubEncoding = encodedLength <= 512
                     ? stackalloc byte[encodedLength]

@@ -151,7 +151,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             m_aadData.Write(input, inOff, len);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void ProcessAadBytes(ReadOnlySpan<byte> input)
         {
             CheckAad();
@@ -163,7 +163,7 @@ namespace Org.BouncyCastle.Crypto.Engines
         public int ProcessByte(byte input, byte[] output, int outOff) =>
             ProcessBytes(new byte[1]{ input }, 0, 1, output, outOff);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int ProcessByte(byte input, Span<byte> output) => ProcessBytes(stackalloc byte[1]{ input }, output);
 #endif
 
@@ -173,7 +173,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 
             Check.DataLength(input, inOff, len, "input buffer too short");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return ProcessBytes(input.AsSpan(inOff, len), output.AsSpan(outOff));
 #else
             int updateOutputSize = GetUpdateOutputSize(len);
@@ -223,7 +223,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int ProcessBytes(ReadOnlySpan<byte> input, Span<byte> output)
         {
             int updateOutputSize = GetUpdateOutputSize(input.Length);
@@ -275,7 +275,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 
         public int DoFinal(byte[] output, int outOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return DoFinal(output.AsSpan(outOff));
 #else
             int outputSize = GetOutputSize(0);
@@ -323,7 +323,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int DoFinal(Span<byte> output)
         {
             int outputSize = GetOutputSize(0);
@@ -615,7 +615,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private void ProcessBufferDecrypt(ReadOnlySpan<byte> input, Span<byte> output)
         {
             for (int i = 0, len = input.Length; i < len; ++i)

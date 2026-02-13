@@ -576,7 +576,7 @@ namespace Org.BouncyCastle.Bcpg.OpenPgp
 
                         return PublicKeyFactory.CreateKey(new SubjectPublicKeyInfo(
                             new AlgorithmIdentifier(curveOid),
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                             pEnc.AsSpan(1)));
 #else
                             Arrays.CopyOfRange(pEnc, 1, pEnc.Length)));
@@ -590,7 +590,7 @@ namespace Org.BouncyCastle.Bcpg.OpenPgp
 
                         return PublicKeyFactory.CreateKey(new SubjectPublicKeyInfo(
                             new AlgorithmIdentifier(curveOid),
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                             pEnc.AsSpan(1)));
 #else
                             Arrays.CopyOfRange(pEnc, 1, pEnc.Length)));
@@ -615,7 +615,7 @@ namespace Org.BouncyCastle.Bcpg.OpenPgp
 
                         return PublicKeyFactory.CreateKey(new SubjectPublicKeyInfo(
                             new AlgorithmIdentifier(curveOid),
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                             pEnc.AsSpan(1)));
 #else
                             Arrays.CopyOfRange(pEnc, 1, pEnc.Length)));
@@ -629,7 +629,7 @@ namespace Org.BouncyCastle.Bcpg.OpenPgp
 
                         return PublicKeyFactory.CreateKey(new SubjectPublicKeyInfo(
                             new AlgorithmIdentifier(curveOid),
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                             pEnc.AsSpan(1)));
 #else
                             Arrays.CopyOfRange(pEnc, 1, pEnc.Length)));
@@ -664,7 +664,7 @@ namespace Org.BouncyCastle.Bcpg.OpenPgp
 
             BigInteger encodedPoint = ecK.EncodedPoint;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             int encodedLength = BigIntegers.GetUnsignedByteLength(encodedPoint);
             Span<byte> encoding = encodedLength <= 512
                 ? stackalloc byte[encodedLength]

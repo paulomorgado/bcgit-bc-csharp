@@ -7,7 +7,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
     public class ParametersWithIV
         : ICipherParameters
     {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         // TODO[api] 'parameter' -> 'parameters'
         public static ParametersWithIV Create<TState>(ICipherParameters parameter, int ivLength, TState state,
             System.Buffers.SpanAction<byte, TState> action)
@@ -38,7 +38,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
             m_iv = Arrays.CopySegment(iv, ivOff, ivLen);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public ParametersWithIV(ICipherParameters parameters, ReadOnlySpan<byte> iv)
         {
             // NOTE: 'parameters' may be null to imply key re-use
@@ -47,7 +47,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
         }
 #endif
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private ParametersWithIV(ICipherParameters parameters, int ivLength)
         {
             // NOTE: 'parameters' may be null to imply key re-use
@@ -60,7 +60,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
 
         public byte[] GetIV() => Arrays.InternalCopyBuffer(m_iv);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal ReadOnlySpan<byte> InternalIV => m_iv;
 #endif
 

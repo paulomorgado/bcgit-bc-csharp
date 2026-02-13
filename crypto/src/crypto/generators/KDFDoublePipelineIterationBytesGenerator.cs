@@ -79,7 +79,7 @@ namespace Org.BouncyCastle.Crypto.Generators
 
         public int GenerateBytes(byte[] output, int outOff, int length)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return GenerateBytes(output.AsSpan(outOff, length));
 #else
             if (generatedBytes >= maxSizeExcl - length)
@@ -111,7 +111,7 @@ namespace Org.BouncyCastle.Crypto.Generators
 #endif
         }
 
-    #if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+    #if !NETFRAMEWORK
             public int GenerateBytes(Span<byte> output)
             {
                 int length = output.Length;

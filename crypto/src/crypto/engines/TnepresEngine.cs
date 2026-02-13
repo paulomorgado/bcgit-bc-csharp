@@ -157,7 +157,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             return w;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal override void EncryptBlock(ReadOnlySpan<byte> input, Span<byte> output)
         {
             X3 = (int)Pack.BE_To_UInt32(input);

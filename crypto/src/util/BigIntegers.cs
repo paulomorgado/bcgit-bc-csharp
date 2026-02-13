@@ -17,7 +17,7 @@ namespace Org.BouncyCastle.Utilities
 
         private const int MaxIterations = 1000;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         [CLSCompliant(false)]
         public static void AsUint32ArrayLittleEndian(BigInteger n, Span<uint> buf)
         {
@@ -53,7 +53,7 @@ namespace Org.BouncyCastle.Utilities
          */
         public static byte[] AsUnsignedByteArray(int length, BigInteger n)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             int bytesLength = n.GetLengthofByteArrayUnsigned();
 
             if (bytesLength > length)
@@ -93,7 +93,7 @@ namespace Org.BouncyCastle.Utilities
          */
         public static void AsUnsignedByteArray(BigInteger n, byte[] buf, int off, int len)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             AsUnsignedByteArray(n, buf.AsSpan(off, len));
 #else
             byte[] bytes = n.ToByteArrayUnsigned();
@@ -108,7 +108,7 @@ namespace Org.BouncyCastle.Utilities
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void AsUnsignedByteArray(BigInteger n, Span<byte> buf)
         {
             int bytesLength = n.GetLengthofByteArrayUnsigned();
@@ -198,7 +198,7 @@ namespace Org.BouncyCastle.Utilities
 
             int bits = M.BitLength;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             if (bits <= 2048)
             {
                 int len = Nat.GetLengthForBits(bits);
@@ -241,7 +241,7 @@ namespace Org.BouncyCastle.Utilities
 
             int bits = M.BitLength;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             if (bits <= 2048)
             {
                 int len = Nat.GetLengthForBits(bits);
@@ -280,7 +280,7 @@ namespace Org.BouncyCastle.Utilities
 
             int bits = M.BitLength;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             if (bits <= 2048)
             {
                 int len = Nat.GetLengthForBits(bits);
@@ -314,7 +314,7 @@ namespace Org.BouncyCastle.Utilities
 
             int bits = M.BitLength;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             if (bits <= 2048)
             {
                 int len = Nat.GetLengthForBits(bits);
@@ -335,7 +335,7 @@ namespace Org.BouncyCastle.Utilities
 
         public static void WriteUnsignedByteArray(Stream outStr, BigInteger n)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             int length = n.GetLengthofByteArrayUnsigned();
             if (length <= 512)
             {

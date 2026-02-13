@@ -1,4 +1,4 @@
-﻿#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+﻿#if !NETFRAMEWORK
 using System;
 using System.Runtime.CompilerServices;
 
@@ -11,7 +11,7 @@ namespace Org.BouncyCastle.Utilities
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void CopyFrom<T>(this Span<T> output, ReadOnlySpan<T> input)
         {
-            input[..output.Length].CopyTo(output);
+            input.Slice(0, output.Length).CopyTo(output);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -38,5 +38,14 @@ namespace Org.BouncyCastle.Utilities
             return array == null ? Span<T>.Empty : array.AsSpan(start);
         }
     }
+}
+#endif
+
+#if NETSTANDARD2_0
+namespace System.Buffers
+{
+    public delegate void SpanAction<T, in TArg>(Span<T> span, TArg arg);
+ 
+    public delegate void ReadOnlySpanAction<T, in TArg>(ReadOnlySpan<T> span, TArg arg);
 }
 #endif

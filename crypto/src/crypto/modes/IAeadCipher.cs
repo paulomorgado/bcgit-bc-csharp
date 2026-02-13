@@ -41,7 +41,7 @@ namespace Org.BouncyCastle.Crypto.Modes
         /// <param name="len">The number of bytes to be processed.</param>
         void ProcessAadBytes(byte[] inBytes, int inOff, int len);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         /// <summary>Add a span of bytes to the associated data check.</summary>
         /// <remarks>If the implementation supports it, this will be an online operation and will not retain the associated data.</remarks>
         /// <param name="input">the span containing the data.</param>
@@ -59,7 +59,7 @@ namespace Org.BouncyCastle.Crypto.Modes
 		*/
         int ProcessByte(byte input, byte[] outBytes, int outOff);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         int ProcessByte(byte input, Span<byte> output);
 #endif
 
@@ -76,7 +76,7 @@ namespace Org.BouncyCastle.Crypto.Modes
         */
         int ProcessBytes(byte[] inBytes, int inOff, int len, byte[] outBytes, int outOff);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         int ProcessBytes(ReadOnlySpan<byte> input, Span<byte> output);
 #endif
 
@@ -91,7 +91,7 @@ namespace Org.BouncyCastle.Crypto.Modes
         */
         int DoFinal(byte[] outBytes, int outOff);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         int DoFinal(Span<byte> output);
 #endif
 

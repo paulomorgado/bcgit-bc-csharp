@@ -109,7 +109,7 @@ namespace Org.BouncyCastle.Math.EC
             BigIntegers.AsUnsignedByteArray(ToBigInteger(), buf, off, GetEncodedLength());
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual void EncodeTo(Span<byte> buf)
         {
             BigIntegers.AsUnsignedByteArray(ToBigInteger(), buf[..GetEncodedLength()]);
@@ -529,7 +529,7 @@ namespace Org.BouncyCastle.Math.EC
 
         public override int GetHashCode()
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return HashCode.Combine(q, x);
 #else
             return q.GetHashCode() ^ x.GetHashCode();
@@ -920,7 +920,7 @@ namespace Org.BouncyCastle.Math.EC
 
         public override int GetHashCode()
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return HashCode.Combine(x, m, Arrays.GetHashCode(ks));
 #else
             return x.GetHashCode() ^ m ^ Arrays.GetHashCode(ks);

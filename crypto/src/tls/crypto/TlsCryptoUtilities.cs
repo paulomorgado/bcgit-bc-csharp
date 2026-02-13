@@ -190,7 +190,7 @@ namespace Org.BouncyCastle.Tls.Crypto
         public static TlsSecret HkdfExpandLabel(TlsSecret secret, int cryptoHashAlgorithm, string label,
             byte[] context, int length)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return HkdfExpandLabel(secret, cryptoHashAlgorithm, label.AsSpan(), context.AsSpan(), length);
 #else
             int labelLength = label.Length;
@@ -232,7 +232,7 @@ namespace Org.BouncyCastle.Tls.Crypto
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         /// <exception cref="IOException"/>
         public static TlsSecret HkdfExpandLabel(TlsSecret secret, int cryptoHashAlgorithm, ReadOnlySpan<char> label,
             ReadOnlySpan<byte> context, int length)

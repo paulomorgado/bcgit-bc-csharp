@@ -6,6 +6,7 @@
     <AssemblyOriginatorKeyFile>..\..\BouncyCastle.NET.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
     <NoWarn>1591</NoWarn>
+    <LangVersion>10.0</LangVersion>
 
     <AssemblyName>BouncyCastle.Cryptography</AssemblyName>
     <AssemblyTitle>BouncyCastle.NET Cryptography ($(TargetFramework))</AssemblyTitle>
@@ -102,6 +103,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="System.Memory" Version="4.6.3" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
   </ItemGroup>
 
   <Target Name="FixAssemblyAttributes" AfterTargets="GetBuildVersion">

@@ -46,7 +46,7 @@ namespace Org.BouncyCastle.Asn1
         {
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal DerOctetString(ReadOnlySpan<byte> contents)
             : base(contents)
         {
@@ -80,7 +80,7 @@ namespace Org.BouncyCastle.Asn1
             asn1Out.Write(buf, off, len);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static void Encode(Asn1OutputStream asn1Out, ReadOnlySpan<byte> buf)
         {
             asn1Out.WriteIdentifier(Asn1Tags.Universal, Asn1Tags.OctetString);

@@ -1,5 +1,5 @@
 using System;
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 using System.Buffers;
 #endif
 
@@ -10,7 +10,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
     public class KeyParameter
         : ICipherParameters
     {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static KeyParameter Create<TState>(int length, TState state, SpanAction<byte, TState> action)
         {
             if (action == null)
@@ -36,7 +36,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
             m_key = Arrays.CopySegment(key, keyOff, keyLen);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public KeyParameter(ReadOnlySpan<byte> key)
         {
             m_key = key.ToArray();
@@ -68,7 +68,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
 
         internal bool FixedTimeEquals(byte[] data) => Arrays.FixedTimeEquals(m_key, data);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal ReadOnlySpan<byte> InternalKey => m_key;
 #endif
 

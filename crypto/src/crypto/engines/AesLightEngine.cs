@@ -188,7 +188,7 @@ namespace Org.BouncyCastle.Crypto.Engines
         */
         private uint[][] GenerateWorkingKey(KeyParameter keyParameter, bool forEncryption)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             var key = keyParameter.InternalKey;
 #else
             byte[] key = keyParameter.GetKey();
@@ -377,7 +377,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             Check.DataLength(input, inOff, 16, "input buffer too short");
             Check.OutputLength(output, outOff, 16, "output buffer too short");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             if (forEncryption)
             {
                 EncryptBlock(input.AsSpan(inOff), output.AsSpan(outOff), WorkingKey);
@@ -400,7 +400,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             return BLOCK_SIZE;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int ProcessBlock(ReadOnlySpan<byte> input, Span<byte> output)
         {
             if (WorkingKey == null)
@@ -422,7 +422,7 @@ namespace Org.BouncyCastle.Crypto.Engines
         }
 #endif
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private void EncryptBlock(ReadOnlySpan<byte> input, Span<byte> output, uint[][] KW)
         {
             uint C0 = Pack.LE_To_UInt32(input);

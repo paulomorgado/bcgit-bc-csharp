@@ -53,7 +53,7 @@ namespace Org.BouncyCastle.Crypto.Generators
 			return newKey;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         protected override KeyParameter EngineGenerateKeyParameter()
         {
             return KeyParameter.Create(strength, random, (bytes, random) =>

@@ -62,7 +62,7 @@ namespace Org.BouncyCastle.Crypto.Kems.MLKem
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal void CompressPolyVec(Span<byte> rBuf)
         {
             int pos = 0;
@@ -74,7 +74,7 @@ namespace Org.BouncyCastle.Crypto.Kems.MLKem
             ConditionalSubQ();
             if (m_engine.PolyVecCompressedBytes == m_engine.K * 320)
             {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 Span<short> t = stackalloc short[4];
 #else
                 short[] t = new short[4];
@@ -105,7 +105,7 @@ namespace Org.BouncyCastle.Crypto.Kems.MLKem
             }
             else if (m_engine.PolyVecCompressedBytes == m_engine.K * 352)
             {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 Span<short> t = stackalloc short[8];
 #else
                 short[] t = new short[8];
@@ -146,7 +146,7 @@ namespace Org.BouncyCastle.Crypto.Kems.MLKem
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal void DecompressPolyVec(ReadOnlySpan<byte> cBuf)
         {
             int pos = 0;
@@ -228,7 +228,7 @@ namespace Org.BouncyCastle.Crypto.Kems.MLKem
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal void FromBytes(ReadOnlySpan<byte> pk)
         {
             for (int i = 0; i < m_engine.K; i++)
@@ -270,7 +270,7 @@ namespace Org.BouncyCastle.Crypto.Kems.MLKem
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static int CheckModulus(MLKemEngine engine, ReadOnlySpan<byte> t)
         {
             int result = -1;

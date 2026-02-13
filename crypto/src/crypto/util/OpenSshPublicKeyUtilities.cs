@@ -131,7 +131,7 @@ namespace Org.BouncyCastle.Crypto.Utilities
                         "unable to find curve for " + magic + " using curve name " + curveName);
                 }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 ReadOnlySpan<byte> pointEncoding = buffer.ReadBlockSpan();
 #else
                 byte[] pointEncoding = buffer.ReadBlock();
@@ -142,7 +142,7 @@ namespace Org.BouncyCastle.Crypto.Utilities
             }
             else if (ED_25519.Equals(magic))
             {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 ReadOnlySpan<byte> pubKeyBytes = buffer.ReadBlockSpan();
 #else
                 byte[] pubKeyBytes = buffer.ReadBlock();

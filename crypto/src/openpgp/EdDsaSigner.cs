@@ -36,7 +36,7 @@ namespace Org.BouncyCastle.Bcpg.OpenPgp
             m_digest.BlockUpdate(input, inOff, inLen);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void BlockUpdate(ReadOnlySpan<byte> input)
         {
             m_digest.BlockUpdate(input);
@@ -65,7 +65,7 @@ namespace Org.BouncyCastle.Bcpg.OpenPgp
 
         private void FinalizeDigest()
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             int digestSize = m_digest.GetDigestSize();
             Span<byte> hash = digestSize <= 128
                 ? stackalloc byte[digestSize]

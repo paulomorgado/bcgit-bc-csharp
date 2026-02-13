@@ -61,7 +61,7 @@ namespace Org.BouncyCastle.Crypto.Macs
             int keyLength = keyParameter.KeyLength;
             if (keyLength > blockLength)
             {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 digest.BlockUpdate(keyParameter.InternalKey);
 #else
                 byte[] key = keyParameter.GetKey();
@@ -114,7 +114,7 @@ namespace Org.BouncyCastle.Crypto.Macs
             digest.BlockUpdate(input, inOff, len);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual void BlockUpdate(ReadOnlySpan<byte> input)
         {
             digest.BlockUpdate(input);
@@ -123,7 +123,7 @@ namespace Org.BouncyCastle.Crypto.Macs
 
         public virtual int DoFinal(byte[] output, int outOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return DoFinal(output.AsSpan(outOff));
 #else
             digest.DoFinal(outputBuf, blockLength);
@@ -155,7 +155,7 @@ namespace Org.BouncyCastle.Crypto.Macs
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual int DoFinal(Span<byte> output)
         {
             digest.DoFinal(outputBuf.AsSpan(blockLength));

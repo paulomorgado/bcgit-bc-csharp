@@ -332,7 +332,7 @@ namespace Org.BouncyCastle.Bcpg
             return pos;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if NET6_0_OR_GREATER
         public override int Read(Span<byte> buffer)
         {
             /*

@@ -42,7 +42,7 @@ namespace Org.BouncyCastle.Bcpg
             Debug.Assert(len > 0);
             Debug.Assert(len < 4);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> bs = stackalloc byte[4];
 #else
             byte[] bs = new byte[4];
@@ -79,7 +79,7 @@ namespace Org.BouncyCastle.Bcpg
             }
             }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             outStream.Write(bs);
 #else
             outStream.Write(bs, 0, bs.Length);
@@ -92,7 +92,7 @@ namespace Org.BouncyCastle.Bcpg
             int d2 = data[1];
             int d3 = data[2];
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> bs = stackalloc byte[4];
 #else
             byte[] bs = new byte[4];
@@ -103,7 +103,7 @@ namespace Org.BouncyCastle.Bcpg
             bs[2] = encodingTable[((d2 << 2) | (d3 >> 6)) & 0x3f];
             bs[3] = encodingTable[d3 & 0x3f];
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             outStream.Write(bs);
 #else
             outStream.Write(bs, 0, bs.Length);

@@ -63,7 +63,7 @@ namespace Org.BouncyCastle.Tls
             if (len < 0 || len > buf.Length - off)
                 throw new ArgumentException("invalid length: " + len, "len");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return Receive(buf.AsSpan(off, len), waitMillis, recordCallback);
 #else
             if (waitMillis < 0)
@@ -127,7 +127,7 @@ namespace Org.BouncyCastle.Tls
             if (len < 0 || len > buf.Length - off)
                 throw new ArgumentException("invalid length: " + len, "len");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return ReceivePending(buf.AsSpan(off, len), recordCallback);
 #else
             try
@@ -177,7 +177,7 @@ namespace Org.BouncyCastle.Tls
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         /// <exception cref="IOException"/>
         public virtual int Receive(Span<byte> buffer, int waitMillis)
         {
@@ -301,7 +301,7 @@ namespace Org.BouncyCastle.Tls
             if (len < 0 || len > buf.Length - off)
                 throw new ArgumentException("invalid length: " + len, "len");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Send(buf.AsSpan(off, len));
 #else
             try
@@ -343,7 +343,7 @@ namespace Org.BouncyCastle.Tls
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual void Send(ReadOnlySpan<byte> buffer)
         {
             try

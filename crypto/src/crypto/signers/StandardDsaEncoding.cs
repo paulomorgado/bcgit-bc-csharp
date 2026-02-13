@@ -35,7 +35,7 @@ namespace Org.BouncyCastle.Crypto.Signers
             ).GetEncoded(Asn1Encodable.Der);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual int Encode(BigInteger n, BigInteger r, BigInteger s, Span<byte> output)
         {
             byte[] encoding = Encode(n, r, s);

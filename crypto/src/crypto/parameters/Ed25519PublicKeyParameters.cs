@@ -24,7 +24,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
             m_publicPoint = Parse(buf, off);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public Ed25519PublicKeyParameters(ReadOnlySpan<byte> buf)
             : base(false)
         {
@@ -38,7 +38,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
         public Ed25519PublicKeyParameters(Stream input)
             : base(false)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> data = stackalloc byte[KeySize];
 #else
             byte[] data = new byte[KeySize];
@@ -47,7 +47,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
             if (KeySize != Streams.ReadFully(input, data))
                 throw new EndOfStreamException("EOF encountered in middle of Ed25519 public key");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             m_publicPoint = Parse(data);
 #else
             m_publicPoint = Parse(data, 0);
@@ -65,7 +65,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
             Ed25519.EncodePublicPoint(m_publicPoint, buf, off);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void Encode(Span<byte> buf)
         {
             Ed25519.EncodePublicPoint(m_publicPoint, buf);
@@ -118,7 +118,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public bool Verify(Ed25519.Algorithm algorithm, byte[] ctx, ReadOnlySpan<byte> msg, ReadOnlySpan<byte> sig)
         {
             switch (algorithm)
@@ -162,7 +162,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
                 ?? throw new ArgumentException("invalid public key");
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static Ed25519.PublicPoint Parse(ReadOnlySpan<byte> buf)
         {
             return Ed25519.ValidatePublicKeyPartialExport(buf)

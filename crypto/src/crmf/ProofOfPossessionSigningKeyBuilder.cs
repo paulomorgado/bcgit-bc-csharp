@@ -39,7 +39,7 @@ namespace Org.BouncyCastle.Crmf
             return this;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public ProofOfPossessionSigningKeyBuilder SetPublicKeyMac(PKMacBuilder generator, ReadOnlySpan<char> password)
         {
             m_publicKeyMac = PKMacValueGenerator.Generate(generator, password, m_pubKeyInfo);

@@ -89,7 +89,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 
         public virtual int ProcessBlock(byte[] input, int inOff, byte[]	output, int outOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return forEncryption
                 ? EncryptBlock(input.AsSpan(inOff), output.AsSpan(outOff))
                 : DecryptBlock(input.AsSpan(inOff), output.AsSpan(outOff));
@@ -100,7 +100,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual int ProcessBlock(ReadOnlySpan<byte> input, Span<byte> output)
         {
             return forEncryption
@@ -177,7 +177,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private int EncryptBlock(ReadOnlySpan<byte> input, Span<byte> output)
         {
             int A = (int)Pack.LE_To_UInt32(input) + _S[0];

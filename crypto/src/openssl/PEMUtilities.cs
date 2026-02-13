@@ -46,7 +46,7 @@ namespace Org.BouncyCastle.OpenSsl
 			throw new EncryptionException("Unknown DEK algorithm: " + dekAlgName);
 		}
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static byte[] Crypt(bool encrypt, ReadOnlySpan<byte> bytes, ReadOnlySpan<char> password,
 			string dekAlgName, ReadOnlySpan<byte> iv)
         {
@@ -200,7 +200,7 @@ namespace Org.BouncyCastle.OpenSsl
 		}
 #endif
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static ICipherParameters GetCipherParameters(ReadOnlySpan<char> password, PemBaseAlg baseAlg,
             ReadOnlySpan<byte> salt)
 #else

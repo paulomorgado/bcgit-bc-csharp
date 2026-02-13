@@ -30,7 +30,7 @@ namespace Org.BouncyCastle.Crypto.Digests
 
         public void BlockUpdate(byte[] input, int inOff, int inLen) => m_buf.Write(input, inOff, inLen);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 		public void BlockUpdate(ReadOnlySpan<byte> input) => m_buf.Write(input);
 #endif
 
@@ -49,7 +49,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int DoFinal(Span<byte> output)
         {
             try

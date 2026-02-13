@@ -28,7 +28,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             return b;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static int LeftEncode(long length, Span<byte> lengthEncoding)
         {
             byte n = 1;
@@ -70,7 +70,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             return b;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static int RightEncode(long length, Span<byte> lengthEncoding)
         {
             byte n = 1;
@@ -104,7 +104,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             return Arrays.Concatenate(LeftEncode(len * 8), Arrays.CopyOfRange(inBuf, inOff, inOff + len));
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static void EncodeTo(IDigest digest, ReadOnlySpan<byte> buf)
         {
             Span<byte> lengthEncoding = stackalloc byte[9];

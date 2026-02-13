@@ -230,7 +230,7 @@ namespace Org.BouncyCastle.Crypto.Signers
 
         public virtual void BlockUpdate(byte[] input, int inOff, int inLen)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             BlockUpdate(input.AsSpan(inOff, inLen));
 #else
             if (preSig == null)
@@ -250,7 +250,7 @@ namespace Org.BouncyCastle.Crypto.Signers
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual void BlockUpdate(ReadOnlySpan<byte> input)
         {
             if (preSig == null)
@@ -284,7 +284,7 @@ namespace Org.BouncyCastle.Crypto.Signers
             byte[] hash = new byte[hLen];
             digest.DoFinal(hash, 0);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> C = stackalloc byte[8];
             Pack.UInt64_To_BE((uint)(messageLength * 8), C);
             digest.BlockUpdate(C);
@@ -379,7 +379,7 @@ namespace Org.BouncyCastle.Crypto.Signers
             //
             // check the hashes
             //
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> C = stackalloc byte[8];
             Pack.UInt64_To_BE((uint)(recoveredMessage.Length * 8), C);
             digest.BlockUpdate(C);

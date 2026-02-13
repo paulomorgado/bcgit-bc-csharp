@@ -39,7 +39,7 @@ namespace Org.BouncyCastle.Crypto.Macs
             cshake.BlockUpdate(input, inOff, len);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void BlockUpdate(ReadOnlySpan<byte> input)
         {
             if (!initialised)
@@ -68,7 +68,7 @@ namespace Org.BouncyCastle.Crypto.Macs
             return rv;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int DoFinal(Span<byte> output)
         {
             if (firstOutput)
@@ -108,7 +108,7 @@ namespace Org.BouncyCastle.Crypto.Macs
             return rv;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int OutputFinal(Span<byte> output)
         {
             if (firstOutput)
@@ -146,7 +146,7 @@ namespace Org.BouncyCastle.Crypto.Macs
             return cshake.Output(output, outOff, outLen);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int Output(Span<byte> output)
         {
             if (firstOutput)

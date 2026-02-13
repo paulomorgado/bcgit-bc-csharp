@@ -30,7 +30,7 @@ namespace Org.BouncyCastle.Crypto.Paddings
             return count;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual int AddPadding(Span<byte> block, int position)
         {
             byte lastByte = position > 0 ? block[position - 1] : block[block.Length - 1];
@@ -56,7 +56,7 @@ namespace Org.BouncyCastle.Crypto.Paddings
             return count;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual int PadCount(ReadOnlySpan<byte> block)
         {
             int i = block.Length;

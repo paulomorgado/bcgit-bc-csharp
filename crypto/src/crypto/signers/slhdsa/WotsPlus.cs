@@ -71,7 +71,7 @@ namespace Org.BouncyCastle.Crypto.Signers.SlhDsa
 
             Adrs adrs = new Adrs(paramAdrs);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<uint> msg = stackalloc uint[wotsLen];
 
             // convert message to base w
@@ -97,7 +97,7 @@ namespace Org.BouncyCastle.Crypto.Signers.SlhDsa
             }
             int len_2_bytes = (wotsLen2 * wotsLogW + 7) / 8;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> csum_bytes = stackalloc byte[4];
             Pack.UInt32_To_BE(csum, csum_bytes);
             BaseW(csum_bytes[^len_2_bytes..], w, msg[wotsLen1..]);
@@ -124,7 +124,7 @@ namespace Org.BouncyCastle.Crypto.Signers.SlhDsa
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal void BaseW(ReadOnlySpan<byte> X, uint w, Span<uint> output)
         {
             int wotsLogW = m_engine.WotsLogW;
@@ -179,7 +179,7 @@ namespace Org.BouncyCastle.Crypto.Signers.SlhDsa
 
             Adrs wotspkAdrs = new Adrs(adrs);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<uint> msg = stackalloc uint[wotsLen];
 
             // convert message to base w
@@ -202,7 +202,7 @@ namespace Org.BouncyCastle.Crypto.Signers.SlhDsa
             csum <<= 8 - (wotsLen2 * wotsLogW % 8);
             int len_2_bytes = (wotsLen2 * wotsLogW + 7) / 8;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> csum_bytes = stackalloc byte[4];
             Pack.UInt32_To_BE(csum, csum_bytes);
             BaseW(csum_bytes[^len_2_bytes..], w, msg[wotsLen1..]);

@@ -30,7 +30,7 @@ namespace Org.BouncyCastle.Crypto.Prng
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public override void SetSeed(Span<byte> seed)
         {
             lock (this)
@@ -62,7 +62,7 @@ namespace Org.BouncyCastle.Crypto.Prng
 
         public override void NextBytes(byte[] buf, int off, int len)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             NextBytes(buf.AsSpan(off, len));
 #else
             lock (this)
@@ -77,7 +77,7 @@ namespace Org.BouncyCastle.Crypto.Prng
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public override void NextBytes(Span<byte> buffer)
         {
             lock (this)
@@ -97,7 +97,7 @@ namespace Org.BouncyCastle.Crypto.Prng
             return EntropyUtilities.GenerateSeed(mDrbg.EntropySource, numBytes);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public override void GenerateSeed(Span<byte> seed)
         {
             EntropyUtilities.GenerateSeed(mDrbg.EntropySource, seed);

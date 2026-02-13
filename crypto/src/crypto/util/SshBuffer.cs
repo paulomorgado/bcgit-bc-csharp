@@ -40,7 +40,7 @@ namespace Org.BouncyCastle.Crypto.Utilities
 
         public string ReadStringAscii()
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return Encoding.ASCII.GetString(ReadBlockSpan());
 #else
             return Encoding.ASCII.GetString(ReadBlock());
@@ -49,7 +49,7 @@ namespace Org.BouncyCastle.Crypto.Utilities
 
         public string ReadStringUtf8()
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return Encoding.UTF8.GetString(ReadBlockSpan());
 #else
             return Encoding.UTF8.GetString(ReadBlock());
@@ -68,7 +68,7 @@ namespace Org.BouncyCastle.Crypto.Utilities
             return Arrays.CopyOfRange(buffer, start, pos);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public ReadOnlySpan<byte> ReadBlockSpan()
         {
             int len = ReadU32();

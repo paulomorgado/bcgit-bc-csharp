@@ -76,7 +76,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             Absorb(input, inOff, len);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual void BlockUpdate(ReadOnlySpan<byte> input)
         {
             Absorb(input);
@@ -92,7 +92,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             return GetDigestSize();
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual int DoFinal(Span<byte> output)
         {
             int digestSize = GetDigestSize();
@@ -114,7 +114,7 @@ namespace Org.BouncyCastle.Crypto.Digests
                 AbsorbBits(partialByte, partialBits);
             }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Squeeze(output.AsSpan(outOff, fixedOutputLength >> 3));
 #else
             Squeeze(output, outOff, fixedOutputLength);
@@ -180,7 +180,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             dataQueue[bitsInQueue >> 3] = data;
             if ((bitsInQueue += 8) == rate)
             {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 KeccakAbsorb(dataQueue);
 #else
                 KeccakAbsorb(dataQueue, 0);
@@ -191,7 +191,7 @@ namespace Org.BouncyCastle.Crypto.Digests
 
         protected void Absorb(byte[] data, int off, int len)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Absorb(data.AsSpan(off, len));
 #else
             if ((bitsInQueue & 7) != 0)
@@ -230,7 +230,7 @@ namespace Org.BouncyCastle.Crypto.Digests
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         protected void Absorb(ReadOnlySpan<byte> data)
         {
             if ((bitsInQueue & 7) != 0)
@@ -294,7 +294,7 @@ namespace Org.BouncyCastle.Crypto.Digests
 
             if (++bitsInQueue == rate)
             {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 KeccakAbsorb(dataQueue);
 #else
                 KeccakAbsorb(dataQueue, 0);
@@ -367,7 +367,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         protected void Squeeze(Span<byte> output)
         {
             int rateBytes = rate >> 3;
@@ -410,7 +410,7 @@ namespace Org.BouncyCastle.Crypto.Digests
         }
 #endif
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private void KeccakAbsorb(ReadOnlySpan<byte> data)
         {
             int count = rate >> 6, off = 0;
@@ -436,7 +436,7 @@ namespace Org.BouncyCastle.Crypto.Digests
         }
 #endif
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static void KeccakPermutation(Span<ulong> A)
 #else
         internal static void KeccakPermutation(ulong[] A)

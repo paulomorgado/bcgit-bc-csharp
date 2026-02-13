@@ -72,7 +72,7 @@ namespace Org.BouncyCastle.Crypto.Modes
         public virtual void Init(bool forEncryption, ICipherParameters parameters)
         {
             KeyParameter initKeyParam;
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             ReadOnlySpan<byte> initNonce;
 #else
             byte[] initNonce;
@@ -86,7 +86,7 @@ namespace Org.BouncyCastle.Crypto.Modes
                     throw new ArgumentException("Invalid value for MAC size: " + macSizeBits);
 
                 initKeyParam = aeadParams.Key;
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 initNonce = aeadParams.Nonce;
 #else
                 initNonce = aeadParams.GetNonce();
@@ -98,7 +98,7 @@ namespace Org.BouncyCastle.Crypto.Modes
             else if (parameters is ParametersWithIV ivParams)
             {
                 initKeyParam = (KeyParameter)ivParams.Parameters;
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 initNonce = ivParams.InternalIV;
 #else
                 initNonce = ivParams.GetIV();
@@ -129,7 +129,7 @@ namespace Org.BouncyCastle.Crypto.Modes
                 throw new ArgumentException("Nonce must be 96 bits");
 
             // Check for encryption with reused nonce
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             if (State.Uninitialized != mState && forEncryption && initNonce.SequenceEqual(mNonce))
 #else
             if (State.Uninitialized != mState && forEncryption && Arrays.AreEqual(mNonce, initNonce))
@@ -144,7 +144,7 @@ namespace Org.BouncyCastle.Crypto.Modes
                 initKeyParam.CopyKeyTo(mKey, 0, KeySize);
             }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             initNonce.CopyTo(mNonce);
 #else
             Array.Copy(initNonce, 0, mNonce, 0, NonceSize);
@@ -229,7 +229,7 @@ namespace Org.BouncyCastle.Crypto.Modes
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual void ProcessAadBytes(ReadOnlySpan<byte> input)
         {
             CheckAad();
@@ -254,7 +254,7 @@ namespace Org.BouncyCastle.Crypto.Modes
                 if (++mBufPos == mBuf.Length)
                 {
                     mPoly1305.BlockUpdate(mBuf, 0, BufSize);
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                     ProcessBlock(mBuf, outBytes.AsSpan(outOff));
 #else
                     ProcessBlock(mBuf, 0, outBytes, outOff);
@@ -271,7 +271,7 @@ namespace Org.BouncyCastle.Crypto.Modes
                 mBuf[mBufPos] = input;
                 if (++mBufPos == BufSize)
                 {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                     ProcessBlock(mBuf, outBytes.AsSpan(outOff));
 #else
                     ProcessBlock(mBuf, 0, outBytes, outOff);
@@ -288,7 +288,7 @@ namespace Org.BouncyCastle.Crypto.Modes
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual int ProcessByte(byte input, Span<byte> output)
         {
             CheckData();
@@ -348,7 +348,7 @@ namespace Org.BouncyCastle.Crypto.Modes
             if (outOff < 0)
                 throw new ArgumentException("cannot be negative", "outOff");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return ProcessBytes(inBytes.AsSpan(inOff, len), Spans.FromNullable(outBytes, outOff));
 #else
             CheckData();
@@ -462,7 +462,7 @@ namespace Org.BouncyCastle.Crypto.Modes
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual int ProcessBytes(ReadOnlySpan<byte> input, Span<byte> output)
         {
             CheckData();
@@ -580,7 +580,7 @@ namespace Org.BouncyCastle.Crypto.Modes
             if (outOff < 0)
                 throw new ArgumentException("cannot be negative", "outOff");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return DoFinal(outBytes.AsSpan(outOff));
 #else
             CheckData();
@@ -640,7 +640,7 @@ namespace Org.BouncyCastle.Crypto.Modes
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual int DoFinal(Span<byte> output)
         {
             CheckData();
@@ -783,7 +783,7 @@ namespace Org.BouncyCastle.Crypto.Modes
 
         private void InitMac()
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> firstBlock = stackalloc byte[64];
             try
             {
@@ -817,7 +817,7 @@ namespace Org.BouncyCastle.Crypto.Modes
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private void ProcessBlock(ReadOnlySpan<byte> input, Span<byte> output)
         {
             Check.OutputLength(output, 64, "output buffer too short");
@@ -914,7 +914,7 @@ namespace Org.BouncyCastle.Crypto.Modes
 
             if (null != mInitialAad)
             {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 ProcessAadBytes(mInitialAad);
 #else
                 ProcessAadBytes(mInitialAad, 0, mInitialAad.Length);

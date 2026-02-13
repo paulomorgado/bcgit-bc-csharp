@@ -122,7 +122,7 @@ namespace Org.BouncyCastle.Asn1
             m_contents = Arrays.Prepend(data, (byte)padBits);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public DerBitString(ReadOnlySpan<byte> data)
             : this(data, 0)
         {
@@ -224,7 +224,7 @@ namespace Org.BouncyCastle.Asn1
             return Arrays.CopyOfRange(m_contents, 1, m_contents.Length);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal ReadOnlyMemory<byte> GetOctetsMemory()
         {
             CheckOctetAligned();

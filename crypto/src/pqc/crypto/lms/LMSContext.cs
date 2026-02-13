@@ -97,7 +97,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.Lms
             m_digest.Reset();
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void BlockUpdate(ReadOnlySpan<byte> input)
         {
             m_digest.BlockUpdate(input);

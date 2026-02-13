@@ -35,7 +35,7 @@ namespace Org.BouncyCastle.Bcpg.OpenPgp
         {
             int len = ReadLength(input, ch);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return string.Create(len, input, (chars, input) =>
             {
                 for (int i = 0; i < chars.Length; ++i)

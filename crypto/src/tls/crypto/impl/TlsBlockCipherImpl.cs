@@ -13,7 +13,7 @@ namespace Org.BouncyCastle.Tls.Crypto.Impl
         /// <exception cref="IOException"/>
         void SetKey(byte[] key, int keyOff, int keyLen);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         void SetKey(ReadOnlySpan<byte> key);
 #endif
 
@@ -24,7 +24,7 @@ namespace Org.BouncyCastle.Tls.Crypto.Impl
         /// <exception cref="IOException">if the parameters are inappropriate.</exception>
         void Init(byte[] iv, int ivOff, int ivLen);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         void Init(ReadOnlySpan<byte> iv);
 #endif
 

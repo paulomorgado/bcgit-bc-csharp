@@ -18,7 +18,7 @@ namespace Org.BouncyCastle.Crypto.Operators
 
         public int Collect(byte[] buf, int off) => m_mac.DoFinal(buf, off);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int Collect(Span<byte> output) => m_mac.DoFinal(output);
 #endif
 

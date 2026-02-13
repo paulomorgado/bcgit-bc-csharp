@@ -191,7 +191,7 @@ namespace Org.BouncyCastle.Tls.Crypto
         /// <returns>a <see cref="TlsNonceGenerator"/>.</returns>
         TlsNonceGenerator CreateNonceGenerator(byte[] additionalSeedMaterial);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         TlsNonceGenerator CreateNonceGenerator(ReadOnlySpan<byte> additionalSeedMaterial);
 #endif
 

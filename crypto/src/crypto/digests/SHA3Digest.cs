@@ -85,7 +85,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static void CalculateDigest(ReadOnlySpan<ulong> input, int inputLengthBits, Span<byte> output,
             int outputLengthBits)
         {
@@ -197,7 +197,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             return base.DoFinal(output,  outOff);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public override int DoFinal(Span<byte> output)
         {
             AbsorbBits(0x02, 2);

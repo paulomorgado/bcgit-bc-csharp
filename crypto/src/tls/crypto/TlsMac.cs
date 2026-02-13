@@ -11,7 +11,7 @@ namespace Org.BouncyCastle.Tls.Crypto
         /// <param name="keyLen">length of the key in the array.</param>
         void SetKey(byte[] key, int keyOff, int keyLen);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         void SetKey(ReadOnlySpan<byte> key);
 #endif
 
@@ -21,7 +21,7 @@ namespace Org.BouncyCastle.Tls.Crypto
         /// <param name="length">the length of the input data.</param>
         void Update(byte[] input, int inOff, int length);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         void Update(ReadOnlySpan<byte> input);
 #endif
 

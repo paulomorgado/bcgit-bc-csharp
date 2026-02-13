@@ -172,7 +172,7 @@ namespace Org.BouncyCastle.Crmf
         public bool IsValidSigningKeyPop(IVerifierFactoryProvider verifierProvider, PKMacBuilder macBuilder,
             char[] password)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return IsValidSigningKeyPop(verifierProvider, macBuilder, password.AsSpan());
 #else
             ProofOfPossession pop = m_certReqMsg.Pop;
@@ -191,7 +191,7 @@ namespace Org.BouncyCastle.Crmf
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         /// <summary>
         /// Return whether or not a signing key proof-of-possession (POP), with an associated PKMAC, is valid.
         /// </summary>

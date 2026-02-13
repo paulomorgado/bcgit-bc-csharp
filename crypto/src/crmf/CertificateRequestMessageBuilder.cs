@@ -191,7 +191,7 @@ namespace Org.BouncyCastle.Crmf
             return this;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public CertificateRequestMessageBuilder SetAuthInfoPKMacBuilder(PKMacBuilder pkmacFactory,
             ReadOnlySpan<char> password)
         {

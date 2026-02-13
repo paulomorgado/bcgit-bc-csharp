@@ -84,7 +84,7 @@ namespace Org.BouncyCastle.Crypto.Digests
         {
             Check.DataLength(input, inOff, inLen, "input buffer too short");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             BlockUpdate(input.AsSpan(inOff, inLen));
 #else
             if (inLen < 1)
@@ -120,7 +120,7 @@ namespace Org.BouncyCastle.Crypto.Digests
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void BlockUpdate(ReadOnlySpan<byte> input)
         {
             int available = 8 - m_bufPos;
@@ -153,7 +153,7 @@ namespace Org.BouncyCastle.Crypto.Digests
 
         public int DoFinal(byte[] output, int outOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return DoFinal(output.AsSpan(outOff));
 #else
             Check.OutputLength(output, outOff, 32, "output buffer too short");
@@ -175,7 +175,7 @@ namespace Org.BouncyCastle.Crypto.Digests
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int DoFinal(Span<byte> output)
         {
             Check.OutputLength(output, 32, "output buffer too short");

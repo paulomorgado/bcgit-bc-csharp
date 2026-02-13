@@ -54,7 +54,7 @@ namespace Org.BouncyCastle.Bcpg
             return 1;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if NET6_0_OR_GREATER
         public override int Read(Span<byte> buffer)
         {
             if (!next)
@@ -76,7 +76,7 @@ namespace Org.BouncyCastle.Bcpg
 
         public void ReadFully(byte[] buffer) => StreamUtilities.RequireBytes(this, buffer);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void ReadFully(Span<byte> buffer) => StreamUtilities.RequireBytes(this, buffer);
 #endif
 
@@ -299,7 +299,7 @@ namespace Org.BouncyCastle.Bcpg
                 return 0;
             }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if NET6_0_OR_GREATER
             public override int Read(Span<byte> buffer)
             {
                 do

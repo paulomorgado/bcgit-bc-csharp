@@ -57,7 +57,7 @@ namespace Org.BouncyCastle.Crypto.Prng.Drbg
             mReseedCounter = 1;
 	    }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private void hmac_DRBG_Update()
         {
             hmac_DRBG_Update_Func(ReadOnlySpan<byte>.Empty, 0x00);
@@ -138,7 +138,7 @@ namespace Org.BouncyCastle.Crypto.Prng.Drbg
 	    public int Generate(byte[] output, int outputOff, int outputLen, byte[] additionalInput,
 			bool predictionResistant)
 	    {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             var outputSpan = output.AsSpan(outputOff, outputLen);
             return additionalInput == null
 				? Generate(outputSpan, predictionResistant)
@@ -197,7 +197,7 @@ namespace Org.BouncyCastle.Crypto.Prng.Drbg
 #endif
 	    }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int Generate(Span<byte> output, bool predictionResistant)
         {
             int numberOfBits = output.Length * 8;
@@ -293,7 +293,7 @@ namespace Org.BouncyCastle.Crypto.Prng.Drbg
 	      */
         public void Reseed(byte[] additionalInput)
 	    {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 			Reseed(Spans.FromNullableReadOnly(additionalInput));
 #else
 			byte[] entropy = GetEntropy();
@@ -305,7 +305,7 @@ namespace Org.BouncyCastle.Crypto.Prng.Drbg
 #endif
 	    }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void Reseed(ReadOnlySpan<byte> additionalInput)
 		{
             int entropyLength = GetEntropyLength();
@@ -330,7 +330,7 @@ namespace Org.BouncyCastle.Crypto.Prng.Drbg
 	        return entropy;
 	    }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private int GetEntropy(Span<byte> output)
         {
             int length = mEntropySource.GetEntropy(output);

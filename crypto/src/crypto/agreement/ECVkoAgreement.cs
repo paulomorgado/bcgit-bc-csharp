@@ -35,7 +35,7 @@ namespace Org.BouncyCastle.Crypto.Agreement
                 throw new ArgumentException($"{nameof(ECVkoAgreement)} expects {nameof(ECPrivateKeyParameters)}");
 
             m_key = ecParams;
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             m_ukm = new BigInteger(1, paramsWithUkm.InternalUkm, bigEndian: false);
 #else
             m_ukm = new BigInteger(1, paramsWithUkm.GetUkm(), bigEndian: false);
@@ -44,7 +44,7 @@ namespace Org.BouncyCastle.Crypto.Agreement
 
         public void CalculateAgreement(ICipherParameters publicKey, byte[] buf, int off)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             CalculateAgreement(publicKey, buf.AsSpan(off));
 #else
             ImplUpdateDigest(publicKey);
@@ -52,7 +52,7 @@ namespace Org.BouncyCastle.Crypto.Agreement
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void CalculateAgreement(ICipherParameters publicKey, Span<byte> buf)
         {
             ImplUpdateDigest(publicKey);

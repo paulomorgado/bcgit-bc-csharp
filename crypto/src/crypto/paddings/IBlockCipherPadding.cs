@@ -20,7 +20,7 @@ namespace Org.BouncyCastle.Crypto.Paddings
         /// <returns>the number of bytes of padding added.</returns>
         int AddPadding(byte[] input, int inOff);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         /// <summary>Add padding to the passed in block.</summary>
         /// <param name="block">the block to add padding to.</param>
         /// <param name="position">the offset into the block the padding is to start at.</param>
@@ -33,7 +33,7 @@ namespace Org.BouncyCastle.Crypto.Paddings
         /// <returns>the number of bytes of padding present.</returns>
         int PadCount(byte[] input);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         /// <summary>Determine the length of padding present in the passed in block.</summary>
         /// <param name="block">the block to check padding for.</param>
         /// <returns>the number of bytes of padding present.</returns>

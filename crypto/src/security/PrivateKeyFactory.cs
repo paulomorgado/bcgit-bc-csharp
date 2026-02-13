@@ -461,7 +461,7 @@ namespace Org.BouncyCastle.Security
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static ReadOnlySpan<byte> GetRawKey(PrivateKeyInfo keyInfo)
         {
             return Asn1OctetString.GetInstance(keyInfo.ParsePrivateKey()).GetOctetsSpan();

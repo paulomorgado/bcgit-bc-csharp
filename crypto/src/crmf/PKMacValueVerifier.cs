@@ -16,7 +16,7 @@ namespace Org.BouncyCastle.Crmf
             m_builder = builder;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal virtual bool IsValid(PKMacValue value, ReadOnlySpan<char> password, SubjectPublicKeyInfo keyInfo)
         {
             m_builder.SetParameters(PbmParameter.GetInstance(value.AlgID.Parameters));

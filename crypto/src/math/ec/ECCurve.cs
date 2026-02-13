@@ -462,7 +462,7 @@ namespace Org.BouncyCastle.Math.EC
          */
         public virtual ECPoint DecodePoint(byte[] encoded)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return DecodePoint(encoded.AsSpan());
 #else
             ECPoint p;
@@ -535,7 +535,7 @@ namespace Org.BouncyCastle.Math.EC
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual ECPoint DecodePoint(ReadOnlySpan<byte> encoded)
         {
             ECPoint p;

@@ -20,7 +20,7 @@ namespace Org.BouncyCastle.Tls
 
         private static TlsNonceGenerator CreateNonceGenerator(TlsCrypto crypto, int connectionEnd)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> additionalSeedMaterial = stackalloc byte[16];
             Pack.UInt64_To_BE((ulong)NextCounterValue(), additionalSeedMaterial);
             Pack.UInt64_To_BE((ulong)DateTime.UtcNow.Ticks, additionalSeedMaterial[8..]);

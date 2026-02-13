@@ -41,7 +41,7 @@ namespace Org.BouncyCastle.Crypto
             this.mIterationCount = iterationCount;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual void Init(ReadOnlySpan<byte> password, ReadOnlySpan<byte> salt, int iterationCount)
         {
             this.mPassword = password.ToArray();
@@ -103,7 +103,7 @@ namespace Org.BouncyCastle.Crypto
             return Strings.ToUtf8ByteArray(password);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static byte[] Pkcs5PasswordToBytes(ReadOnlySpan<char> password) => Strings.ToByteArray(password);
 
         public static byte[] Pkcs5PasswordToUtf8Bytes(ReadOnlySpan<char> password) => Strings.ToUtf8ByteArray(password);
@@ -130,7 +130,7 @@ namespace Org.BouncyCastle.Crypto
             return bytes;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static byte[] Pkcs12PasswordToBytes(ReadOnlySpan<char> password) =>
             Pkcs12PasswordToBytes(password, wrongPkcs12Zero: false);
 

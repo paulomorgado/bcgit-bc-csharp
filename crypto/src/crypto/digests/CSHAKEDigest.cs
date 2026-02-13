@@ -95,7 +95,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             return outLen;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public override int Output(Span<byte> output)
         {
             if (diff == null)

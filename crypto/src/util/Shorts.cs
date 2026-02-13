@@ -1,5 +1,5 @@
 ﻿using System;
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 using System.Buffers.Binary;
 #endif
 
@@ -12,7 +12,7 @@ namespace Org.BouncyCastle.Utilities
 
         public static short ReverseBytes(short i)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return BinaryPrimitives.ReverseEndianness(i);
 #else
             return RotateLeft(i, 8);
@@ -22,7 +22,7 @@ namespace Org.BouncyCastle.Utilities
         [CLSCompliant(false)]
         public static ushort ReverseBytes(ushort i)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return BinaryPrimitives.ReverseEndianness(i);
 #else
             return RotateLeft(i, 8);

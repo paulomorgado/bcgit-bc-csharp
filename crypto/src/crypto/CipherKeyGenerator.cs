@@ -66,7 +66,7 @@ namespace Org.BouncyCastle.Crypto
 
         protected virtual KeyParameter EngineGenerateKeyParameter()
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             // TODO[api] Redesign to avoid this exceptional case
             // Avoid problems if EngineGenerateKey() was overridden before this method even existed.
             if (GetType() == typeof(CipherKeyGenerator))

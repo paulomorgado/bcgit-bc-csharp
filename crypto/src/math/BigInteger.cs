@@ -5,7 +5,7 @@ using System.Globalization;
 #if NETCOREAPP3_0_OR_GREATER
 using System.Numerics;
 #endif
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 using System.Runtime.InteropServices;
 #endif
 using System.Runtime.Serialization;
@@ -259,7 +259,7 @@ namespace Org.BouncyCastle.Math
             return (nBits + BitsPerByte - 1) / BitsPerByte;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static int GetIntsLength(int nBits)
         {
             return (nBits + BitsPerInt - 1) / BitsPerInt;
@@ -547,7 +547,7 @@ namespace Org.BouncyCastle.Math
 
             int numBytes = end - iBval;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> inverse = numBytes <= 512
                 ? stackalloc byte[numBytes]
                 : new byte[numBytes];
@@ -598,7 +598,7 @@ namespace Org.BouncyCastle.Math
 
             int numBytes = last + 1;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> inverse = numBytes <= 512
                 ? stackalloc byte[numBytes]
                 : new byte[numBytes];
@@ -629,7 +629,7 @@ namespace Org.BouncyCastle.Math
 
         private static uint[] MakeMagnitudeBE(byte[] bytes, int offset, int length)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return MakeMagnitudeBE(bytes.AsSpan(offset, length));
 #else
             int end = offset + length;
@@ -657,7 +657,7 @@ namespace Org.BouncyCastle.Math
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static uint[] MakeMagnitudeBE(ReadOnlySpan<byte> bytes)
         {
             int end = bytes.Length;
@@ -692,7 +692,7 @@ namespace Org.BouncyCastle.Math
 
         private static uint[] MakeMagnitudeLE(byte[] bytes, int offset, int length)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return MakeMagnitudeLE(bytes.AsSpan(offset, length));
 #else
             // strip leading zeros
@@ -725,7 +725,7 @@ namespace Org.BouncyCastle.Math
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static uint[] MakeMagnitudeLE(ReadOnlySpan<byte> bytes)
         {
             // strip leading zeros
@@ -793,7 +793,7 @@ namespace Org.BouncyCastle.Math
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public BigInteger(int sign, ReadOnlySpan<byte> bytes)
             : this(sign, bytes, true)
         {
@@ -837,7 +837,7 @@ namespace Org.BouncyCastle.Math
 
             int nBytes = GetBytesLength(sizeInBits);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> b = nBytes <= 512
                 ? stackalloc byte[nBytes]
                 : new byte[nBytes];
@@ -872,7 +872,7 @@ namespace Org.BouncyCastle.Math
              
             int nBytes = GetBytesLength(bitLength);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> b = nBytes <= 512
                 ? stackalloc byte[nBytes]
                 : new byte[nBytes];
@@ -1473,7 +1473,7 @@ namespace Org.BouncyCastle.Math
 
         public override int GetHashCode()
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             HashCode hc = default;
             hc.AddBytes(MemoryMarshal.AsBytes(magnitude.AsSpan()));
             hc.Add(sign);
@@ -3190,7 +3190,7 @@ namespace Org.BouncyCastle.Math
             return GetBytesLength(sign < 0 ? BitLength + 1 : BitLength);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int GetLengthofUInt32Array()
         {
             return GetIntsLength(BitLength + 1);
@@ -3207,7 +3207,7 @@ namespace Org.BouncyCastle.Math
             return ToByteArray(false);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void ToByteArray(Span<byte> output)
         {
             ToByteArray(false, output);
@@ -3231,7 +3231,7 @@ namespace Org.BouncyCastle.Math
             return ToByteArray(true);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void ToByteArrayUnsigned(Span<byte> output)
         {
             ToByteArray(true, output);
@@ -3330,7 +3330,7 @@ namespace Org.BouncyCastle.Math
             return bytes;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private void ToByteArray(bool unsigned, Span<byte> output)
         {
             if (sign == 0)

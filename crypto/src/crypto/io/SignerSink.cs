@@ -37,7 +37,7 @@ namespace Org.BouncyCastle.Crypto.IO
         }
 #endif
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if NET6_0_OR_GREATER
 		public override void Write(ReadOnlySpan<byte> buffer)
 		{
 			if (!buffer.IsEmpty)
@@ -52,7 +52,7 @@ namespace Org.BouncyCastle.Crypto.IO
         }
 #endif
 
-		public override void WriteByte(byte value)
+        public override void WriteByte(byte value)
 		{
 			m_signer.Update(value);
 		}

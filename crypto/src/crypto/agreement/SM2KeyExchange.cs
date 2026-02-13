@@ -269,7 +269,7 @@ namespace Org.BouncyCastle.Crypto.Agreement
 
         private static void AddFieldElement(IDigest digest, ECFieldElement v)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> buf = stackalloc byte[v.GetEncodedLength()];
             v.EncodeTo(buf);
             digest.BlockUpdate(buf);

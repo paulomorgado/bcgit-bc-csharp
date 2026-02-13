@@ -120,7 +120,7 @@ namespace Org.BouncyCastle.Crypto.Digests
 			}
 		}
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 		public void BlockUpdate(ReadOnlySpan<byte> input)
 		{
 			while ((xBufOff != 0) && (input.Length > 0))
@@ -284,7 +284,7 @@ namespace Org.BouncyCastle.Crypto.Digests
 			return DIGEST_LENGTH;
 		}
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 		public int DoFinal(Span<byte> output)
 		{
 			Finish();

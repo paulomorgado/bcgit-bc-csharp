@@ -18,7 +18,7 @@ namespace Org.BouncyCastle.Crypto
         /// <returns>the number of bytes written</returns>
         int OutputFinal(byte[] output, int outOff, int outLen);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         /// <summary>
         /// Output the results of the final calculation for this XOF to fill the output span.
         /// </summary>
@@ -37,7 +37,7 @@ namespace Org.BouncyCastle.Crypto
         /// <returns>the number of bytes written</returns>
         int Output(byte[] output, int outOff, int outLen);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         /// <summary>
         /// Start outputting the results of the final calculation for this XOF. Unlike OutputFinal, this method
         /// will continue producing output until the XOF is explicitly reset, or signals otherwise.

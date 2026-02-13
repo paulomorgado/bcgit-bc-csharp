@@ -22,7 +22,7 @@ namespace Org.BouncyCastle.Crypto
         /// <param name="inLen">the length of the data.</param>
         void BlockUpdate(byte[] input, int inOff, int inLen);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         /// <summary>Update the signer with a span of bytes.</summary>
         /// <param name="input">the span containing the data.</param>
         void BlockUpdate(ReadOnlySpan<byte> input);
@@ -35,7 +35,7 @@ namespace Org.BouncyCastle.Crypto
         /// <returns>A byte array containing the signature for the message.</returns>
         byte[] GenerateSignature();
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         // TODO[api]
         //int GenerateSignature(Span<byte> output);
 #endif
@@ -46,7 +46,7 @@ namespace Org.BouncyCastle.Crypto
         /// <returns>true if the internal state represents the signature described in the passed in array.</returns>
         bool VerifySignature(byte[] signature);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         // TODO[api]
         //bool VerifySignature(ReadOnlySpan<byte> signature);
 #endif

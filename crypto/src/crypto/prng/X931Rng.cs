@@ -38,7 +38,7 @@ namespace Org.BouncyCastle.Crypto.Prng
             this.mR = new byte[engine.GetBlockSize()];
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal int Generate(Span<byte> output, bool predictionResistant)
         {
             int outputLen = output.Length;

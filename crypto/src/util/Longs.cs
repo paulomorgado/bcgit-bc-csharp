@@ -1,5 +1,5 @@
 ﻿using System;
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 using System.Buffers.Binary;
 #endif
 #if NETCOREAPP3_0_OR_GREATER
@@ -117,7 +117,7 @@ namespace Org.BouncyCastle.Utilities
 
         public static long ReverseBytes(long i)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return BinaryPrimitives.ReverseEndianness(i);
 #else
             return (long)ReverseBytes((ulong)i);
@@ -127,7 +127,7 @@ namespace Org.BouncyCastle.Utilities
         [CLSCompliant(false)]
         public static ulong ReverseBytes(ulong i)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return BinaryPrimitives.ReverseEndianness(i);
 #else
             return RotateLeft(i & 0xFF000000FF000000UL,  8) |

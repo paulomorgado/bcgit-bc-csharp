@@ -68,7 +68,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal override void ProcessWord(ReadOnlySpan<byte> word)
         {
             X[xOff++] = (int)Pack.LE_To_UInt32(word);
@@ -106,7 +106,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             return DigestLength;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public override int DoFinal(Span<byte> output)
         {
             Finish();

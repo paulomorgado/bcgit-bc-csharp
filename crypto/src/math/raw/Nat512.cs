@@ -50,7 +50,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static void Xor(uint[] x, uint[] y, uint[] z)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Xor(x.AsSpan(), y.AsSpan(), z.AsSpan());
 #else
             for (int i = 0; i < 16; i += 4)
@@ -65,7 +65,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static void Xor(uint[] x, int xOff, uint[] y, int yOff, uint[] z, int zOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Xor(x.AsSpan(xOff), y.AsSpan(yOff), z.AsSpan(zOff));
 #else
             for (int i = 0; i < 16; i += 4)
@@ -78,7 +78,7 @@ namespace Org.BouncyCastle.Math.Raw
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void Xor(ReadOnlySpan<uint> x, ReadOnlySpan<uint> y, Span<uint> z)
         {
 #if NETCOREAPP3_0_OR_GREATER
@@ -157,7 +157,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static void Xor64(ulong[] x, ulong[] y, ulong[] z)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Xor64(x.AsSpan(), y.AsSpan(), z.AsSpan());
 #else
             for (int i = 0; i < 8; i += 4)
@@ -172,7 +172,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static void Xor64(ulong[] x, int xOff, ulong[] y, int yOff, ulong[] z, int zOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Xor64(x.AsSpan(xOff), y.AsSpan(yOff), z.AsSpan(zOff));
 #else
             for (int i = 0; i < 8; i += 4)
@@ -185,7 +185,7 @@ namespace Org.BouncyCastle.Math.Raw
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void Xor64(ReadOnlySpan<ulong> x, ReadOnlySpan<ulong> y, Span<ulong> z)
         {
 #if NETCOREAPP3_0_OR_GREATER
@@ -264,7 +264,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static void XorBothTo(uint[] x, uint[] y, uint[] z)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             XorBothTo(x.AsSpan(), y.AsSpan(), z.AsSpan());
 #else
             for (int i = 0; i < 16; i += 4)
@@ -279,7 +279,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static void XorBothTo(uint[] x, int xOff, uint[] y, int yOff, uint[] z, int zOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             XorBothTo(x.AsSpan(xOff), y.AsSpan(yOff), z.AsSpan(zOff));
 #else
             for (int i = 0; i < 16; i += 4)
@@ -292,7 +292,7 @@ namespace Org.BouncyCastle.Math.Raw
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void XorBothTo(ReadOnlySpan<uint> x, ReadOnlySpan<uint> y, Span<uint> z)
         {
 #if NETCOREAPP3_0_OR_GREATER
@@ -379,7 +379,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static void XorBothTo64(ulong[] x, ulong[] y, ulong[] z)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             XorBothTo64(x.AsSpan(), y.AsSpan(), z.AsSpan());
 #else
             for (int i = 0; i < 8; i += 4)
@@ -394,7 +394,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static void XorBothTo64(ulong[] x, int xOff, ulong[] y, int yOff, ulong[] z, int zOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             XorBothTo64(x.AsSpan(xOff), y.AsSpan(yOff), z.AsSpan(zOff));
 #else
             for (int i = 0; i < 8; i += 4)
@@ -407,7 +407,7 @@ namespace Org.BouncyCastle.Math.Raw
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void XorBothTo64(ReadOnlySpan<ulong> x, ReadOnlySpan<ulong> y, Span<ulong> z)
         {
 #if NETCOREAPP3_0_OR_GREATER
@@ -494,7 +494,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static void XorTo(uint[] x, uint[] z)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             XorTo(x.AsSpan(), z.AsSpan());
 #else
             for (int i = 0; i < 16; i += 4)
@@ -509,7 +509,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static void XorTo(uint[] x, int xOff, uint[] z, int zOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             XorTo(x.AsSpan(xOff), z.AsSpan(zOff));
 #else
             for (int i = 0; i < 16; i += 4)
@@ -522,7 +522,7 @@ namespace Org.BouncyCastle.Math.Raw
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void XorTo(ReadOnlySpan<uint> x, Span<uint> z)
         {
 #if NETCOREAPP3_0_OR_GREATER
@@ -599,7 +599,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static void XorTo64(ulong[] x, ulong[] z)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             XorTo64(x.AsSpan(), z.AsSpan());
 #else
             for (int i = 0; i < 8; i += 4)
@@ -614,7 +614,7 @@ namespace Org.BouncyCastle.Math.Raw
 
         public static void XorTo64(ulong[] x, int xOff, ulong[] z, int zOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             XorTo64(x.AsSpan(xOff), z.AsSpan(zOff));
 #else
             for (int i = 0; i < 8; i += 4)
@@ -627,7 +627,7 @@ namespace Org.BouncyCastle.Math.Raw
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void XorTo64(ReadOnlySpan<ulong> x, Span<ulong> z)
         {
 #if NETCOREAPP3_0_OR_GREATER

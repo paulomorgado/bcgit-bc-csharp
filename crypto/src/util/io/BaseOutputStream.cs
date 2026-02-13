@@ -35,7 +35,7 @@ namespace Org.BouncyCastle.Utilities.IO
             set { throw new NotSupportedException(); }
         }
         public sealed override int Read(byte[] buffer, int offset, int count) { throw new NotSupportedException(); }
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if NET6_0_OR_GREATER
         public sealed override int Read(Span<byte> buffer) { throw new NotSupportedException(); }
         // TODO[api] sealed
         public override ValueTask<int> ReadAsync(Memory<byte> buffer, CancellationToken cancellationToken = default)
@@ -57,7 +57,7 @@ namespace Org.BouncyCastle.Utilities.IO
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if NET6_0_OR_GREATER
         public override void Write(ReadOnlySpan<byte> buffer)
         {
             int count = buffer.Length;

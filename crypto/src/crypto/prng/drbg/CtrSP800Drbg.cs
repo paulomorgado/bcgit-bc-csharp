@@ -80,7 +80,7 @@ namespace Org.BouncyCastle.Crypto.Prng.Drbg
             mReseedCounter = 1;
 	    }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private void CTR_DRBG_Update(ReadOnlySpan<byte> seed, Span<byte> key, Span<byte> v)
         {
 			int seedLength = seed.Length;
@@ -136,7 +136,7 @@ namespace Org.BouncyCastle.Crypto.Prng.Drbg
         }
 #endif
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private void CTR_DRBG_Reseed_algorithm(ReadOnlySpan<byte> additionalInput)
         {
 			int entropyLength = GetEntropyLength();
@@ -174,7 +174,7 @@ namespace Org.BouncyCastle.Crypto.Prng.Drbg
         }
 #endif
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private void AddOneTo(Span<byte> longer)
 #else
 		private void AddOneTo(byte[] longer)
@@ -198,7 +198,7 @@ namespace Org.BouncyCastle.Crypto.Prng.Drbg
 	        return entropy;
 	    }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private int GetEntropy(Span<byte> output)
         {
 			int length = mEntropySource.GetEntropy(output);
@@ -280,7 +280,7 @@ namespace Org.BouncyCastle.Crypto.Prng.Drbg
         // 15. Return SUCCESS and requested_bits.
 		private byte[] BlockCipherDF(byte[] input, int N)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return BlockCipherDF(input.AsSpan(), N);
 #else
             int outLen = mEngine.GetBlockSize();
@@ -338,7 +338,7 @@ namespace Org.BouncyCastle.Crypto.Prng.Drbg
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private byte[] BlockCipherDF(ReadOnlySpan<byte> input, int N)
         {
             int blockSize = mEngine.GetBlockSize();
@@ -409,7 +409,7 @@ namespace Org.BouncyCastle.Crypto.Prng.Drbg
         * 5. output_block = chaining_value.
         * 6. Return output_block. 
         */
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private void BCC(Span<byte> bccOut, ReadOnlySpan<byte> iV, ReadOnlySpan<byte> data)
         {
             int blockSize = mEngine.GetBlockSize();
@@ -475,7 +475,7 @@ namespace Org.BouncyCastle.Crypto.Prng.Drbg
 	    public int Generate(byte[] output, int outputOff, int outputLen, byte[] additionalInput,
 			bool predictionResistant)
 	    {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             var outputSpan = output.AsSpan(outputOff, outputLen);
             return additionalInput == null
                 ? Generate(outputSpan, predictionResistant)
@@ -540,7 +540,7 @@ namespace Org.BouncyCastle.Crypto.Prng.Drbg
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int Generate(Span<byte> output, bool predictionResistant)
         {
             int outputLen = output.Length;
@@ -645,14 +645,14 @@ namespace Org.BouncyCastle.Crypto.Prng.Drbg
 	      */
         public void Reseed(byte[] additionalInput)
 	    {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 			Reseed(Spans.FromNullableReadOnly(additionalInput));
 #else
 			CTR_DRBG_Reseed_algorithm(additionalInput);
 #endif
 	    }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void Reseed(ReadOnlySpan<byte> additionalInput)
 		{
             CTR_DRBG_Reseed_algorithm(additionalInput);
@@ -693,7 +693,7 @@ namespace Org.BouncyCastle.Crypto.Prng.Drbg
             return new KeyParameter(tmp);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private KeyParameter ExpandToKeyParameter(ReadOnlySpan<byte> key)
         {
 			if (!mIsTdea)
@@ -720,7 +720,7 @@ namespace Org.BouncyCastle.Crypto.Prng.Drbg
 	     */
         private void PadKey(byte[] keyMaster, int keyOff, byte[] tmp, int tmpOff)
 	    {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             PadKey(keyMaster.AsSpan(keyOff), tmp.AsSpan(tmpOff));
 #else
             tmp[tmpOff + 0] = (byte)(keyMaster[keyOff + 0] & 0xfe);
@@ -736,7 +736,7 @@ namespace Org.BouncyCastle.Crypto.Prng.Drbg
 #endif
 	    }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private void PadKey(ReadOnlySpan<byte> keyMaster, Span<byte> tmp)
         {
             tmp[0] = (byte)(keyMaster[0] & 0xFE);

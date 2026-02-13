@@ -28,7 +28,7 @@ namespace Org.BouncyCastle.Tls.Crypto.Impl.BC
             m_digest.BlockUpdate(data, offSet, length);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void Update(ReadOnlySpan<byte> input)
         {
             m_digest.BlockUpdate(input);

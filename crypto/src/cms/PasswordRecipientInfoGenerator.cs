@@ -48,7 +48,7 @@ namespace Org.BouncyCastle.Cms
 			// Note: In Java build, the IV is automatically generated in JCE layer
 			int ivLength = Platform.StartsWithIgnoreCase(rfc3211WrapperName, "DES") ? 8 : 16;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             var parametersWithIV = ParametersWithIV.Create(keyEncryptionKey, ivLength, random,
                 (bytes, random) => random.NextBytes(bytes));
 #else
@@ -64,7 +64,7 @@ namespace Org.BouncyCastle.Cms
 
 			DerSequence seq = new DerSequence(
 				new DerObjectIdentifier(keyEncryptionKeyOID),
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 new DerOctetString(parametersWithIV.InternalIV)
 #else
                 new DerOctetString(iv)

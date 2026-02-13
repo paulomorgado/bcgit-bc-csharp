@@ -109,7 +109,7 @@ namespace Org.BouncyCastle.Crypto.Macs
 			engine.BlockUpdate(input, inOff, len);
 		}
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 		public void BlockUpdate(ReadOnlySpan<byte> input)
 		{
 			engine.BlockUpdate(input);
@@ -121,7 +121,7 @@ namespace Org.BouncyCastle.Crypto.Macs
 			return engine.DoFinal(output, outOff);
 		}
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 		public int DoFinal(Span<byte> output)
 		{
 			return engine.DoFinal(output);

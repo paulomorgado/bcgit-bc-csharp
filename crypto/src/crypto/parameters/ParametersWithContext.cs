@@ -7,7 +7,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
     public class ParametersWithContext
         : ICipherParameters
     {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static ParametersWithContext Create<TState>(ICipherParameters parameters, int contextLength,
             TState state, System.Buffers.SpanAction<byte, TState> action)
         {
@@ -37,7 +37,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
             m_context = Arrays.CopySegment(context, contextOff, contextLen);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public ParametersWithContext(ICipherParameters parameters, ReadOnlySpan<byte> context)
         {
             // NOTE: 'parameters' may be null to imply key re-use
@@ -46,7 +46,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
         }
 #endif
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private ParametersWithContext(ICipherParameters parameters, int contextLength)
         {
             // NOTE: 'parameters' may be null to imply key re-use
@@ -61,7 +61,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
 
         public byte[] GetContext() => Arrays.InternalCopyBuffer(m_context);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal ReadOnlySpan<byte> InternalContext => m_context;
 #endif
 

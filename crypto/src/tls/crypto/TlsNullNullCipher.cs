@@ -31,7 +31,7 @@ namespace Org.BouncyCastle.Tls.Crypto
             return new TlsEncodeResult(result, 0, result.Length, contentType);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public TlsEncodeResult EncodePlaintext(long seqNo, short contentType, ProtocolVersion recordVersion,
             int headerAllocation, ReadOnlySpan<byte> plaintext)
         {

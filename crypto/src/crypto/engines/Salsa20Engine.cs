@@ -184,7 +184,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 			}
 		}
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual void ProcessBytes(ReadOnlySpan<byte> input, Span<byte> output)
         {
             if (!initialised)
@@ -248,7 +248,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 			Pack.UInt32_To_LE(x, output, 0);
 		}
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static void SalsaCore(int rounds, ReadOnlySpan<uint> input, Span<uint> output)
         {
             if (input.Length < 16)

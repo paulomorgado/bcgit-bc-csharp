@@ -38,7 +38,7 @@ namespace Org.BouncyCastle.Crypto.Prng.Drbg
         /**
 	     * Used by both Dual EC and Hash.
 	     */
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static void HashDF(IDigest digest, ReadOnlySpan<byte> seedMaterial, int seedLength, Span<byte> output)
 #else
 		internal static void HashDF(IDigest digest, byte[] seedMaterial, int seedLength, byte[] output)
@@ -61,7 +61,7 @@ namespace Org.BouncyCastle.Crypto.Prng.Drbg
             int len = outputLength / digestSize;
 	        int counter = 1;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 			Span<byte> dig = digestSize <= 128
 				? stackalloc byte[digestSize]
 				: new byte[digestSize];
@@ -76,7 +76,7 @@ namespace Org.BouncyCastle.Crypto.Prng.Drbg
             for (int i = 0; i <= len; i++, counter++)
 	        {
                 header[0] = (byte)counter;
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 digest.BlockUpdate(header);
                 digest.BlockUpdate(seedMaterial);
                 digest.DoFinal(dig);

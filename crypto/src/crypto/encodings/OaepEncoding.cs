@@ -235,7 +235,7 @@ namespace Org.BouncyCastle.Crypto.Encodings
         {
             if (mgf1Hash is IXof xof)
             {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 Span<byte> buf = maskLen <= 512
                     ? stackalloc byte[maskLen]
                     : new byte[maskLen];
@@ -262,7 +262,7 @@ namespace Org.BouncyCastle.Crypto.Encodings
         {
             int digestSize = mgf1Hash.GetDigestSize();
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> hash = digestSize <= 128
                 ? stackalloc byte[digestSize]
                 : new byte[digestSize];
@@ -287,7 +287,7 @@ namespace Org.BouncyCastle.Crypto.Encodings
                 while (maskPos < maskLimit)
                 {
                     Pack.UInt32_To_BE((uint)counter++, C);
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                     mgf1Hash.BlockUpdate(C);
                     mgf1Hash.DoFinal(hash);
                     memoable.Reset(memo);
@@ -306,7 +306,7 @@ namespace Org.BouncyCastle.Crypto.Encodings
                 while (maskPos < maskLimit)
                 {
                     Pack.UInt32_To_BE((uint)counter++, C);
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                     mgf1Hash.BlockUpdate(C);
                     mgf1Hash.DoFinal(hash);
                     mgf1Hash.BlockUpdate(z, zOff, zLen);
@@ -322,7 +322,7 @@ namespace Org.BouncyCastle.Crypto.Encodings
             }
 
             Pack.UInt32_To_BE((uint)counter, C);
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             mgf1Hash.BlockUpdate(C);
             mgf1Hash.DoFinal(hash);
             Bytes.XorTo(maskEnd - maskPos, hash, mask.AsSpan(maskPos));

@@ -172,7 +172,7 @@ namespace Org.BouncyCastle.Crypto.Modes
 			return blockSize;
 		}
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 		public int ProcessBlock(ReadOnlySpan<byte> input, Span<byte> output)
 		{
 			Check.DataLength(input, blockSize, "input buffer too short");

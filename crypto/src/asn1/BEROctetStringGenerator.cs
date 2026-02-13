@@ -61,8 +61,8 @@ namespace Org.BouncyCastle.Asn1
             {
                 Streams.ValidateBufferArguments(buffer, offset, count);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
-                Write(buffer.AsSpan(offset, count));
+#if !NETFRAMEWORK
+                this.Write(buffer.AsSpan(offset, count));
 #else
                 int bufLen = _buf.Length;
                 int available = bufLen - _off;
@@ -94,7 +94,7 @@ namespace Org.BouncyCastle.Asn1
 #endif
             }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if NET6_0_OR_GREATER
             public override void Write(ReadOnlySpan<byte> buffer)
             {
                 int bufLen = _buf.Length;
@@ -108,15 +108,15 @@ namespace Org.BouncyCastle.Asn1
 
                 if (_off > 0)
                 {
-                    DerOctetString.Encode(_asn1Out, _buf.AsSpan(0, _off), buffer[..available]);
-                    buffer = buffer[available..];
+                    DerOctetString.Encode(_asn1Out, _buf.AsSpan(0, _off), buffer.Slice(0, available));
+                    buffer = buffer.Slice(available);
                     //_off = 0;
                 }
 
                 while (buffer.Length >= bufLen)
                 {
-                    DerOctetString.Encode(_asn1Out, buffer[..bufLen]);
-                    buffer = buffer[bufLen..];
+                    DerOctetString.Encode(_asn1Out, buffer.Slice(0, bufLen));
+                    buffer = buffer.Slice(bufLen);
                 }
 
                 buffer.CopyTo(_buf.AsSpan());

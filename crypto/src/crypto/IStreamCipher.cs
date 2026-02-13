@@ -38,7 +38,7 @@ namespace Org.BouncyCastle.Crypto
         /// <exception cref="OutputLengthException">If the output buffer is too small.</exception>
         void ProcessBytes(byte[] input, int inOff, int length, byte[] output, int outOff);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         /// <summary>
         /// Process a block of bytes from <paramref name="input"/>, putting the result into <paramref name="output"/>.
         /// </summary>

@@ -277,7 +277,7 @@ namespace Org.BouncyCastle.Tls
         /// <exception cref="IOException"/>
         internal int Receive(byte[] buf, int off, int len, int waitMillis, DtlsRecordCallback recordCallback)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return Receive(buf.AsSpan(off, len), waitMillis, recordCallback);
 #else
             long currentTimeMillis = DateTimeUtilities.CurrentUnixMs();
@@ -347,7 +347,7 @@ namespace Org.BouncyCastle.Tls
         /// <exception cref="IOException"/>
         internal int ReceivePending(byte[] buf, int off, int len, DtlsRecordCallback recordCallback)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return ReceivePending(buf.AsSpan(off, len), recordCallback);
 #else
             if (m_recordQueue.Available > 0)
@@ -369,7 +369,7 @@ namespace Org.BouncyCastle.Tls
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         /// <exception cref="IOException"/>
         public virtual int Receive(Span<byte> buffer, int waitMillis) => Receive(buffer, waitMillis, null);
 
@@ -467,7 +467,7 @@ namespace Org.BouncyCastle.Tls
         /// <exception cref="IOException"/>
         public virtual void Send(byte[] buf, int off, int len)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Send(buf.AsSpan(off, len));
 #else
             short contentType = ContentType.application_data;
@@ -509,7 +509,7 @@ namespace Org.BouncyCastle.Tls
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         /// <exception cref="IOException"/>
         public virtual void Send(ReadOnlySpan<byte> buffer)
         {
@@ -634,7 +634,7 @@ namespace Org.BouncyCastle.Tls
         {
             m_peer.NotifyAlertRaised(alertLevel, alertDescription, message, cause);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             ReadOnlySpan<byte> error = stackalloc byte[2]{ (byte)alertLevel, (byte)alertDescription };
             SendRecord(ContentType.alert, error);
 #else
@@ -673,7 +673,7 @@ namespace Org.BouncyCastle.Tls
 
         // TODO Include 'currentTimeMillis' as an argument, use with Timeout, resetHeartbeat
         /// <exception cref="IOException"/>
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private int ProcessRecord(int received, byte[] record, Span<byte> buffer, DtlsRecordCallback recordCallback)
 #else
         private int ProcessRecord(int received, byte[] record, byte[] buf, int off, int len,
@@ -968,7 +968,7 @@ namespace Org.BouncyCastle.Tls
             }
 
             // NOTE: Internal error implies GetReceiveLimit() was not used to allocate result space
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             if (decoded.len > buffer.Length)
                 throw new TlsFatalAlert(AlertDescription.internal_error);
 
@@ -1078,7 +1078,7 @@ namespace Org.BouncyCastle.Tls
             MemoryStream output = new MemoryStream();
             heartbeatMessage.Encode(output);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             if (!output.TryGetBuffer(out var buffer))
                 throw new InvalidOperationException();
 
@@ -1096,7 +1096,7 @@ namespace Org.BouncyCastle.Tls
          * be possible reordering of records (which might surprise a reliable transport implementation).
          */
         /// <exception cref="IOException"/>
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private void SendRecord(short contentType, ReadOnlySpan<byte> buffer)
 #else
         private void SendRecord(short contentType, byte[] buf, int off, int len)
@@ -1106,7 +1106,7 @@ namespace Org.BouncyCastle.Tls
             if (m_writeVersion == null)
                 return;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             int len = buffer.Length;
 #endif
 
@@ -1129,7 +1129,7 @@ namespace Org.BouncyCastle.Tls
 
                 int recordHeaderLength = m_writeEpoch.RecordHeaderLengthWrite;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 TlsEncodeResult encoded = m_writeEpoch.Cipher.EncodePlaintext(macSequenceNumber, contentType,
                     recordVersion, recordHeaderLength, buffer);
 #else

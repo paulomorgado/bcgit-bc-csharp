@@ -220,7 +220,7 @@ namespace Org.BouncyCastle.Security
             return DoFinal(digest, buf, off, len);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static byte[] CalculateDigest(DerObjectIdentifier oid, ReadOnlySpan<byte> buffer) =>
             CalculateDigest(oid.GetID(), buffer);
 
@@ -250,7 +250,7 @@ namespace Org.BouncyCastle.Security
             return DoFinal(digest);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static byte[] DoFinal(IDigest digest, ReadOnlySpan<byte> buffer)
         {
             digest.BlockUpdate(buffer);

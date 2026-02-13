@@ -81,7 +81,7 @@ namespace Org.BouncyCastle.Tls.Crypto.Impl
                 keyBlockSize += clientCipher.GetBlockSize() + serverCipher.GetBlockSize();
             }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> keyBlock = keyBlockSize <= 512
                 ? stackalloc byte[keyBlockSize]
                 : new byte[keyBlockSize];
@@ -206,7 +206,7 @@ namespace Org.BouncyCastle.Tls.Crypto.Impl
         public virtual TlsEncodeResult EncodePlaintext(long seqNo, short contentType, ProtocolVersion recordVersion,
             int headerAllocation, byte[] plaintext, int offset, int len)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return EncodePlaintext(seqNo, contentType, recordVersion, headerAllocation, plaintext.AsSpan(offset, len));
 #else
             int blockSize = m_encryptCipher.GetBlockSize();
@@ -290,7 +290,7 @@ namespace Org.BouncyCastle.Tls.Crypto.Impl
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual TlsEncodeResult EncodePlaintext(long seqNo, short contentType, ProtocolVersion recordVersion,
             int headerAllocation, ReadOnlySpan<byte> plaintext)
         {

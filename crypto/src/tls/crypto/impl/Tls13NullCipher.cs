@@ -48,7 +48,7 @@ namespace Org.BouncyCastle.Tls.Crypto.Impl
         public TlsEncodeResult EncodePlaintext(long seqNo, short contentType, ProtocolVersion recordVersion,
             int headerAllocation, byte[] plaintext, int plaintextOffset, int plaintextLength)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return EncodePlaintext(seqNo, contentType, recordVersion, headerAllocation,
                 plaintext.AsSpan(plaintextOffset, plaintextLength));
 #else
@@ -96,7 +96,7 @@ namespace Org.BouncyCastle.Tls.Crypto.Impl
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public TlsEncodeResult EncodePlaintext(long seqNo, short contentType, ProtocolVersion recordVersion,
             int headerAllocation, ReadOnlySpan<byte> plaintext)
         {
@@ -221,7 +221,7 @@ namespace Org.BouncyCastle.Tls.Crypto.Impl
             byte[] key = HkdfExpandLabel(secret, cryptoHashAlgorithm, "key", length).Extract();
             hmac.SetKey(key, 0, length);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             HkdfExpandLabel(secret, cryptoHashAlgorithm, "iv", length).ExtractTo(nonce);
 #else
             byte[] iv = HkdfExpandLabel(secret, cryptoHashAlgorithm, "iv", length).Extract();

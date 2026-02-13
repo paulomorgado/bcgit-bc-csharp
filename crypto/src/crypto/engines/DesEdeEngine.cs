@@ -93,7 +93,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             return BLOCK_SIZE;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public override int ProcessBlock(ReadOnlySpan<byte> input, Span<byte> output)
         {
             if (workingKey1 == null)

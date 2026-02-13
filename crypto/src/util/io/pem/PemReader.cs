@@ -158,7 +158,7 @@ namespace Org.BouncyCastle.Utilities.IO.Pem
         {
 			m_textBuffer.Flush();
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             if (!m_buffer.TryGetBuffer(out var data))
                 throw new InvalidOperationException();
 

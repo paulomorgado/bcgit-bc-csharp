@@ -88,7 +88,7 @@ namespace Org.BouncyCastle.Crypto.Digests
         {
             Check.DataLength(input, inOff, inLen, "input buffer too short");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             BlockUpdate(input.AsSpan(inOff, inLen));
 #else
             if (m_squeezing)
@@ -127,7 +127,7 @@ namespace Org.BouncyCastle.Crypto.Digests
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void BlockUpdate(ReadOnlySpan<byte> input)
         {
             if (m_squeezing)
@@ -166,7 +166,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             return OutputFinal(output, outOff, GetDigestSize());
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int DoFinal(Span<byte> output)
         {
             int digestSize = GetDigestSize();
@@ -181,7 +181,7 @@ namespace Org.BouncyCastle.Crypto.Digests
         {
             Check.OutputLength(output, outOff, outLen, "output buffer is too short");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return OutputFinal(output.AsSpan(outOff, outLen));
 #else
             int length = Output(output, outOff, outLen);
@@ -192,7 +192,7 @@ namespace Org.BouncyCastle.Crypto.Digests
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int OutputFinal(Span<byte> output)
         {
             int length = Output(output);
@@ -207,7 +207,7 @@ namespace Org.BouncyCastle.Crypto.Digests
         {
             Check.OutputLength(output, outOff, outLen, "output buffer is too short");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return Output(output.AsSpan(outOff, outLen));
 #else
             int result = outLen;
@@ -269,7 +269,7 @@ namespace Org.BouncyCastle.Crypto.Digests
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int Output(Span<byte> output)
         {
             int result = output.Length;

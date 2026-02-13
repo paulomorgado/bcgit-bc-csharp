@@ -279,7 +279,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             {
                 // full buffer
                 IncrementCounter(BLOCK_LENGTH_BYTES);
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 Compress(buffer);
 #else
                 Compress(buffer, 0);
@@ -300,7 +300,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             if (message == null || len == 0)
                 return;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             BlockUpdate(message.AsSpan(offset, len));
 #else
             int remainingLength = 0; // left bytes of buffer
@@ -343,7 +343,7 @@ namespace Org.BouncyCastle.Crypto.Digests
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         /// <inheritdoc />
         public void BlockUpdate(ReadOnlySpan<byte> input)
         {
@@ -402,7 +402,7 @@ namespace Org.BouncyCastle.Crypto.Digests
         {
             Check.OutputLength(output, outOffset, digestLength, "output buffer too short");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return DoFinal(output.AsSpan(outOffset));
 #else
             f0 = 0xFFFFFFFFFFFFFFFFUL;
@@ -431,7 +431,7 @@ namespace Org.BouncyCastle.Crypto.Digests
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         /// <summary>Close the digest, producing the final digest value.</summary>
         /// <remarks>
         ///  The <see cref="DoFinal(Span{byte})"/> call leaves the digest reset. 
@@ -485,7 +485,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             Init();
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private void Compress(ReadOnlySpan<byte> message)
         {
 #if NETCOREAPP3_0_OR_GREATER

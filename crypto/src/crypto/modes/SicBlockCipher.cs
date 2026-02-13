@@ -101,7 +101,7 @@ namespace Org.BouncyCastle.Crypto.Modes
             return counter.Length;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual int ProcessBlock(ReadOnlySpan<byte> input, Span<byte> output)
         {
             cipher.ProcessBlock(counter, 0, counterOut, 0);

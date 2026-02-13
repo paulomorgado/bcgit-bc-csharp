@@ -174,7 +174,7 @@ namespace Org.BouncyCastle.Crypto.Macs
             if (len < 0)
                 throw new ArgumentException("Can't have a negative input length!");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             BlockUpdate(inBytes.AsSpan(inOff, len));
 #else
             int blockSize = m_cipherMode.GetBlockSize();
@@ -205,7 +205,7 @@ namespace Org.BouncyCastle.Crypto.Macs
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void BlockUpdate(ReadOnlySpan<byte> input)
         {
             int blockSize = m_cipherMode.GetBlockSize();
@@ -235,7 +235,7 @@ namespace Org.BouncyCastle.Crypto.Macs
 
         public int DoFinal(byte[] outBytes, int outOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return DoFinal(outBytes.AsSpan(outOff));
 #else
             int blockSize = m_cipherMode.GetBlockSize();
@@ -266,7 +266,7 @@ namespace Org.BouncyCastle.Crypto.Macs
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int DoFinal(Span<byte> output)
         {
             int blockSize = m_cipherMode.GetBlockSize();

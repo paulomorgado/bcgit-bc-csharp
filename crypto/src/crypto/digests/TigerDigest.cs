@@ -603,7 +603,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             bOff = 0;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private void ProcessWord(ReadOnlySpan<byte> b)
         {
             x[xOff++] = (long)Pack.LE_To_UInt64(b);
@@ -670,7 +670,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void BlockUpdate(ReadOnlySpan<byte> input)
         {
             int inOff = 0, length = input.Length;
@@ -864,7 +864,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             return DigestLength;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int DoFinal(Span<byte> output)
         {
             Finish();

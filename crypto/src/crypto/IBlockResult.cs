@@ -22,7 +22,7 @@ namespace Org.BouncyCastle.Crypto
         /// <param name="off">The offset into destination to start copying the result at.</param>
         int Collect(byte[] buf, int off);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         /// <summary>
         /// Store the final result of the operation by copying it into the destination span.
         /// </summary>

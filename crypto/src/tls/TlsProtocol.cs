@@ -711,7 +711,7 @@ namespace Org.BouncyCastle.Tls
         {
             Streams.ValidateBufferArguments(buffer, offset, count);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return ReadApplicationData(buffer.AsSpan(offset, count));
 #else
             if (!m_appDataReady)
@@ -743,7 +743,7 @@ namespace Org.BouncyCastle.Tls
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual int ReadApplicationData(Span<byte> buffer)
         {
             if (!m_appDataReady)
@@ -896,7 +896,7 @@ namespace Org.BouncyCastle.Tls
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         /// <exception cref="IOException"/>
         protected virtual void SafeWriteRecord(short type, ReadOnlySpan<byte> buffer)
         {
@@ -926,7 +926,7 @@ namespace Org.BouncyCastle.Tls
         protected virtual void WriteRecord(short type, byte[] buf, int off, int len) =>
             m_recordStream.WriteRecord(type, buf, off, len);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         /// <exception cref="IOException"/>
         protected virtual void WriteRecord(short type, ReadOnlySpan<byte> buffer) =>
             m_recordStream.WriteRecord(type, buffer);
@@ -951,7 +951,7 @@ namespace Org.BouncyCastle.Tls
         {
             Streams.ValidateBufferArguments(buffer, offset, count);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             WriteApplicationData(buffer.AsSpan(offset, count));
 #else
             if (!m_appDataReady)
@@ -1026,7 +1026,7 @@ namespace Org.BouncyCastle.Tls
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual void WriteApplicationData(ReadOnlySpan<byte> buffer)
         {
             if (!m_appDataReady)
@@ -1168,7 +1168,7 @@ namespace Org.BouncyCastle.Tls
             {
                 // Fragment data according to the current fragment limit.
                 int toWrite = System.Math.Min(len - total, m_recordStream.PlaintextLimit);
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 SafeWriteRecord(ContentType.handshake, buf.AsSpan(off + total, toWrite));
 #else
                 SafeWriteRecord(ContentType.handshake, buf, off + total, toWrite);
@@ -1529,7 +1529,7 @@ namespace Org.BouncyCastle.Tls
             SecurityParameters securityParameters = context.SecurityParameters;
             bool isServerContext = context.IsServer;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> verify_data = stackalloc byte[securityParameters.VerifyDataLength];
             TlsUtilities.ReadFully(verify_data, buf);
 #else
@@ -1569,7 +1569,7 @@ namespace Org.BouncyCastle.Tls
             SecurityParameters securityParameters = context.SecurityParameters;
             bool isServerContext = context.IsServer;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> verify_data = stackalloc byte[securityParameters.VerifyDataLength];
             TlsUtilities.ReadFully(verify_data, buf);
 #else
@@ -1602,7 +1602,7 @@ namespace Org.BouncyCastle.Tls
 
             try
             {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 Span<byte> alert = stackalloc byte[] { (byte)AlertLevel.fatal, (byte)alertDescription };
                 WriteRecord(ContentType.alert, alert);
 #else
@@ -1621,7 +1621,7 @@ namespace Org.BouncyCastle.Tls
         {
             Peer.NotifyAlertRaised(AlertLevel.warning, alertDescription, message, null);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> alert = stackalloc byte[] { (byte)AlertLevel.warning, (byte)alertDescription };
             SafeWriteRecord(ContentType.alert, alert);
 #else
@@ -1718,7 +1718,7 @@ namespace Org.BouncyCastle.Tls
         /// <exception cref="IOException"/>
         protected virtual void SendChangeCipherSpecMessage()
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> message = stackalloc byte[] { (byte)ChangeCipherSpec.change_cipher_spec };
             SafeWriteRecord(ContentType.change_cipher_spec, message);
 #else

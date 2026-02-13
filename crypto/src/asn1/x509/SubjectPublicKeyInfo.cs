@@ -62,7 +62,7 @@ namespace Org.BouncyCastle.Asn1.X509
             m_publicKey = new DerBitString(publicKey);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public SubjectPublicKeyInfo(AlgorithmIdentifier algID, ReadOnlySpan<byte> publicKey)
         {
             m_algorithm = algID;

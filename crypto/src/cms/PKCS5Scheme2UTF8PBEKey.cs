@@ -29,7 +29,7 @@ namespace Org.BouncyCastle.Cms
 		{
 		}
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public Pkcs5Scheme2Utf8PbeKey(ReadOnlySpan<char> password, ReadOnlySpan<byte> salt, int iterationCount)
             : base(password, salt, iterationCount)
         {

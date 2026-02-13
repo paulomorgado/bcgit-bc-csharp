@@ -1,5 +1,5 @@
 using System;
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 using System.Buffers;
 #endif
 using System.IO;
@@ -101,7 +101,7 @@ namespace Org.BouncyCastle.Asn1
 
             int charLen = byteLen / 2;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             m_str = string.Create(charLen, contents, (chars, bytes) =>
             {
                 for (int i = 0; i < chars.Length; ++i)
@@ -198,7 +198,7 @@ namespace Org.BouncyCastle.Asn1
             return new DerBmpString(contents);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static DerBmpString CreatePrimitive<TState>(int length, TState state, SpanAction<char, TState> action)
         {
             return new DerBmpString(string.Create(length, state, action));

@@ -725,7 +725,7 @@ namespace Org.BouncyCastle.Math.EC.Abc
             int uPos = 0;
 
             long r0_64, r1_64;
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<int> alphaUs = stackalloc int[alpha.Length];
             Span<int> alphaVs = stackalloc int[alpha.Length];
 #else
@@ -738,7 +738,7 @@ namespace Org.BouncyCastle.Math.EC.Abc
                 alphaVs[i] = alpha[i].v.IntValueExact;
             }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             int len = (System.Math.Max(R0.BitLength, R1.BitLength) + 33) >> 5;
             if (len <= 2)
             {

@@ -29,7 +29,7 @@ namespace Org.BouncyCastle.Crypto.Prng
             // We don't care about the seed
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void AddSeedMaterial(ReadOnlySpan<byte> inSeed)
         {
             // We don't care about the seed
@@ -69,7 +69,7 @@ namespace Org.BouncyCastle.Crypto.Prng
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void NextBytes(Span<byte> bytes)
         {
             m_randomNumberGenerator.GetBytes(bytes);

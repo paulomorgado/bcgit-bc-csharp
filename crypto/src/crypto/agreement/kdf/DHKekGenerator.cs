@@ -41,7 +41,7 @@ namespace Org.BouncyCastle.Crypto.Agreement.Kdf
         {
             Check.OutputLength(outBytes, outOff, length, "output buffer too short");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return GenerateBytes(outBytes.AsSpan(outOff, length));
 #else
             long oBytes = length;
@@ -103,7 +103,7 @@ namespace Org.BouncyCastle.Crypto.Agreement.Kdf
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int GenerateBytes(Span<byte> output)
         {
             long oBytes = output.Length;

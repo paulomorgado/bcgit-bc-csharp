@@ -18,7 +18,7 @@ namespace Org.BouncyCastle.Pqc.Crypto
         /// <returns>the signature of the message.</returns>
         byte[] GenerateSignature(byte[] message);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         // TODO[api]
         //int GenerateSignature(Span<byte> output);
 #endif
@@ -29,7 +29,7 @@ namespace Org.BouncyCastle.Pqc.Crypto
         /// <returns>true if and only if the signature verified against the message.</returns>
         bool VerifySignature(byte[] message, byte[] signature);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         // TODO[api]
         //bool VerifySignature(ReadOnlySpan<byte> message, ReadOnlySpan<byte> signature);
 #endif

@@ -40,7 +40,7 @@ namespace Org.BouncyCastle.Crypto.Agreement.Kdf
         {
             Check.OutputLength(outBytes, outOff, length, "output buffer too short");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return GenerateBytes(outBytes.AsSpan(outOff, length));
 #else
             // TODO Create an ASN.1 class for this (RFC3278)
@@ -55,7 +55,7 @@ namespace Org.BouncyCastle.Crypto.Agreement.Kdf
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int GenerateBytes(Span<byte> output)
         {
             // TODO Create an ASN.1 class for this (RFC3278)

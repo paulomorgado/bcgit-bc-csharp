@@ -101,7 +101,7 @@ namespace Org.BouncyCastle.Crypto.Macs
 
         private void SetKey(KeyParameter keyParameter, byte[] nonce)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             var key = keyParameter.InternalKey;
 #else
             byte[] key = keyParameter.GetKey();
@@ -143,7 +143,7 @@ namespace Org.BouncyCastle.Crypto.Macs
             {
                 // Compute encrypted nonce
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 Span<byte> kBytes = stackalloc byte[BlockSize];
                 cipher.Init(true, new KeyParameter(key.Slice(BlockSize, BlockSize)));
                 cipher.ProcessBlock(nonce, kBytes);
@@ -175,7 +175,7 @@ namespace Org.BouncyCastle.Crypto.Macs
             currentBlock[currentBlockOffset++] = input;
             if (currentBlockOffset == BlockSize)
             {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 ProcessBlock(currentBlock);
 #else
                 ProcessBlock(currentBlock, 0);
@@ -188,7 +188,7 @@ namespace Org.BouncyCastle.Crypto.Macs
         {
             Check.DataLength(input, inOff, len, "input buffer too short");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             BlockUpdate(input.AsSpan(inOff, len));
 #else
             int available = BlockSize - currentBlockOffset;
@@ -219,7 +219,7 @@ namespace Org.BouncyCastle.Crypto.Macs
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void BlockUpdate(ReadOnlySpan<byte> input)
         {
             int available = BlockSize - currentBlockOffset;
@@ -250,7 +250,7 @@ namespace Org.BouncyCastle.Crypto.Macs
         }
 #endif
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private void ProcessBlock(ReadOnlySpan<byte> block)
         {
             uint t0 = Pack.LE_To_UInt32(block);
@@ -289,7 +289,7 @@ namespace Org.BouncyCastle.Crypto.Macs
 
         public int DoFinal(byte[] output, int outOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return DoFinal(output.AsSpan(outOff));
 #else
             Check.OutputLength(output, outOff, BlockSize, "output buffer too short");
@@ -335,7 +335,7 @@ namespace Org.BouncyCastle.Crypto.Macs
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int DoFinal(Span<byte> output)
         {
             Check.OutputLength(output, BlockSize, "output buffer too short.");

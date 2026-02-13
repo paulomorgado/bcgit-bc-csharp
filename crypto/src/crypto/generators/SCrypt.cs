@@ -102,7 +102,7 @@ namespace Org.BouncyCastle.Crypto.Generators
 			return key.GetKey();
 		}
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static void SMix(uint[] B, int BOff, int N, int d, int r)
 		{
             int powN = Integers.NumberOfTrailingZeros(N);

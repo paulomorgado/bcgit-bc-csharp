@@ -56,7 +56,7 @@ namespace Org.BouncyCastle.Crypto.Digests
         {
             Check.DataLength(input, inOff, inLen, "input buffer too short");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             BlockUpdate(input.AsSpan(inOff, inLen));
 #else
             if (m_squeezing)
@@ -96,7 +96,7 @@ namespace Org.BouncyCastle.Crypto.Digests
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void BlockUpdate(ReadOnlySpan<byte> input)
         {
             if (m_squeezing)
@@ -112,9 +112,9 @@ namespace Org.BouncyCastle.Crypto.Digests
 
             if (m_bufPos > 0)
             {
-                input[..available].CopyTo(m_buf.AsSpan(m_bufPos));
+                input.Slice(0, available).CopyTo(m_buf.AsSpan(m_bufPos));
                 S0 ^= Pack.LE_To_UInt64(m_buf);
-                input = input[available..];
+                input = input.Slice(available);
                 //m_bufPos = Rate;
                 P12();
             }
@@ -122,7 +122,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             while (input.Length >= Rate)
             {
                 S0 ^= Pack.LE_To_UInt64(input);
-                input = input[Rate..];
+                input = input.Slice(Rate);
                 P12();
             }
 
@@ -136,14 +136,14 @@ namespace Org.BouncyCastle.Crypto.Digests
             return OutputFinal(output, outOff, GetDigestSize());
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int DoFinal(Span<byte> output)
         {
             int digestSize = GetDigestSize();
 
             Check.OutputLength(output, digestSize, "output buffer is too short");
 
-            return OutputFinal(output[..digestSize]);
+            return OutputFinal(output.Slice(0, digestSize));
         }
 #endif
 
@@ -171,7 +171,7 @@ namespace Org.BouncyCastle.Crypto.Digests
         {
             Check.OutputLength(output, outOff, outLen, "output buffer is too short");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return OutputFinal(output.AsSpan(outOff, outLen));
 #else
             int length = Output(output, outOff, outLen);
@@ -182,7 +182,7 @@ namespace Org.BouncyCastle.Crypto.Digests
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int OutputFinal(Span<byte> output)
         {
             int length = Output(output);
@@ -244,7 +244,7 @@ namespace Org.BouncyCastle.Crypto.Digests
 #endif
         }
 
-#if NETCOREAPP2_0_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if NETCOREAPP2_0_OR_GREATER || NETSTANDARD2_0_OR_GREATER
         public int Output(Span<byte> output)
         {
             int result = output.Length;
@@ -265,8 +265,8 @@ namespace Org.BouncyCastle.Crypto.Digests
                     return result;
                 }
 
-                output[..available].CopyFrom(m_buf.AsSpan(m_bufPos));
-                output = output[available..];
+                output.Slice(0, available).CopyFrom(m_buf.AsSpan(m_bufPos));
+                output = output.Slice(available);
                 m_bufPos = 8;
             }
 
@@ -274,7 +274,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             {
                 P12();
                 Pack.UInt64_To_LE(S0, output);
-                output = output[8..];
+                output = output.Slice(8);
             }
 
             if (!output.IsEmpty)

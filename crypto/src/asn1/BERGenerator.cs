@@ -84,7 +84,7 @@ namespace Org.BouncyCastle.Asn1
 
 		protected void WriteBerEnd()
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> data = stackalloc byte[4]{ 0x00, 0x00, 0x00, 0x00 };
             if (_tagged && _isExplicit)  // write extra end for tag header
             {

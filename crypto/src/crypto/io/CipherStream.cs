@@ -55,7 +55,7 @@ namespace Org.BouncyCastle.Crypto.IO
         }
 #endif
 
-#if NETCOREAPP1_0_OR_GREATER || NET45_OR_GREATER || NETSTANDARD1_0_OR_GREATER
+#if NETCOREAPP1_0_OR_GREATER || NET45_ORGREATER || NETSTANDARD1_0_OR_GREATER
         public override Task CopyToAsync(Stream destination, int bufferSize, CancellationToken cancellationToken)
         {
             return Streams.CopyToAsync(ReadSource, destination, bufferSize, cancellationToken);
@@ -103,7 +103,7 @@ namespace Org.BouncyCastle.Crypto.IO
             return num;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if NET6_0_OR_GREATER
         public override int Read(Span<byte> buffer)
         {
             if (m_readCipher == null)
@@ -215,7 +215,7 @@ namespace Org.BouncyCastle.Crypto.IO
         }
 #endif
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if NET6_0_OR_GREATER
         public override void Write(ReadOnlySpan<byte> buffer)
         {
             if (m_writeCipher == null)
@@ -303,12 +303,12 @@ namespace Org.BouncyCastle.Crypto.IO
 			    {
                     int outputSize = m_writeCipher.GetOutputSize(0);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                     Span<byte> output = outputSize <= 256
                         ? stackalloc byte[outputSize]
                         : new byte[outputSize];
                     int len = m_writeCipher.DoFinal(output);
-                    m_stream.Write(output[..len]);
+                    m_stream.Write(output.Slice(0, len));
                     output.Fill(0x00);
 #else
                     byte[] output = new byte[outputSize];

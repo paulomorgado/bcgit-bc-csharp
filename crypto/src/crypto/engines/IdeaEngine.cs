@@ -64,7 +64,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             Check.DataLength(input, inOff, BlockSize, "input buffer too short");
             Check.OutputLength(output, outOff, BlockSize, "output buffer too short");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             IdeaFunc(m_workingKey, input.AsSpan(inOff), output.AsSpan(outOff));
 #else
             IdeaFunc(m_workingKey, input, inOff, output, outOff);
@@ -72,7 +72,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             return BlockSize;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual int ProcessBlock(ReadOnlySpan<byte> input, Span<byte> output)
         {
             if (m_workingKey == null)
@@ -115,7 +115,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             return x & Mask;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private void IdeaFunc(int[] workingKey, ReadOnlySpan<byte> input, Span<byte> output)
         {
             int x0 = Pack.BE_To_UInt16(input);
@@ -206,7 +206,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             }
             for (int i = 0; i < 8; i++)
             {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 key[i] = Pack.BE_To_UInt16(uKey.AsSpan(i * 2));
 #else
                 key[i] = Pack.BE_To_UInt16(uKey, i * 2);

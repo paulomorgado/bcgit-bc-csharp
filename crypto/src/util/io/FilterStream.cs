@@ -57,7 +57,7 @@ namespace Org.BouncyCastle.Utilities.IO
         {
             return s.Read(buffer, offset, count);
         }
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if NET6_0_OR_GREATER
         public override int Read(Span<byte> buffer)
         {
             return s.Read(buffer);
@@ -83,7 +83,7 @@ namespace Org.BouncyCastle.Utilities.IO
         {
             s.Write(buffer, offset, count);
         }
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if NET6_0_OR_GREATER
         public override void Write(ReadOnlySpan<byte> buffer)
         {
             s.Write(buffer);

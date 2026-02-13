@@ -8,7 +8,7 @@ namespace Org.BouncyCastle.Crypto.Kems.MLKem
     {
         internal readonly int XofBlockBytes;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal abstract void Hash_h(ReadOnlySpan<byte> input, Span<byte> output);
 
         internal abstract void Hash_g(ReadOnlySpan<byte> input, Span<byte> output);
@@ -39,7 +39,7 @@ namespace Org.BouncyCastle.Crypto.Kems.MLKem
             this.XofBlockBytes = xofBlockBytes;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static void DoDigest(IDigest digest, ReadOnlySpan<byte> input, Span<byte> output)
         {
             digest.BlockUpdate(input);
@@ -70,7 +70,7 @@ namespace Org.BouncyCastle.Crypto.Kems.MLKem
                 sha3Digest512 = new Sha3Digest(512);
             }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             internal override void Hash_h(ReadOnlySpan<byte> input, Span<byte> output) =>
                 DoDigest(sha3Digest256, input, output);
 

@@ -40,7 +40,7 @@ namespace Org.BouncyCastle.Tls
             return bytesToRead;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if NET6_0_OR_GREATER
         public override int Read(Span<byte> buffer)
         {
             int bytesToRead = System.Math.Min(m_buffer.Available, buffer.Length);

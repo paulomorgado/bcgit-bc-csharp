@@ -50,7 +50,7 @@ namespace Org.BouncyCastle.Crypto.Generators
 			return key;
 		}
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         protected override KeyParameter EngineGenerateKeyParameter()
         {
             return KeyParameter.Create(strength, random, (bytes, random) =>
@@ -73,7 +73,7 @@ namespace Org.BouncyCastle.Crypto.Generators
         /// <param name="key">a 32 byte key value <code>k[0] ... k[15], r[0] ... r[15]</code></param>
         public static void Clamp(byte[] key)
 		{
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 			Clamp(key.AsSpan());
 #else
 			/*
@@ -99,7 +99,7 @@ namespace Org.BouncyCastle.Crypto.Generators
 #endif
 		}
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void Clamp(Span<byte> key)
         {
             /*

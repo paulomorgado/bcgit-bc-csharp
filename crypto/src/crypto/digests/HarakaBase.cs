@@ -146,7 +146,7 @@ namespace Org.BouncyCastle.Crypto.Digests
 
         public abstract void Reset();
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public abstract void BlockUpdate(ReadOnlySpan<byte> input);
 
         public abstract int DoFinal(Span<byte> output);

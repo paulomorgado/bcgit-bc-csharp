@@ -56,7 +56,7 @@ namespace Org.BouncyCastle.Crypto.Signers
 
             int size = BigIntegers.GetUnsignedByteLength(n);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             int xmSize = size * 2;
             Span<byte> xm = xmSize <= 512
                 ? stackalloc byte[xmSize]
@@ -75,7 +75,7 @@ namespace Org.BouncyCastle.Crypto.Signers
 
             hMac.BlockUpdate(V, 0, V.Length);
             hMac.Update(0x00);
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             hMac.BlockUpdate(xm);
 #else
             hMac.BlockUpdate(x, 0, x.Length);
@@ -90,7 +90,7 @@ namespace Org.BouncyCastle.Crypto.Signers
 
             hMac.BlockUpdate(V, 0, V.Length);
             hMac.Update(0x01);
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             hMac.BlockUpdate(xm);
 #else
             hMac.BlockUpdate(x, 0, x.Length);

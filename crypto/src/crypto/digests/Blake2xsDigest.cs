@@ -185,7 +185,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             hash.BlockUpdate(input, inOff, inLen);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         /// <inheritdoc />
         public void BlockUpdate(ReadOnlySpan<byte> input)
         {
@@ -251,7 +251,7 @@ namespace Org.BouncyCastle.Crypto.Digests
         {
             Check.OutputLength(output, outOff, outLen, "output buffer too short");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return Output(output.AsSpan(outOff, outLen));
 #else
             if (h0 == null)
@@ -292,7 +292,7 @@ namespace Org.BouncyCastle.Crypto.Digests
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         /// <summary>Close the digest, producing the final digest value.</summary>
         /// <remarks>
         ///  The <see cref="DoFinal(Span{byte})"/> call leaves the digest reset. 

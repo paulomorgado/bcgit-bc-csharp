@@ -29,7 +29,7 @@ namespace Org.BouncyCastle.Math.EC.Multiplier
             int d = (size + width - 1) / width;
             int fullComb = d * width;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             int len = Nat.GetLengthForBits(fullComb);
             Span<uint> K = len <= 64
                 ? stackalloc uint[len]

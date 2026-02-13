@@ -34,7 +34,7 @@ namespace Org.BouncyCastle.Crypto
             return outBytes.Length;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public abstract int ProcessByte(byte input, Span<byte> output);
 #endif
 
@@ -70,7 +70,7 @@ namespace Org.BouncyCastle.Crypto
             return outBytes.Length;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public abstract int ProcessBytes(ReadOnlySpan<byte> input, Span<byte> output);
 #endif
 
@@ -118,7 +118,7 @@ namespace Org.BouncyCastle.Crypto
             return len;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public abstract int DoFinal(Span<byte> output);
 
         public virtual int DoFinal(ReadOnlySpan<byte> input, Span<byte> output)

@@ -92,7 +92,7 @@ namespace Org.BouncyCastle.Asn1
         {
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal BerOctetString(ReadOnlySpan<byte> contents)
             : base(contents)
         {

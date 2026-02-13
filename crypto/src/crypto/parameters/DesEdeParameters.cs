@@ -84,7 +84,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
 			return IsWeakKey(key, 0, key.Length);
 		}
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static new bool IsWeakKey(ReadOnlySpan<byte> key)
         {
             for (int i = 0; i < key.Length; i += DesKeyLength)
@@ -142,7 +142,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
             return diff12 && diff13 && diff23;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static bool IsRealEdeKey(ReadOnlySpan<byte> key)
         {
             return key.Length == 16 ? IsReal2Key(key) : IsReal3Key(key);

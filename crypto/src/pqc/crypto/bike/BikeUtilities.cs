@@ -28,7 +28,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.Bike
 
         internal static void GenerateRandomUlongs(ulong[] res, int size, int weight, IXof digest)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> buf = stackalloc byte[4];
 #else
             byte[] buf = new byte[4];
@@ -36,7 +36,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.Bike
 
             for (int i = weight - 1; i >= 0; i--)
             {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 digest.Output(buf);
                 ulong temp = Pack.LE_To_UInt32(buf);
 #else

@@ -1,5 +1,5 @@
 ﻿using System;
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 using System.Buffers.Binary;
 #endif
 using System.Diagnostics;
@@ -267,7 +267,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc7748
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void CMov(int cond, ReadOnlySpan<int> x, Span<int> z)
         {
             Debug.Assert(0 == cond || -1 == cond);
@@ -300,7 +300,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc7748
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void Copy(ReadOnlySpan<int> x, Span<int> z)
         {
             x[..Size].CopyTo(z);
@@ -340,7 +340,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc7748
             z[9] &= M24;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         [CLSCompliant(false)]
         public static void Decode(ReadOnlySpan<uint> x, Span<int> z)
         {
@@ -371,7 +371,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc7748
             z[zOff + 9] &= M24;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void Decode(ReadOnlySpan<byte> x, Span<int> z)
         {
             Decode128(x, z);
@@ -391,7 +391,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc7748
             z[zOff + 4] = (int)(t3 >> 7);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static void Decode128(ReadOnlySpan<uint> x, Span<int> z)
         {
             uint t0 = x[0], t1 = x[1], t2 = x[2], t3 = x[3];
@@ -418,7 +418,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc7748
             z[zOff + 4] = (int)(t3 >> 7);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static void Decode128(ReadOnlySpan<byte> bs, Span<int> z)
         {
             uint t0 = Decode32(bs);
@@ -436,7 +436,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc7748
 
         private static uint Decode32(byte[] bs, int off)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return BinaryPrimitives.ReadUInt32LittleEndian(bs.AsSpan(off));
 #else
             uint n = bs[off];
@@ -447,7 +447,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc7748
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static uint Decode32(ReadOnlySpan<byte> bs)
         {
             return BinaryPrimitives.ReadUInt32LittleEndian(bs);
@@ -461,7 +461,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc7748
             Encode128(x, 5, z, zOff + 4);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         [CLSCompliant(false)]
         public static void Encode(ReadOnlySpan<int> x, Span<uint> z)
         {
@@ -488,7 +488,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc7748
             Encode128(x, xOff + 5, z, zOff + 16);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void Encode(ReadOnlySpan<int> x, Span<byte> z)
         {
             Encode128(x, z);
@@ -507,7 +507,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc7748
             z[zOff + 3] = (x3 >> 19) | (x4 <<  7);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static void Encode128(ReadOnlySpan<int> x, Span<uint> z)
         {
             uint x0 = (uint)x[0], x1 = (uint)x[1], x2 = (uint)x[2], x3 = (uint)x[3], x4 = (uint)x[4];
@@ -530,7 +530,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc7748
             uint t3 = (x3 >> 19) | (x4 <<  7);  Encode32(t3, bs, off + 12);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static void Encode128(ReadOnlySpan<int> x, Span<byte> bs)
         {
             uint x0 = (uint)x[0], x1 = (uint)x[1], x2 = (uint)x[2];
@@ -545,7 +545,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc7748
 
         private static void Encode32(uint n, byte[] bs, int off)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             BinaryPrimitives.WriteUInt32LittleEndian(bs.AsSpan(off), n);
 #else
             bs[  off] = (byte)(n      );
@@ -555,7 +555,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc7748
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static void Encode32(uint n, Span<byte> bs)
         {
             BinaryPrimitives.WriteUInt32LittleEndian(bs, n);
@@ -564,7 +564,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc7748
 
         public static void Inv(int[] x, int[] z)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Inv(x.AsSpan(), z.AsSpan());
 #else
             //int[] x2 = Create();
@@ -586,7 +586,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc7748
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void Inv(ReadOnlySpan<int> x, Span<int> z)
         {
             Span<int> t = stackalloc int[Size];
@@ -604,7 +604,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc7748
 
         public static void InvVar(int[] x, int[] z)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             InvVar(x.AsSpan(), z.AsSpan());
 #else
             int[] t = Create();
@@ -620,7 +620,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc7748
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void InvVar(ReadOnlySpan<int> x, Span<int> z)
         {
             Span<int> t = stackalloc int[Size];
@@ -870,7 +870,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc7748
             Debug.Assert(z[9] >> 24 == 0);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void Normalize(Span<int> z)
         {
             int x = (z[9] >> (24 - 1)) & 1;
@@ -929,7 +929,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc7748
             z[9] = z9 + (int)cc;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static void Reduce(Span<int> z, int x)
         {
             int t = z[9], z9 = t & M24;

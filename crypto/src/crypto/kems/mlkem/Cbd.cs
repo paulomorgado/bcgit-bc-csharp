@@ -6,7 +6,7 @@ namespace Org.BouncyCastle.Crypto.Kems.MLKem
 {
     internal static class Cbd
     {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static void Eta(Poly r, ReadOnlySpan<byte> bytes, int eta)
 #else
         internal static void Eta(Poly r, byte[] bytes, int eta)

@@ -61,7 +61,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
 			return (byte[])nonce.Clone();
 		}
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal ReadOnlySpan<byte> Nonce => nonce;
 #endif
     }

@@ -110,7 +110,7 @@ namespace Org.BouncyCastle.Crypto.Digests
 			return engine.DoFinal(outBytes, outOff);
 		}
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void BlockUpdate(ReadOnlySpan<byte> input)
         {
             engine.BlockUpdate(input);

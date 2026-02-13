@@ -176,7 +176,7 @@ namespace Org.BouncyCastle.Crypto.Modes
         {
             /* Set defaults */
             byte[] myInitialAEAD = null;
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             ReadOnlySpan<byte> myNonce;
 #else
             byte[] myNonce;
@@ -187,7 +187,7 @@ namespace Org.BouncyCastle.Crypto.Modes
             if (cipherParameters is AeadParameters myAEAD)
             {
                 myInitialAEAD = myAEAD.GetAssociatedText();
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 myNonce = myAEAD.Nonce;
 #else
                 myNonce = myAEAD.GetNonce();
@@ -196,7 +196,7 @@ namespace Org.BouncyCastle.Crypto.Modes
             }
             else if (cipherParameters is ParametersWithIV myParms)
             {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 myNonce = myParms.InternalIV;
 #else
                 myNonce = myParms.GetIV();
@@ -223,7 +223,7 @@ namespace Org.BouncyCastle.Crypto.Modes
             /* Reset details */
             forEncryption = pEncrypt;
             theInitialAEAD = myInitialAEAD;
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             theNonce = myNonce.ToArray();
 #else
             theNonce = myNonce;
@@ -304,7 +304,7 @@ namespace Org.BouncyCastle.Crypto.Modes
         {
             Check.DataLength(pData, pOffset, pLen, "input buffer too short");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             ProcessAadBytes(pData.AsSpan(pOffset, pLen));
 #else
             /* Check that we can supply AEAD */
@@ -315,7 +315,7 @@ namespace Org.BouncyCastle.Crypto.Modes
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual void ProcessAadBytes(ReadOnlySpan<byte> input)
         {
             /* Check that we can supply AEAD */
@@ -346,7 +346,7 @@ namespace Org.BouncyCastle.Crypto.Modes
             return 0;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual int ProcessByte(byte input, Span<byte> output)
         {
             /* Check that we have initialised */
@@ -372,7 +372,7 @@ namespace Org.BouncyCastle.Crypto.Modes
         {
             Check.DataLength(pData, pOffset, pLen, "input buffer too short");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return ProcessBytes(pData.AsSpan(pOffset, pLen), Spans.FromNullable(pOutput, pOutOffset));
 #else
             /* Check that we have initialised */
@@ -394,7 +394,7 @@ namespace Org.BouncyCastle.Crypto.Modes
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual int ProcessBytes(ReadOnlySpan<byte> input, Span<byte> output)
         {
             /* Check that we have initialised */
@@ -420,7 +420,7 @@ namespace Org.BouncyCastle.Crypto.Modes
         {
             Check.OutputLength(pOutput, pOffset, GetOutputSize(0), "output buffer too short");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return DoFinal(pOutput.AsSpan(pOffset));
 #else
             /* Check that we have initialised */
@@ -459,7 +459,7 @@ namespace Org.BouncyCastle.Crypto.Modes
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual int DoFinal(Span<byte> output)
         {
             /* Check that we have initialised */
@@ -569,7 +569,7 @@ namespace Org.BouncyCastle.Crypto.Modes
             return pBuffer == null ? 0 : pBuffer.Length;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private int EncryptPlain(byte[] pCounter, Span<byte> target)
         {
             byte[] thePlainBuf = thePlain.GetBuffer();
@@ -765,7 +765,7 @@ namespace Org.BouncyCastle.Crypto.Modes
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static void fillReverse(ReadOnlySpan<byte> input, Span<byte> output)
         {
             /* Loop through the buffer */
@@ -1021,7 +1021,7 @@ namespace Org.BouncyCastle.Crypto.Modes
                 numHashed += (ulong)pLen;
             }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             internal void UpdateHash(ReadOnlySpan<byte> buffer)
             {
                 int pLen = buffer.Length;

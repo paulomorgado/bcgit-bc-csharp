@@ -26,7 +26,7 @@ namespace Org.BouncyCastle.Crypto
         /// <param name="inLen">the length of the data.</param>
         void BlockUpdate(byte[] input, int inOff, int inLen);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         /// <summary>Update the MAC with a span of bytes.</summary>
         /// <param name="input">the span containing the data.</param>
         void BlockUpdate(ReadOnlySpan<byte> input);
@@ -39,7 +39,7 @@ namespace Org.BouncyCastle.Crypto
         /// <returns>the number of bytes written</returns>
         int DoFinal(byte[] output, int outOff);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         /// <summary>Perform final calculations, producing the result MAC.</summary>
         /// <remarks>This call leaves the MAC reset.</remarks>
         /// <param name="output">the span the MAC is to be copied into.</param>

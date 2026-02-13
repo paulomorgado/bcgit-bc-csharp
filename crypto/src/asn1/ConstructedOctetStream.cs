@@ -23,7 +23,7 @@ namespace Org.BouncyCastle.Asn1
 		{
 			Streams.ValidateBufferArguments(buffer, offset, count);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 			return Read(buffer.AsSpan(offset, count));
 #else
 			if (count < 1)
@@ -70,7 +70,7 @@ namespace Org.BouncyCastle.Asn1
 #endif
 		}
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if NET6_0_OR_GREATER
 		public override int Read(Span<byte> buffer)
 		{
 			if (buffer.IsEmpty)
@@ -117,7 +117,7 @@ namespace Org.BouncyCastle.Asn1
 		}
 #endif
 
-		public override int ReadByte()
+        public override int ReadByte()
 		{
 			if (m_currentStream == null)
 			{

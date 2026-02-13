@@ -106,7 +106,7 @@ namespace Org.BouncyCastle.Crypto.Prng.Drbg
 	    public int Generate(byte[] output, int outputOff, int outputLen, byte[] additionalInput,
 			bool predictionResistant)
 	    {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             var outputSpan = output.AsSpan(outputOff, outputLen);
             return additionalInput == null
                 ? Generate(outputSpan, predictionResistant)
@@ -178,7 +178,7 @@ namespace Org.BouncyCastle.Crypto.Prng.Drbg
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int Generate(Span<byte> output, bool predictionResistant)
         {
             // 1. If reseed_counter > reseed_interval, then return an indication that a
@@ -294,7 +294,7 @@ namespace Org.BouncyCastle.Crypto.Prng.Drbg
 	        return entropy;
 	    }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private int GetEntropy(Span<byte> output)
         {
             int length = mEntropySource.GetEntropy(output);
@@ -312,7 +312,7 @@ namespace Org.BouncyCastle.Crypto.Prng.Drbg
         // this will always add the shorter length byte array mathematically to the
         // longer length byte array.
         // be careful....
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private void AddTo(Span<byte> longer, ReadOnlySpan<byte> shorter)
 #else
 		private void AddTo(byte[] longer, byte[] shorter)
@@ -345,7 +345,7 @@ namespace Org.BouncyCastle.Crypto.Prng.Drbg
 	      */
 	    public void Reseed(byte[] additionalInput)
 	    {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 			Reseed(Spans.FromNullableReadOnly(additionalInput));
 #else
 			// 1. seed_material = 0x01 || V || entropy_input || additional_input.
@@ -374,7 +374,7 @@ namespace Org.BouncyCastle.Crypto.Prng.Drbg
 #endif
 	    }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void Reseed(ReadOnlySpan<byte> additionalInput)
         {
 			// 1. seed_material = 0x01 || V || entropy_input || additional_input.
@@ -417,7 +417,7 @@ namespace Org.BouncyCastle.Crypto.Prng.Drbg
         }
 #endif
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private void DoHash(ReadOnlySpan<byte> input, Span<byte> output)
         {
             mDigest.BlockUpdate(input);
@@ -447,7 +447,7 @@ namespace Org.BouncyCastle.Crypto.Prng.Drbg
         // 4.3 data = (data + 1) mod 2^seedlen
         // .
         // 5. returned_bits = Leftmost (requested_no_of_bits) bits of W.
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private void Hashgen(ReadOnlySpan<byte> input, Span<byte> output)
 	    {
 	        int digestSize = mDigest.GetDigestSize();

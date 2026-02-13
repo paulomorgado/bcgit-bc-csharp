@@ -176,7 +176,7 @@ namespace Org.BouncyCastle.Tls
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void Update(ReadOnlySpan<byte> input)
         {
             if (m_buf != null)

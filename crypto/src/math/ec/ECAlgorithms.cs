@@ -210,7 +210,7 @@ namespace Org.BouncyCastle.Math.EC
             if (!c.Equals(cp))
                 throw new ArgumentException("Point must be on the same curve", nameof(p));
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             int encodedLength = p.GetEncodedLength(false);
             Span<byte> encoding = encodedLength <= 512
                 ? stackalloc byte[encodedLength]
@@ -567,7 +567,7 @@ namespace Org.BouncyCastle.Math.EC
             int d = (combSize + width - 1) / width;
             int fullComb = d * width;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             int len = Nat.GetLengthForBits(fullComb);
             Span<uint> K = len <= 64
                 ? stackalloc uint[len]

@@ -25,7 +25,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.Lms
 
         public Composer U64Str(long n)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> buf = stackalloc byte[8];
             Pack.UInt64_To_BE((ulong)n, buf);
             bos.Write(buf);
@@ -38,7 +38,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.Lms
 
         public Composer U32Str(int n)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> buf = stackalloc byte[4];
             Pack.UInt32_To_BE((uint)n, buf);
             bos.Write(buf);
@@ -53,7 +53,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.Lms
 
         public Composer U16Str(int n)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> buf = stackalloc byte[2];
             Pack.UInt16_To_BE((ushort)n, buf);
             bos.Write(buf);

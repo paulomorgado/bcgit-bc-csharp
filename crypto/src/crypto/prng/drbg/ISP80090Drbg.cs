@@ -25,7 +25,7 @@ namespace Org.BouncyCastle.Crypto.Prng.Drbg
 	     */
         int Generate(byte[] output, int outputOff, int outputLen, byte[] additionalInput, bool predictionResistant);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         int Generate(Span<byte> output, bool predictionResistant);
 
         int GenerateWithInput(Span<byte> output, ReadOnlySpan<byte> additionalInput, bool predictionResistant);
@@ -38,7 +38,7 @@ namespace Org.BouncyCastle.Crypto.Prng.Drbg
 	     */
         void Reseed(byte[] additionalInput);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         void Reseed(ReadOnlySpan<byte> additionalInput);
 #endif
     }

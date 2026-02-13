@@ -39,7 +39,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.Lms
             m_digest.BlockUpdate(I, 0, I.Length);
 #pragma warning restore CS0618 // Type or member is obsolete
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> qj = stackalloc byte[7];
             Pack.UInt32_To_BE((uint)q, qj);
             Pack.UInt16_To_BE((ushort)j, qj[4..]);

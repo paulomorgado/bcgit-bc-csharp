@@ -60,7 +60,7 @@ namespace Org.BouncyCastle.Utilities.IO
             return pos;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if NET6_0_OR_GREATER
         public override int Read(Span<byte> buffer)
         {
             int count = buffer.Length, pos = 0;
@@ -83,17 +83,19 @@ namespace Org.BouncyCastle.Utilities.IO
             return pos;
         }
 
+#if NET6_0_OR_GREATER
         public override ValueTask<int> ReadAsync(Memory<byte> buffer, CancellationToken cancellationToken = default)
         {
             return Streams.ReadAsync(this, buffer, cancellationToken);
         }
+#endif
 #endif
 
         public sealed override long Seek(long offset, SeekOrigin origin) { throw new NotSupportedException(); }
         public sealed override void SetLength(long value) { throw new NotSupportedException(); }
         public sealed override void Write(byte[] buffer, int offset, int count) { throw new NotSupportedException(); }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if NET6_0_OR_GREATER
         // TODO[api] sealed
         public override void Write(ReadOnlySpan<byte> buffer) { throw new NotSupportedException(); }
         // TODO[api] sealed

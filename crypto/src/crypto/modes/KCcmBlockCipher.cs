@@ -141,7 +141,7 @@ namespace Org.BouncyCastle.Crypto.Modes
             associatedText.Write(input, inOff, len);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual void ProcessAadBytes(ReadOnlySpan<byte> input)
         {
             associatedText.Write(input);
@@ -217,7 +217,7 @@ namespace Org.BouncyCastle.Crypto.Modes
             return 0;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual int ProcessByte(byte input, Span<byte> output)
         {
             data.WriteByte(input);
@@ -235,7 +235,7 @@ namespace Org.BouncyCastle.Crypto.Modes
             return 0;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual int ProcessBytes(ReadOnlySpan<byte> input, Span<byte> output)
         {
             data.Write(input);
@@ -249,7 +249,7 @@ namespace Org.BouncyCastle.Crypto.Modes
             Check.DataLength(input, inOff, len, "input buffer too short");
             Check.OutputLength(output, outOff, len, "output buffer too short");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return ProcessPacket(input.AsSpan(inOff, len), output.AsSpan(outOff));
 #else
             if (associatedText.Length > 0)
@@ -357,7 +357,7 @@ namespace Org.BouncyCastle.Crypto.Modes
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int ProcessPacket(ReadOnlySpan<byte> input, Span<byte> output)
         {
             int len = input.Length;
@@ -466,7 +466,7 @@ namespace Org.BouncyCastle.Crypto.Modes
         }
 #endif
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private void CalculateMac(ReadOnlySpan<byte> authText)
         {
             int blockSize = engine.GetBlockSize();
@@ -537,7 +537,7 @@ namespace Org.BouncyCastle.Crypto.Modes
 
         public virtual int DoFinal(byte[] output, int outOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return DoFinal(output.AsSpan(outOff));
 #else
             byte[] buf = data.GetBuffer();
@@ -551,7 +551,7 @@ namespace Org.BouncyCastle.Crypto.Modes
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual int DoFinal(Span<byte> output)
         {
             byte[] buf = data.GetBuffer();

@@ -61,7 +61,7 @@ namespace Org.BouncyCastle.Bcpg.OpenPgp
                 {
                     // The native format for X25519 private keys is little-endian
                     X25519PrivateKeyParameters xK = (X25519PrivateKeyParameters)privKey.Key;
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                     secKey = new ECSecretBcpgKey(new BigInteger(1, xK.DataSpan, bigEndian: false));
 #else
                     secKey = new ECSecretBcpgKey(new BigInteger(1, xK.GetEncoded(), bigEndian: false));
@@ -77,7 +77,7 @@ namespace Org.BouncyCastle.Bcpg.OpenPgp
             {
                 if (privKey.Key is Ed25519PrivateKeyParameters ed25519K)
                 {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                     secKey = new EdSecretBcpgKey(new BigInteger(1, ed25519K.DataSpan));
 #else
                     secKey = new EdSecretBcpgKey(new BigInteger(1, ed25519K.GetEncoded()));
@@ -85,7 +85,7 @@ namespace Org.BouncyCastle.Bcpg.OpenPgp
                 }
                 else if (privKey.Key is Ed448PrivateKeyParameters ed448K)
                 {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                     secKey = new EdSecretBcpgKey(new BigInteger(1, ed448K.DataSpan));
 #else
                     secKey = new EdSecretBcpgKey(new BigInteger(1, ed448K.GetEncoded()));

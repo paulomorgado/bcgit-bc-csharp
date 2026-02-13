@@ -58,7 +58,7 @@ namespace Org.BouncyCastle.Crypto.Generators
 			base.Init(password, salt, 1);
 		}
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public override void Init(ReadOnlySpan<byte> password, ReadOnlySpan<byte> salt, int iterationCount)
         {
             // Ignore the provided iterationCount

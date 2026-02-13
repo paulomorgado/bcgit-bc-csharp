@@ -60,7 +60,7 @@ namespace Org.BouncyCastle.Crypto.Digests
         {
             Check.OutputLength(output, outOff, outLen, "output buffer is too short");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return OutputFinal(output.AsSpan(outOff, outLen));
 #else
             int length = Output(output, outOff, outLen);
@@ -89,7 +89,7 @@ namespace Org.BouncyCastle.Crypto.Digests
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public override int DoFinal(Span<byte> output)
         {
             return OutputFinal(output[..GetDigestSize()]);
@@ -149,7 +149,7 @@ namespace Org.BouncyCastle.Crypto.Digests
                 AbsorbBits(finalInput, finalBits);
             }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Squeeze(output.AsSpan(outOff, outLen));
 #else
             Squeeze(output, outOff, (long)outLen << 3);

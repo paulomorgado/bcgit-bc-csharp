@@ -40,7 +40,7 @@ namespace Org.BouncyCastle.Crypto.Kems
             Arrays.ValidateSegment(encBuf, encOff, encLen);
             Arrays.ValidateSegment(secBuf, secOff, secLen);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Encapsulate(encBuf.AsSpan(encOff, encLen), secBuf.AsSpan(secOff, secLen));
 #else
             if (EncapsulationLength != encLen)
@@ -54,7 +54,7 @@ namespace Org.BouncyCastle.Crypto.Kems
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void Encapsulate(Span<byte> encapsulation, Span<byte> secret)
         {
             if (EncapsulationLength != encapsulation.Length)

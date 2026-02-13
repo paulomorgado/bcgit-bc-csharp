@@ -16,7 +16,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.SphincsPlus
             this.w = this.engine.WOTS_W;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal void PKGen(byte[] skSeed, byte[] pkSeed, Adrs paramAdrs, Span<byte> output)
 #else
         internal void PKGen(byte[] skSeed, byte[] pkSeed, Adrs paramAdrs, byte[] output)
@@ -24,7 +24,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.SphincsPlus
         {
             Adrs wotspkAdrs = new Adrs(paramAdrs); // copy address to create OTS public key address
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             byte[] tmpConcat = new byte[engine.WOTS_LEN * engine.N];
 #else
             byte[][] tmp = new byte[engine.WOTS_LEN][];
@@ -38,7 +38,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.SphincsPlus
                 adrs.SetChainAddress(i);
                 adrs.SetHashAddress(0);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 engine.PRF(pkSeed, skSeed, adrs, tmpConcat, engine.N * (int)i);
 #else
                 engine.PRF(pkSeed, skSeed, adrs, sk, 0);
@@ -49,7 +49,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.SphincsPlus
                 adrs.SetChainAddress(i);
                 adrs.SetHashAddress(0);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 Chain(0, w - 1, pkSeed, adrs, tmpConcat.AsSpan(engine.N * (int)i, engine.N));
 #else
                 tmp[i] = Chain(sk, 0, w - 1, pkSeed, adrs);
@@ -59,14 +59,14 @@ namespace Org.BouncyCastle.Pqc.Crypto.SphincsPlus
             wotspkAdrs.SetTypeAndClear(Adrs.WOTS_PK);
             wotspkAdrs.SetKeyPairAddress(paramAdrs.GetKeyPairAddress());
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             engine.T_l(pkSeed, wotspkAdrs, tmpConcat, output);
 #else
             engine.T_l(pkSeed, wotspkAdrs, Arrays.ConcatenateAll(tmp), output);
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         // #Input: Input string X, start index i, number of steps s, public seed PK.seed, address Adrs
         // #Output: value of F iterated s times on X
         private bool Chain(uint i, uint s, byte[] pkSeed, Adrs adrs, Span<byte> X)
@@ -114,7 +114,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.SphincsPlus
         {
             Adrs adrs = new Adrs(paramAdrs);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<uint> msg = stackalloc uint[engine.WOTS_LEN];
 
             // convert message to base w
@@ -140,7 +140,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.SphincsPlus
             }
             int len_2_bytes = (engine.WOTS_LEN2 * engine.WOTS_LOGW + 7) / 8;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> csum_bytes = stackalloc byte[4];
             Pack.UInt32_To_BE(csum, csum_bytes);
             BaseW(csum_bytes[^len_2_bytes..], w, msg[engine.WOTS_LEN1..]);
@@ -160,7 +160,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.SphincsPlus
                 adrs.SetChainAddress((uint)i);
                 adrs.SetHashAddress(0);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 engine.PRF(pkSeed, skSeed, adrs, sigConcat, engine.N * i);
 #else
                 engine.PRF(pkSeed, skSeed, adrs, sk, 0);
@@ -171,14 +171,14 @@ namespace Org.BouncyCastle.Pqc.Crypto.SphincsPlus
                 adrs.SetChainAddress((uint)i);
                 adrs.SetHashAddress(0);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 Chain(0, msg[i], pkSeed, adrs, sigConcat.AsSpan(engine.N * i, engine.N));
 #else
                 sig[i] = Chain(sk, 0, msg[i], pkSeed, adrs);
 #endif
             }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return sigConcat;
 #else
             return Arrays.ConcatenateAll(sig);
@@ -188,7 +188,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.SphincsPlus
         //
         // Input: len_X-byte string X, int w, output length out_len
         // Output: outLen int array basew
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal void BaseW(ReadOnlySpan<byte> X, uint w, Span<uint> output)
         {
             int total = 0;
@@ -228,7 +228,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.SphincsPlus
         }
 #endif
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal void PKFromSig(byte[] sig, byte[] M, byte[] pkSeed, Adrs adrs, Span<byte> output)
 #else
         internal void PKFromSig(byte[] sig, byte[] M, byte[] pkSeed, Adrs adrs, byte[] output)
@@ -236,7 +236,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.SphincsPlus
         {
             Adrs wotspkAdrs = new Adrs(adrs);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<uint> msg = stackalloc uint[engine.WOTS_LEN];
 
             // convert message to base w
@@ -259,7 +259,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.SphincsPlus
             csum <<= 8 - (engine.WOTS_LEN2 * engine.WOTS_LOGW % 8);
             int len_2_bytes = (engine.WOTS_LEN2 * engine.WOTS_LOGW + 7) / 8;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> csum_bytes = stackalloc byte[4];
             Pack.UInt32_To_BE(csum, csum_bytes);
             BaseW(csum_bytes[^len_2_bytes..], w, msg[engine.WOTS_LEN1..]);
@@ -277,7 +277,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.SphincsPlus
                 adrs.SetChainAddress((uint)i);
 
                 int sigPos = engine.N * i;
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 Array.Copy(sig, sigPos, tmpConcat, sigPos, engine.N);
                 Chain(msg[i], w - 1 - msg[i], pkSeed, adrs, tmpConcat.AsSpan(sigPos, engine.N));
 #else
@@ -289,7 +289,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.SphincsPlus
             wotspkAdrs.SetTypeAndClear(Adrs.WOTS_PK);
             wotspkAdrs.SetKeyPairAddress(adrs.GetKeyPairAddress());
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             engine.T_l(pkSeed, wotspkAdrs, tmpConcat, output);
 #else
             engine.T_l(pkSeed, wotspkAdrs, Arrays.ConcatenateAll(tmp), output);

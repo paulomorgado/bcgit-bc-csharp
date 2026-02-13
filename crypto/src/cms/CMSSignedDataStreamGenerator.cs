@@ -669,7 +669,7 @@ namespace Org.BouncyCastle.Cms
                 m_out.Write(buffer, offset, count);
             }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if NET6_0_OR_GREATER
             public override void Write(ReadOnlySpan<byte> buffer)
             {
                 m_out.Write(buffer);

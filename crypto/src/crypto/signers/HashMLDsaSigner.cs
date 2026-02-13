@@ -82,7 +82,7 @@ namespace Org.BouncyCastle.Crypto.Signers
 
         public void BlockUpdate(byte[] input, int inOff, int inLen) => m_preHashDigest.BlockUpdate(input, inOff, inLen);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void BlockUpdate(ReadOnlySpan<byte> input) => m_preHashDigest.BlockUpdate(input);
 #endif
 
@@ -118,7 +118,7 @@ namespace Org.BouncyCastle.Crypto.Signers
         {
             ShakeDigest msgRepDigest = new ShakeDigest(m_msgRepDigest);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> preHash = stackalloc byte[m_preHashDigest.GetDigestSize()];
             m_preHashDigest.DoFinal(preHash);
             msgRepDigest.BlockUpdate(preHash);

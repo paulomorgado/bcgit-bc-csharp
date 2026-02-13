@@ -34,7 +34,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.SphincsPlus
             off += len;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void BlockUpdate(ReadOnlySpan<byte> input)
         {
             if (off > 32 - input.Length)
@@ -58,7 +58,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.SphincsPlus
             return 32;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int DoFinal(Span<byte> output)
         {
             // TODO Check received all 32 bytes of input?

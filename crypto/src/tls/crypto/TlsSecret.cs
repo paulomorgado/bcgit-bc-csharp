@@ -23,7 +23,7 @@ namespace Org.BouncyCastle.Tls.Crypto
         /// <returns>the new secret.</returns>
         TlsSecret DeriveUsingPrf(int prfAlgorithm, string label, byte[] seed, int length);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         TlsSecret DeriveUsingPrf(int prfAlgorithm, ReadOnlySpan<char> label, ReadOnlySpan<byte> seed, int length);
 #endif
 
@@ -48,7 +48,7 @@ namespace Org.BouncyCastle.Tls.Crypto
         /// <returns>the secret's internal data.</returns>
         byte[] Extract();
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         void ExtractTo(Span<byte> output);
 #endif
 
@@ -60,7 +60,7 @@ namespace Org.BouncyCastle.Tls.Crypto
         /// <returns> output keying material (of 'length' octets).</returns>
         TlsSecret HkdfExpand(int cryptoHashAlgorithm, byte[] info, int length);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         TlsSecret HkdfExpand(int cryptoHashAlgorithm, ReadOnlySpan<byte> info, int length);
 #endif
 

@@ -164,7 +164,7 @@ namespace Org.BouncyCastle.Crypto.Engines
         public void Init(bool forEncryption, ICipherParameters parameters)
         {
             KeyParameter key;
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             ReadOnlySpan<byte> iv;
 #else
             byte[] iv;
@@ -173,7 +173,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             if (parameters is AeadParameters aeadParameters)
             {
                 key = aeadParameters.Key;
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 iv = aeadParameters.Nonce;
 #else
                 iv = aeadParameters.GetNonce();
@@ -187,7 +187,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             else if (parameters is ParametersWithIV withIV)
             {
                 key = withIV.Parameters as KeyParameter;
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 iv = withIV.InternalIV;
 #else
                 iv = withIV.GetIV();
@@ -210,7 +210,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             if (expectedIVLength != iv.Length)
                 throw new ArgumentException(algorithmName + " requires exactly " + expectedIVLength + " bytes of IV");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Pack.LE_To_UInt32(key.InternalKey, k);
             Pack.LE_To_UInt32(iv, npub);
 #else
@@ -229,7 +229,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 
             if (m_bufPos == RATE_BYTES)
             {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 ProcessBufferAad(m_buf);
 #else
                 ProcessBufferAad(m_buf, 0);
@@ -244,7 +244,7 @@ namespace Org.BouncyCastle.Crypto.Engines
         {
             Check.DataLength(inBytes, inOff, len, "input buffer too short");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             ProcessAadBytes(inBytes.AsSpan(inOff, len));
 #else
             // Don't enter AAD state until we actually get input
@@ -283,7 +283,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void ProcessAadBytes(ReadOnlySpan<byte> input)
         {
             // Don't enter AAD state until we actually get input
@@ -322,14 +322,14 @@ namespace Org.BouncyCastle.Crypto.Engines
 
         public int ProcessByte(byte input, byte[] outBytes, int outOff)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return ProcessByte(input, Spans.FromNullable(outBytes, outOff));
 #else
             return ProcessBytes(new byte[]{ input }, 0, 1, outBytes, outOff);
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int ProcessByte(byte input, Span<byte> output)
         {
             Span<byte> singleByte = stackalloc byte[1]{ input };
@@ -342,7 +342,7 @@ namespace Org.BouncyCastle.Crypto.Engines
         {
             Check.DataLength(inBytes, inOff, len, "input buffer too short");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return ProcessBytes(inBytes.AsSpan(inOff, len), Spans.FromNullable(outBytes, outOff));
 #else
             bool forEncryption = CheckData();
@@ -428,7 +428,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int ProcessBytes(ReadOnlySpan<byte> input, Span<byte> output)
         {
             bool forEncryption = CheckData();
@@ -601,7 +601,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             return resultLength;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int DoFinal(Span<byte> output)
         {
             byte[] rv = new byte[GetOutputSize(0)];
@@ -729,7 +729,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             m_state = nextState;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private void ProcessBufferAad(ReadOnlySpan<byte> buffer)
         {
             for (int i = 0; i < RATE_WORDS / 2; ++i)
@@ -958,7 +958,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 
             if (initialAssociatedText != null)
             {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 ProcessAadBytes(initialAssociatedText);
 #else
                 ProcessAadBytes(initialAssociatedText, 0, initialAssociatedText.Length);

@@ -504,7 +504,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 			}
 		}
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 		private int ProcessBlock128(ReadOnlySpan<byte> input, Span<byte> output)
 		{
 			uint[] state = new uint[4];
@@ -666,7 +666,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             Check.DataLength(input, inOff, BLOCK_SIZE, "input buffer too short");
             Check.OutputLength(output, outOff, BLOCK_SIZE, "output buffer too short");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 			if (_keyIs128)
 			{
 				return ProcessBlock128(input.AsSpan(inOff), output.AsSpan(outOff));
@@ -687,7 +687,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 #endif
 		}
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 		public virtual int ProcessBlock(ReadOnlySpan<byte> input, Span<byte> output)
 		{
 			if (!initialised)

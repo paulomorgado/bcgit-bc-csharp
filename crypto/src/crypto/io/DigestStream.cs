@@ -77,7 +77,7 @@ namespace Org.BouncyCastle.Crypto.IO
             return n;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if NET6_0_OR_GREATER
         public override int Read(Span<byte> buffer)
         {
             int n = m_stream.Read(buffer);
@@ -147,7 +147,7 @@ namespace Org.BouncyCastle.Crypto.IO
         }
 #endif
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if NET6_0_OR_GREATER
         public override void Write(ReadOnlySpan<byte> buffer)
         {
             if (m_writeDigest != null)

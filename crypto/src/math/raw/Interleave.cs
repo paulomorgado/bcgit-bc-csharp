@@ -86,7 +86,7 @@ namespace Org.BouncyCastle.Math.Raw
             z[zOff + 1] = (x >> 1) & M64;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static void Expand64To128(ulong x, Span<ulong> z)
         {
 #if NETCOREAPP3_0_OR_GREATER
@@ -120,7 +120,7 @@ namespace Org.BouncyCastle.Math.Raw
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static void Expand64To128(ReadOnlySpan<ulong> xs, Span<ulong> zs)
         {
             int xsPos = xs.Length, zsPos = xs.Length << 1;

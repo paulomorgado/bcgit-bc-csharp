@@ -7,7 +7,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
 {
     internal static class Wnaf
     {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static void GetSignedVar(ReadOnlySpan<uint> n, int width, Span<sbyte> ws)
 #else
         internal static void GetSignedVar(uint[] n, int width, sbyte[] ws)
@@ -15,7 +15,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
         {
             Debug.Assert(2 <= width && width <= 8);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<uint> t = n.Length <= 64
                 ? stackalloc uint[n.Length * 2]
                 : new uint[n.Length * 2];

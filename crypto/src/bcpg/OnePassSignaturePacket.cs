@@ -51,7 +51,7 @@ namespace Org.BouncyCastle.Bcpg
 
         public override void Encode(BcpgOutputStream bcpgOut)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> body = stackalloc byte[13];
 #else
             byte[] body = new byte[13];

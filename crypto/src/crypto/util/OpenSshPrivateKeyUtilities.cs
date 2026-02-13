@@ -209,7 +209,7 @@ namespace Org.BouncyCastle.Crypto.Utilities
                     pkIn.SkipBlock();
 
                     // Private key value..
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                     ReadOnlySpan<byte> edPrivateKey = pkIn.ReadBlockSpan();
 #else
                     byte[] edPrivateKey = pkIn.ReadBlock();
@@ -218,7 +218,7 @@ namespace Org.BouncyCastle.Crypto.Utilities
                     if (edPrivateKey.Length != Ed25519PrivateKeyParameters.KeySize + Ed25519PublicKeyParameters.KeySize)
                         throw new InvalidOperationException("private key value of wrong length");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                     result = new Ed25519PrivateKeyParameters(edPrivateKey[..Ed25519PrivateKeyParameters.KeySize]);
 #else
                     result = new Ed25519PrivateKeyParameters(edPrivateKey, 0);

@@ -80,7 +80,7 @@ namespace Org.BouncyCastle.Crypto.Macs
 
         public virtual void BlockUpdate(byte[] input, int offset, int length)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             BlockUpdate(input.AsSpan(offset, length));
 #else
             int i = 0, fullWords = length & ~7;
@@ -121,7 +121,7 @@ namespace Org.BouncyCastle.Crypto.Macs
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual void BlockUpdate(ReadOnlySpan<byte> input)
         {
             int length = input.Length;
@@ -190,7 +190,7 @@ namespace Org.BouncyCastle.Crypto.Macs
             return 8;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int DoFinal(Span<byte> output)
         {
             long result = DoFinal();

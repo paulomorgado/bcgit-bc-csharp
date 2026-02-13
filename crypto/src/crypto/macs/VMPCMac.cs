@@ -23,7 +23,7 @@ namespace Org.BouncyCastle.Crypto.Macs
 
 		public virtual int DoFinal(byte[] output, int outOff)
 		{
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 			return DoFinal(output.AsSpan(outOff));
 #else
 			// Execute the Post-Processing Phase
@@ -75,7 +75,7 @@ namespace Org.BouncyCastle.Crypto.Macs
 #endif
 		}
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 		public virtual int DoFinal(Span<byte> output)
         {
 			// Execute the Post-Processing Phase
@@ -198,7 +198,7 @@ namespace Org.BouncyCastle.Crypto.Macs
 		{
 			Check.DataLength(input, inOff, inLen, "input buffer too short");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 			BlockUpdate(input.AsSpan(inOff, inLen));
 #else
 			for (int i = 0; i < inLen; i++)
@@ -225,7 +225,7 @@ namespace Org.BouncyCastle.Crypto.Macs
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 		public virtual void BlockUpdate(ReadOnlySpan<byte> input)
         {
 			for (int i = 0; i < input.Length; i++)

@@ -163,7 +163,7 @@ namespace Org.BouncyCastle.Crmf
 
         public IMacFactory Get(AlgorithmIdentifier algorithm, char[] password)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return Get(algorithm, password.AsSpan());
 #else
             if (!CmpObjectIdentifiers.passwordBasedMac.Equals(algorithm.Algorithm))
@@ -175,7 +175,7 @@ namespace Org.BouncyCastle.Crmf
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public IMacFactory Get(AlgorithmIdentifier algorithm, ReadOnlySpan<char> password)
         {
             if (!CmpObjectIdentifiers.passwordBasedMac.Equals(algorithm.Algorithm))
@@ -194,7 +194,7 @@ namespace Org.BouncyCastle.Crmf
         /// <returns>IMacFactory</returns>
         public IMacFactory Build(char[] password)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return Build(password.AsSpan());
 #else
             PbmParameter pbmParameter = parameters;
@@ -207,7 +207,7 @@ namespace Org.BouncyCastle.Crmf
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public IMacFactory Build(ReadOnlySpan<char> password)
         {
             PbmParameter pbmParameter = parameters;
@@ -226,7 +226,7 @@ namespace Org.BouncyCastle.Crmf
                 throw new ArgumentException("iteration count exceeds limit (" + iterationCount + " > " + maxIterations + ")");
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private IMacFactory GenCalculator(PbmParameter parameters, ReadOnlySpan<char> password)
         {
             return GenCalculator(parameters, Strings.ToUtf8ByteArray(password));

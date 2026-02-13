@@ -26,7 +26,7 @@ namespace Org.BouncyCastle.Tls.Crypto.Impl.BC
             this.key = new KeyParameter(key, keyOff, keyLen);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void SetKey(ReadOnlySpan<byte> key)
         {
             this.key = new KeyParameter(key);

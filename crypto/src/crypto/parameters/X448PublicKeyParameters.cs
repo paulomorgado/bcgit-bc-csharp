@@ -25,7 +25,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
             Array.Copy(buf, off, data, 0, KeySize);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public X448PublicKeyParameters(ReadOnlySpan<byte> buf)
             : base(false)
         {
@@ -48,7 +48,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
             Array.Copy(data, 0, buf, off, KeySize);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void Encode(Span<byte> buf)
         {
             data.CopyTo(buf);
@@ -60,7 +60,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
             return Arrays.Clone(data);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal ReadOnlySpan<byte> DataSpan => data;
 
         internal ReadOnlyMemory<byte> DataMemory => data;

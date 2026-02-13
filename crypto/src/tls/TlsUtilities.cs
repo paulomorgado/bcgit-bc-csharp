@@ -328,7 +328,7 @@ namespace Org.BouncyCastle.Tls
             buf[offset] = (byte)i;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void WriteUint8(int i, Span<byte> buf)
         {
             buf[0] = (byte)i;
@@ -347,7 +347,7 @@ namespace Org.BouncyCastle.Tls
             buf[offset + 1] = (byte)i;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void WriteUint16(int i, Span<byte> buf)
         {
             buf[0] = (byte)(i >> 8);
@@ -443,7 +443,7 @@ namespace Org.BouncyCastle.Tls
             Array.Copy(data, 0, buf, off + 1, data.Length);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void WriteOpaque8(ReadOnlySpan<byte> data, Span<byte> buf)
         {
             CheckUint8(data.Length);
@@ -765,7 +765,7 @@ namespace Org.BouncyCastle.Tls
             return (short)buf[offset];
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static short ReadUint8(ReadOnlySpan<byte> buffer)
         {
             return (short)buffer[0];
@@ -788,7 +788,7 @@ namespace Org.BouncyCastle.Tls
             return n;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static int ReadUint16(ReadOnlySpan<byte> buffer)
         {
             int n = buffer[0] << 8;
@@ -881,7 +881,7 @@ namespace Org.BouncyCastle.Tls
                 throw new EndOfStreamException();
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void ReadFully(Span<byte> buf, Stream input)
         {
             int length = buf.Length;
@@ -1467,7 +1467,7 @@ namespace Org.BouncyCastle.Tls
             return secret.DeriveUsingPrf(securityParameters.PrfAlgorithm, asciiLabel, seed, length);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static TlsSecret Prf(SecurityParameters securityParameters, TlsSecret secret,
             ReadOnlySpan<char> asciiLabel, ReadOnlySpan<byte> seed, int length)
         {

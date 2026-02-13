@@ -119,7 +119,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
 
         public override int GetHashCode()
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             HashCode hc = default;
             hc.Add(m_curve);
             hc.Add(m_g);

@@ -107,7 +107,7 @@ namespace Org.BouncyCastle.Cmp
         /// <exception cref="InvalidOperationException">if algorithm not MAC based, or an exception is thrown verifying the MAC.</exception>
         public virtual bool Verify(PKMacBuilder pkMacBuilder, char[] password)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return Verify(pkMacBuilder, password.AsSpan());
 #else
             var protectionAlgorithm = ProtectionAlgorithm;
@@ -124,7 +124,7 @@ namespace Org.BouncyCastle.Cmp
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual bool Verify(PKMacBuilder pkMacBuilder, ReadOnlySpan<char> password)
         {
             var protectionAlgorithm = ProtectionAlgorithm;

@@ -1,5 +1,5 @@
 ﻿using System;
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 #endif
@@ -10,7 +10,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
 {
     internal static class ScalarUtilities
     {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void AddShifted_NP(int last, int s, Span<uint> Nu, ReadOnlySpan<uint> Nv, Span<uint> p, Span<uint> t)
 #else
@@ -72,7 +72,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
             else
             {
                 // Copy the low limbs of the original p
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 t[..last].CopyFrom(p);
 #else
                 Array.Copy(p, 0, t, 0, last);
@@ -128,7 +128,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void AddShifted_UV(int last, int s, Span<uint> u0, Span<uint> u1, ReadOnlySpan<uint> v0,
             ReadOnlySpan<uint> v1)
@@ -177,7 +177,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static int GetBitLength(int last, ReadOnlySpan<uint> x)
 #else
@@ -193,7 +193,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
             return i * 32 + 32 - Integers.NumberOfLeadingZeros((int)(x[i] ^ sign));
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static int GetBitLengthPositive(int last, ReadOnlySpan<uint> x)
 #else
@@ -208,7 +208,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
             return i * 32 + 32 - Integers.NumberOfLeadingZeros((int)x[i]);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static bool LessThan(int last, ReadOnlySpan<uint> x, ReadOnlySpan<uint> y)
 #else
@@ -227,7 +227,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
             return false;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void SubShifted_NP(int last, int s, Span<uint> Nu, ReadOnlySpan<uint> Nv, Span<uint> p, Span<uint> t)
 #else
@@ -289,7 +289,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
             else
             {
                 // Copy the low limbs of the original p
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 t[..last].CopyFrom(p);
 #else
                 Array.Copy(p, 0, t, 0, last);
@@ -345,7 +345,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void SubShifted_UV(int last, int s, Span<uint> u0, Span<uint> u1, ReadOnlySpan<uint> v0,
             ReadOnlySpan<uint> v1)
@@ -394,7 +394,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void Swap(ref Span<uint> x, ref Span<uint> y)
 #else

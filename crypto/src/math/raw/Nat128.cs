@@ -131,7 +131,7 @@ namespace Org.BouncyCastle.Math.Raw
             z[zOff + 1] = x[xOff + 1];
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static void Copy64(ReadOnlySpan<ulong> x, Span<ulong> z)
         {
             z[0] = x[0];
@@ -278,7 +278,7 @@ namespace Org.BouncyCastle.Math.Raw
             return true;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static bool IsZero64(ReadOnlySpan<ulong> x)
 #else
         public static bool IsZero64(ulong[] x)

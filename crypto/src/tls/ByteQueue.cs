@@ -49,7 +49,7 @@ namespace Org.BouncyCastle.Tls
         /// <param name="len">How many bytes to read from the array.</param>
         public void AddData(byte[] buf, int off, int len)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             AddData(buf.AsSpan(off, len));
 #else
             if (m_readOnlyBuf)
@@ -85,7 +85,7 @@ namespace Org.BouncyCastle.Tls
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void AddData(ReadOnlySpan<byte> buffer)
         {
             if (m_readOnlyBuf)
@@ -158,7 +158,7 @@ namespace Org.BouncyCastle.Tls
             Array.Copy(m_databuf, m_skipped + skip, buf, offset, len);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void Read(Span<byte> buffer, int skip)
         {
             if ((m_available - skip) < buffer.Length)
@@ -234,7 +234,7 @@ namespace Org.BouncyCastle.Tls
             RemoveData(skip + len);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void RemoveData(Span<byte> buffer, int skip)
         {
             Read(buffer, skip);

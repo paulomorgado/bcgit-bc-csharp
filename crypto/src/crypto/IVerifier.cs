@@ -24,7 +24,7 @@ namespace Org.BouncyCastle.Crypto
         /// <returns>true if the signature verifies, false otherwise.</returns>
         bool IsVerified(byte[] source, int off, int length);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         // TODO[api]
         //bool IsVerified(ReadOnlySpan<byte> data);
 #endif

@@ -77,7 +77,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             Check.DataLength(inBytes, inOff, block_size, "input buffer too short");
             Check.OutputLength(outBytes, outOff, block_size, "output buffer too short");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 			return _forEncryption
 				? EncryptBlock(inBytes.AsSpan(inOff), outBytes.AsSpan(outOff))
 				: DecryptBlock(inBytes.AsSpan(inOff), outBytes.AsSpan(outOff));
@@ -88,7 +88,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 #endif
 		}
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 		public virtual int ProcessBlock(ReadOnlySpan<byte> input, Span<byte> output)
 		{
 			if (!_initialised)
@@ -116,7 +116,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 			_d = Pack.BE_To_UInt32(key, 12);
 		}
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 		private int EncryptBlock(ReadOnlySpan<byte> input, Span<byte> output)
 		{
 			// Pack bytes into integers

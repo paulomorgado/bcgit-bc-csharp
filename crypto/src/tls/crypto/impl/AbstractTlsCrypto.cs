@@ -83,7 +83,7 @@ namespace Org.BouncyCastle.Tls.Crypto.Impl
 
         public abstract TlsNonceGenerator CreateNonceGenerator(byte[] additionalSeedMaterial);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public abstract TlsNonceGenerator CreateNonceGenerator(ReadOnlySpan<byte> additionalSeedMaterial);
 #endif
 

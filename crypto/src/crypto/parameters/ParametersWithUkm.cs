@@ -7,7 +7,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
     public class ParametersWithUkm
         : ICipherParameters
     {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static ParametersWithUkm Create<TState>(ICipherParameters parameters, int ukmLength, TState state,
             System.Buffers.SpanAction<byte, TState> action)
         {
@@ -37,7 +37,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
             m_ukm = Arrays.CopySegment(ukm, ukmOff, ukmLen);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public ParametersWithUkm(ICipherParameters parameters, ReadOnlySpan<byte> ukm)
         {
             // NOTE: 'parameters' may be null to imply key re-use
@@ -46,7 +46,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
         }
 #endif
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private ParametersWithUkm(ICipherParameters parameters, int ukmLength)
         {
             // NOTE: 'parameters' may be null to imply key re-use
@@ -59,7 +59,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
 
         public byte[] GetUkm() => Arrays.InternalCopyBuffer(m_ukm);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal ReadOnlySpan<byte> InternalUkm => m_ukm;
 #endif
 

@@ -8,7 +8,7 @@ namespace Org.BouncyCastle.Crmf
 {
     internal static class PKMacValueGenerator
     {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static PKMacValue Generate(PKMacBuilder builder, ReadOnlySpan<char> password,
             SubjectPublicKeyInfo keyInfo)
         {

@@ -1,5 +1,5 @@
 using System;
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 using System.Buffers;
 #endif
 
@@ -11,7 +11,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
     public sealed class MgfParameters
         : IDerivationParameters
     {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public static MgfParameters Create<TState>(int length, TState state, SpanAction<byte, TState> action)
         {
             if (action == null)
@@ -37,7 +37,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
             m_seed = Arrays.CopySegment(seed, off, len);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private MgfParameters(int length)
         {
             if (length < 1)
@@ -54,14 +54,14 @@ namespace Org.BouncyCastle.Crypto.Parameters
         [Obsolete("Use 'CopySeedTo' instead")]
         public void GetSeed(byte[] buffer, int offset) => m_seed.CopyTo(buffer, offset);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void GetSeed(Span<byte> output)
         {
             m_seed.CopyTo(output);
         }
 #endif
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal ReadOnlySpan<byte> InternalSeed => m_seed;
 #endif
 

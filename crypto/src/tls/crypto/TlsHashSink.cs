@@ -29,7 +29,7 @@ namespace Org.BouncyCastle.Tls.Crypto
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if NET6_0_OR_GREATER
         public override void Write(ReadOnlySpan<byte> buffer)
         {
             if (!buffer.IsEmpty)

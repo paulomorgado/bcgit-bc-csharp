@@ -439,7 +439,7 @@ namespace Org.BouncyCastle.Crypto.Digests
                 }
             }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             public void Update(ReadOnlySpan<byte> input, ulong[] output)
             {
                 /*
@@ -761,7 +761,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             ubi.Update(inBytes, inOff, len, chain);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void BlockUpdate(ReadOnlySpan<byte> input)
         {
             CheckInitialised();
@@ -804,7 +804,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             return outputSizeBytes;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int DoFinal(Span<byte> output)
         {
             CheckInitialised();
@@ -867,7 +867,7 @@ namespace Org.BouncyCastle.Crypto.Digests
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private void Output(ulong outputSequence, Span<byte> output, int outputBytes)
         {
             Span<byte> currentBytes = stackalloc byte[8];

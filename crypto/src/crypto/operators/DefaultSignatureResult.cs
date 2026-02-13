@@ -21,7 +21,7 @@ namespace Org.BouncyCastle.Crypto.Operators
             return signature.Length;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int Collect(Span<byte> output)
         {
             byte[] signature = Collect();

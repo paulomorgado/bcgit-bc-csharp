@@ -17,7 +17,7 @@ namespace Org.BouncyCastle.Crypto.Kems.MLKem
 
         private int GenerateMatrixNBlocks => ((12 * MLKemEngine.N / 8 * (1 << 12) / MLKemEngine.Q + m_symmetric.XofBlockBytes) / m_symmetric.XofBlockBytes);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private void GenerateMatrix(PolyVec[] a, ReadOnlySpan<byte> seed, bool transposed)
 #else
         private void GenerateMatrix(PolyVec[] a, byte[] seed, bool transposed)
@@ -38,7 +38,7 @@ namespace Org.BouncyCastle.Crypto.Kems.MLKem
                     {
                         m_symmetric.XofAbsorb(seed, (byte)j, (byte)i);
                     }
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                     m_symmetric.XofSqueezeBlocks(buf.AsSpan(0, GenerateMatrixNBlocks * m_symmetric.XofBlockBytes));
 #else
                     m_symmetric.XofSqueezeBlocks(buf, 0, GenerateMatrixNBlocks * m_symmetric.XofBlockBytes);
@@ -52,7 +52,7 @@ namespace Org.BouncyCastle.Crypto.Kems.MLKem
                         {
                             buf[k] = buf[buflen - off + k];
                         }
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                         m_symmetric.XofSqueezeBlocks(buf.AsSpan(off, m_symmetric.XofBlockBytes * 2));
 #else
                         m_symmetric.XofSqueezeBlocks(buf, off, m_symmetric.XofBlockBytes * 2);
@@ -97,7 +97,7 @@ namespace Org.BouncyCastle.Crypto.Kems.MLKem
 
             m_symmetric.Hash_g(Arrays.Append(d, (byte)K), buf);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             var publicSeed = buf.AsSpan(0, MLKemEngine.SymBytes);
             var noiseSeed = buf.AsSpan(MLKemEngine.SymBytes, MLKemEngine.SymBytes);
 #else
@@ -144,7 +144,7 @@ namespace Org.BouncyCastle.Crypto.Kems.MLKem
             skpv.ToBytes(sk);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private void PackPublicKey(out byte[] pk, PolyVec pkpv, ReadOnlySpan<byte> seed)
         {
             pk = new byte[m_engine.IndCpaPublicKeyBytes];
@@ -320,7 +320,7 @@ namespace Org.BouncyCastle.Crypto.Kems.MLKem
         }
 #endif
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal void Decrypt(Span<byte> m, ReadOnlySpan<byte> encapsulation, ReadOnlySpan<byte> sk)
         {
             PolyVec bp = new PolyVec(m_engine), skpv = new PolyVec(m_engine);

@@ -349,7 +349,7 @@ namespace Org.BouncyCastle.Crypto.Modes.Gcm
             z.n1 = x.n1 ^ y.n1;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static void Xor(Span<byte> x, ReadOnlySpan<byte> y)
         {
             int i = 0;

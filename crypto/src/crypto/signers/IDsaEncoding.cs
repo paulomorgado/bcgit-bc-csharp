@@ -22,7 +22,7 @@ namespace Org.BouncyCastle.Crypto.Signers
         /// <returns>An encoding of the DSA signature given by the provided (r, s) pair.</returns>
         byte[] Encode(BigInteger n, BigInteger r, BigInteger s);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         int Encode(BigInteger n, BigInteger r, BigInteger s, Span<byte> output);
 #endif
 

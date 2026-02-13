@@ -188,7 +188,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             Check.DataLength(inBuf, inOff, BlockSize, "input buffer too short");
             Check.OutputLength(outBuf, outOff, BlockSize, "output buffer too short");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 			return ProcessBlock(inBuf.AsSpan(inOff), outBuf.AsSpan(outOff));
 #else
 			if (wKey == null)
@@ -231,7 +231,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 #endif
 		}
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 		public virtual int ProcessBlock(ReadOnlySpan<byte> input, Span<byte> output)
 		{
 			if (wKey == null)
@@ -282,7 +282,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 			if (keyParameter.KeyLength != 16)
 				throw new ArgumentException("key size must be 128 bits");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             var inKey = keyParameter.InternalKey;
 #else
             byte[] inKey = keyParameter.GetKey();

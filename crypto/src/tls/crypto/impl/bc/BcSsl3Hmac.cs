@@ -52,7 +52,7 @@ namespace Org.BouncyCastle.Tls.Crypto.Impl.BC
             Reset();
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void SetKey(ReadOnlySpan<byte> key)
         {
             this.m_secret = key.ToArray();
@@ -66,7 +66,7 @@ namespace Org.BouncyCastle.Tls.Crypto.Impl.BC
             m_digest.BlockUpdate(input, inOff, len);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void Update(ReadOnlySpan<byte> input)
         {
             m_digest.BlockUpdate(input);

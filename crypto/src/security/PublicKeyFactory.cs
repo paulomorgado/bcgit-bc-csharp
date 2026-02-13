@@ -358,7 +358,7 @@ namespace Org.BouncyCastle.Security
             throw new ArgumentException("invalid " + mlKemParameters.Name + " public key");
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private static ReadOnlySpan<byte> GetRawKey(SubjectPublicKeyInfo keyInfo)
         {
             /*

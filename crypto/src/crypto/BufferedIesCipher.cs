@@ -72,7 +72,7 @@ namespace Org.BouncyCastle.Crypto
             return 0;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public override int ProcessByte(byte input, Span<byte> output)
         {
             buffer.WriteByte(input);
@@ -98,7 +98,7 @@ namespace Org.BouncyCastle.Crypto
 			return null;
 		}
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public override int ProcessBytes(ReadOnlySpan<byte> input, Span<byte> output)
 		{
 			buffer.Write(input);
@@ -124,7 +124,7 @@ namespace Org.BouncyCastle.Crypto
 			return DoFinal();
 		}
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public override int DoFinal(Span<byte> output)
 		{
             byte[] buf = buffer.ToArray();

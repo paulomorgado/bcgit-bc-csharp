@@ -111,7 +111,7 @@ namespace Org.BouncyCastle.Crypto.Kems.MLKem
             Debug.Assert(s.Length == IndCpaSecretKeyBytes);
 
             hpk = new byte[32];
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Symmetric.Hash_h(pk.AsSpan(), hpk.AsSpan());
 #else
             Symmetric.Hash_h(pk, 0, pk.Length, hpk, 0);
@@ -123,7 +123,7 @@ namespace Org.BouncyCastle.Crypto.Kems.MLKem
             seed = Arrays.Concatenate(d, z);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal void KemDecrypt(Span<byte> secret, ReadOnlySpan<byte> encapsulation,
             MLKemPrivateKeyParameters privateKey)
         {

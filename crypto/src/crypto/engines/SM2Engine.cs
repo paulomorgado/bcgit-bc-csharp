@@ -81,7 +81,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             if ((inOff + inLen) > input.Length || inLen == 0)
                 throw new DataLengthException("input buffer too short");
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             return ProcessBlock(input.AsSpan(inOff, inLen));
 #else
             if (mForEncryption)
@@ -95,7 +95,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual byte[] ProcessBlock(ReadOnlySpan<byte> input)
         {
             if (input.Length == 0)
@@ -117,7 +117,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             return new FixedPointCombMultiplier();
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private byte[] Encrypt(ReadOnlySpan<byte> input)
         {
             byte[] c2 = input.ToArray();
@@ -351,7 +351,7 @@ namespace Org.BouncyCastle.Crypto.Engines
         {
             int digestSize = digest.GetDigestSize();
             int bufSize = System.Math.Max(4, digestSize);
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<byte> buf = bufSize <= 128
                 ? stackalloc byte[bufSize]
                 : new byte[bufSize];
@@ -386,7 +386,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 
                 int xorLen = System.Math.Min(digestSize, encData.Length - off);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 Pack.UInt32_To_BE(++ct, buf);
                 digest.BlockUpdate(buf[..4]);
                 digest.DoFinal(buf);
@@ -417,7 +417,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 
         private void AddFieldElement(IDigest digest, ECFieldElement v)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             int encodedLength = v.GetEncodedLength();
             Span<byte> p = encodedLength <= 128
                 ? stackalloc byte[encodedLength]

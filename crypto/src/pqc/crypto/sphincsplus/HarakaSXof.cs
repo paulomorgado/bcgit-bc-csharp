@@ -1,6 +1,6 @@
 ﻿using System;
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 using Org.BouncyCastle.Utilities;
 #endif
 
@@ -55,7 +55,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.SphincsPlus
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public void BlockUpdate(ReadOnlySpan<byte> input)
         {
             int len = input.Length;
@@ -103,7 +103,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.SphincsPlus
             return outLen;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public int OutputFinal(Span<byte> output)
         {
             int outLen = output.Length;

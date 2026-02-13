@@ -52,7 +52,7 @@ namespace Org.BouncyCastle.Bcpg.OpenPgp
             {
                 Streams.ValidateBufferArguments(buffer, offset, count);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 return Read(buffer.AsSpan(offset, count));
 #else
                 int avail = m_bufEnd - m_bufStart;
@@ -77,7 +77,7 @@ namespace Org.BouncyCastle.Bcpg.OpenPgp
 #endif
             }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if NET6_0_OR_GREATER
             public override int Read(Span<byte> buffer)
             {
                 int avail = m_bufEnd - m_bufStart;

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 #endif
@@ -47,7 +47,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
         private const int L4_6 = 0x08EEC492;    // L4_6:27/24
         private const int L4_7 = 0x20CD7705;    // L4_7:29/24
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static bool CheckVar(ReadOnlySpan<byte> s, Span<uint> n)
         {
             if (s[ScalarBytes - 1] != 0x00)
@@ -67,7 +67,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
         }
 #endif
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static void Decode(ReadOnlySpan<byte> k, Span<uint> n)
         {
             Debug.Assert(k[ScalarBytes - 1] == 0x00);
@@ -83,7 +83,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
         }
 #endif
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static void GetOrderWnafVar(int width, Span<sbyte> ws)
 #else
         internal static void GetOrderWnafVar(int width, sbyte[] ws)
@@ -92,7 +92,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
             Wnaf.GetSignedVar(L, width, ws);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static void Multiply225Var(ReadOnlySpan<uint> x, ReadOnlySpan<uint> y225, Span<uint> z)
         {
             Debug.Assert((int)y225[7] >> 31 == (int)y225[7]);
@@ -147,7 +147,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
         {
             byte[] r = new byte[ScalarBytes];
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Reduce704(n, r);
 #else
             ulong x00 =  Codec.Decode32(n,   0);                // x00:32/--
@@ -351,7 +351,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
             return r;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static void Reduce704(ReadOnlySpan<byte> n, Span<byte> r)
         {
             ulong x00 =  Codec.Decode32(n[  0..]);              // x00:32/--
@@ -557,7 +557,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
         {
             byte[] r = new byte[ScalarBytes];
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Reduce912(n, r);
 #else
             ulong x00 =  Codec.Decode32(n,   0);                // x00:32/--
@@ -836,7 +836,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
             return r;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static void Reduce912(ReadOnlySpan<byte> n, Span<byte> r)
         {
             ulong x00 =  Codec.Decode32(n[  0..]);              // x00:32/--
@@ -1113,7 +1113,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
         }
 #endif
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static bool ReduceBasisVar(ReadOnlySpan<uint> k, Span<uint> z0, Span<uint> z1)
         {
             /*
@@ -1239,7 +1239,7 @@ namespace Org.BouncyCastle.Math.EC.Rfc8032
         }
 #endif
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal static void ToSignedDigits(int bits, ReadOnlySpan<uint> x, Span<uint> z)
 #else
         internal static void ToSignedDigits(int bits, uint[] x, uint[] z)

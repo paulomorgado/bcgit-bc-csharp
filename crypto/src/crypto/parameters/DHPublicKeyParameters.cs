@@ -112,7 +112,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
             int bitLength = b.BitLength;
             int len = Nat.GetLengthForBits(bitLength);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             Span<uint> A = len <= 64
                 ? stackalloc uint[len]
                 : new uint[len];

@@ -61,7 +61,7 @@ namespace Org.BouncyCastle.Asn1.X509
             m_signature = new DerBitString(signature);
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public AltSignatureValue(ReadOnlySpan<byte> signature)
         {
             m_signature = new DerBitString(signature);

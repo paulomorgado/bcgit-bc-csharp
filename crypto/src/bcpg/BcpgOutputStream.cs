@@ -142,11 +142,11 @@ namespace Org.BouncyCastle.Bcpg
                 {
                     if (bodyLen <= 0xFF)
                     {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                         Span<byte> buf = stackalloc byte[2];
                         buf[0] = (byte)hdr;
                         buf[1] = (byte)bodyLen;
-                        Write(buf);
+                        this.Write(buf);
 #else
                         WriteByte((byte)hdr);
                         WriteByte((byte)bodyLen);
@@ -154,11 +154,11 @@ namespace Org.BouncyCastle.Bcpg
                     }
                     else if (bodyLen <= 0xFFFF)
                     {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                         Span<byte> buf = stackalloc byte[3];
                         buf[0] = (byte)(hdr | 0x01);
                         Pack.UInt16_To_BE((ushort)bodyLen, buf, 1);
-                        Write(buf);
+                        this.Write(buf);
 #else
                         WriteByte((byte)(hdr | 0x01));
                         WriteByte((byte)(bodyLen >> 8));
@@ -167,11 +167,11 @@ namespace Org.BouncyCastle.Bcpg
                     }
                     else
                     {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                         Span<byte> buf = stackalloc byte[5];
                         buf[0] = (byte)(hdr | 0x02);
                         Pack.UInt32_To_BE((uint)bodyLen, buf, 1);
-                        Write(buf);
+                        this.Write(buf);
 #else
                         WriteByte((byte)(hdr | 0x02));
                         WriteByte((byte)(bodyLen >> 24));
@@ -205,12 +205,12 @@ namespace Org.BouncyCastle.Bcpg
             partialOffset = 0;
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private void PartialFlush(ref ReadOnlySpan<byte> buffer)
         {
             outStr.WriteByte((byte)(0xE0 | partialPower));
-            outStr.Write(buffer[..partialBufferLength]);
-            buffer = buffer[partialBufferLength..];
+            outStr.Write(buffer.Slice(0, partialBufferLength));
+            buffer = buffer.Slice(partialBufferLength);
         }
 #endif
 
@@ -225,7 +225,7 @@ namespace Org.BouncyCastle.Bcpg
         {
             Streams.ValidateBufferArguments(buffer, offset, count);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             PartialWrite(buffer.AsSpan(offset, count));
 #else
             if (partialOffset == partialBufferLength)
@@ -257,7 +257,7 @@ namespace Org.BouncyCastle.Bcpg
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         private void PartialWrite(ReadOnlySpan<byte> buffer)
         {
             if (partialOffset == partialBufferLength)
@@ -273,8 +273,8 @@ namespace Org.BouncyCastle.Bcpg
             }
 
             int diff = partialBufferLength - partialOffset;
-            buffer[..diff].CopyTo(partialBuffer.AsSpan(partialOffset));
-            buffer = buffer[diff..];
+            buffer.Slice(0, diff).CopyTo(partialBuffer.AsSpan(partialOffset));
+            buffer = buffer.Slice(diff);
             PartialFlush();
             while (buffer.Length > partialBufferLength)
             {
@@ -307,7 +307,7 @@ namespace Org.BouncyCastle.Bcpg
             }
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if NET6_0_OR_GREATER
         public override void Write(ReadOnlySpan<byte> buffer)
         {
             if (partialBuffer != null)
@@ -335,14 +335,14 @@ namespace Org.BouncyCastle.Bcpg
 
         public void WritePacket(ContainedPacket p) => p.Encode(this);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal void WritePacket(PacketTag tag, ReadOnlySpan<byte> body)
 #else
         internal void WritePacket(PacketTag tag, byte[] body)
 #endif
         {
             WritePacketHeader(tag, (uint)body.Length);
-            Write(body);
+            this.Write(body);
         }
 
         internal void WritePacketHeader(PacketTag tag, uint bodyLength) =>

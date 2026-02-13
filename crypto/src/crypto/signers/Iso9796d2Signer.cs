@@ -232,7 +232,7 @@ namespace Org.BouncyCastle.Crypto.Signers
 
         public virtual void BlockUpdate(byte[] input, int inOff, int inLen)
         {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
             BlockUpdate(input.AsSpan(inOff, inLen));
 #else
             while (inLen > 0 && messageLength < mBuf.Length)
@@ -250,7 +250,7 @@ namespace Org.BouncyCastle.Crypto.Signers
 #endif
         }
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         public virtual void BlockUpdate(ReadOnlySpan<byte> input)
         {
             while (!input.IsEmpty && messageLength < mBuf.Length)

@@ -14,7 +14,7 @@ namespace Org.BouncyCastle.Tls
         /// <exception cref="IOException"/>
         int Receive(byte[] buf, int off, int len, int waitMillis);
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         /// <remarks>
         /// A <paramref name="waitMillis"/> of zero is interpreted as an infinite timeout.
         /// </remarks>

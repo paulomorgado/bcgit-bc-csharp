@@ -83,7 +83,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 
 			while (inLen >= 128)
             {
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 ProcessBlocks2(inBuf.AsSpan(inOff), outBuf.AsSpan(outOff));
 #else
 				ProcessBlocks2(inBuf, inOff, outBuf, outOff);
@@ -95,7 +95,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 
 			if (inLen >= 64)
 			{
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
                 ImplProcessBlock(inBuf.AsSpan(inOff), outBuf.AsSpan(outOff));
 #else
                 ImplProcessBlock(inBuf, inOff, outBuf, outOff);
@@ -121,7 +121,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 			// TODO Prevent re-use if encrypting
 		}
 
-#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+#if !NETFRAMEWORK
         internal void ProcessBlock(ReadOnlySpan<byte> input, Span<byte> output)
         {
             if (!initialised)
