@@ -193,9 +193,9 @@ namespace Org.BouncyCastle.Crypto.Engines
         {
             // load A,B,C and D registers from in.
             int A = (int)Pack.LE_To_UInt32(input);
-            int B = (int)Pack.LE_To_UInt32(input[4..]);
-            int C = (int)Pack.LE_To_UInt32(input[8..]);
-            int D = (int)Pack.LE_To_UInt32(input[12..]);
+            int B = (int)Pack.LE_To_UInt32(input.Slice(4));
+            int C = (int)Pack.LE_To_UInt32(input.Slice(8));
+            int D = (int)Pack.LE_To_UInt32(input.Slice(12));
 
             // Do pseudo-round #0: pre-whitening of B and D
             B += _S[0];
@@ -233,9 +233,9 @@ namespace Org.BouncyCastle.Crypto.Engines
 
             // store A, B, C and D registers to out
             Pack.UInt32_To_LE((uint)A, output);
-            Pack.UInt32_To_LE((uint)B, output[4..]);
-            Pack.UInt32_To_LE((uint)C, output[8..]);
-            Pack.UInt32_To_LE((uint)D, output[12..]);
+            Pack.UInt32_To_LE((uint)B, output.Slice(4));
+            Pack.UInt32_To_LE((uint)C, output.Slice(8));
+            Pack.UInt32_To_LE((uint)D, output.Slice(12));
 
             return 16;
         }
@@ -244,9 +244,9 @@ namespace Org.BouncyCastle.Crypto.Engines
         {
             // load A,B,C and D registers from out.
             int A = (int)Pack.LE_To_UInt32(input);
-            int B = (int)Pack.LE_To_UInt32(input[4..]);
-            int C = (int)Pack.LE_To_UInt32(input[8..]);
-            int D = (int)Pack.LE_To_UInt32(input[12..]);
+            int B = (int)Pack.LE_To_UInt32(input.Slice(4));
+            int C = (int)Pack.LE_To_UInt32(input.Slice(8));
+            int D = (int)Pack.LE_To_UInt32(input.Slice(12));
 
             // Undo pseudo-round #(ROUNDS+1) : post whitening of A and C
             C -= _S[2 * _noRounds + 3];
@@ -283,9 +283,9 @@ namespace Org.BouncyCastle.Crypto.Engines
             B -= _S[0];
 
             Pack.UInt32_To_LE((uint)A, output);
-            Pack.UInt32_To_LE((uint)B, output[4..]);
-            Pack.UInt32_To_LE((uint)C, output[8..]);
-            Pack.UInt32_To_LE((uint)D, output[12..]);
+            Pack.UInt32_To_LE((uint)B, output.Slice(4));
+            Pack.UInt32_To_LE((uint)C, output.Slice(8));
+            Pack.UInt32_To_LE((uint)D, output.Slice(12));
 
             return 16;
         }

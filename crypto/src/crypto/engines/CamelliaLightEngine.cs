@@ -440,9 +440,9 @@ namespace Org.BouncyCastle.Crypto.Engines
 			camelliaF2(state, subkey, 32);
 
 			Pack.UInt32_To_BE(state[2] ^ kw[4], output);
-			Pack.UInt32_To_BE(state[3] ^ kw[5], output[4..]);
-			Pack.UInt32_To_BE(state[0] ^ kw[6], output[8..]);
-			Pack.UInt32_To_BE(state[1] ^ kw[7], output[12..]);
+			Pack.UInt32_To_BE(state[3] ^ kw[5], output.Slice(4));
+			Pack.UInt32_To_BE(state[0] ^ kw[6], output.Slice(8));
+			Pack.UInt32_To_BE(state[1] ^ kw[7], output.Slice(12));
 
 			return BLOCK_SIZE;
 		}
@@ -474,9 +474,9 @@ namespace Org.BouncyCastle.Crypto.Engines
 			camelliaF2(state, subkey, 44);
 
 			Pack.UInt32_To_BE(state[2] ^ kw[4], output);
-			Pack.UInt32_To_BE(state[3] ^ kw[5], output[4..]);
-			Pack.UInt32_To_BE(state[0] ^ kw[6], output[8..]);
-			Pack.UInt32_To_BE(state[1] ^ kw[7], output[12..]);
+			Pack.UInt32_To_BE(state[3] ^ kw[5], output.Slice(4));
+			Pack.UInt32_To_BE(state[0] ^ kw[6], output.Slice(8));
+			Pack.UInt32_To_BE(state[1] ^ kw[7], output.Slice(12));
 
 			return BLOCK_SIZE;
 		}

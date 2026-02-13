@@ -119,9 +119,9 @@ namespace Org.BouncyCastle.Crypto.Engines
         private void IdeaFunc(int[] workingKey, ReadOnlySpan<byte> input, Span<byte> output)
         {
             int x0 = Pack.BE_To_UInt16(input);
-            int x1 = Pack.BE_To_UInt16(input[2..]);
-            int x2 = Pack.BE_To_UInt16(input[4..]);
-            int x3 = Pack.BE_To_UInt16(input[6..]);
+            int x1 = Pack.BE_To_UInt16(input.Slice(2));
+            int x2 = Pack.BE_To_UInt16(input.Slice(4));
+            int x3 = Pack.BE_To_UInt16(input.Slice(6));
             int keyOff = 0, t0, t1;
             for (int round = 0; round < 8; round++)
             {
@@ -147,9 +147,9 @@ namespace Org.BouncyCastle.Crypto.Engines
                 x2 ^= t0;
             }
             Pack.UInt16_To_BE((ushort)Mul(x0, workingKey[keyOff++]), output);
-            Pack.UInt16_To_BE((ushort)(x2 + workingKey[keyOff++]), output[2..]);  /* NB: Order */
-            Pack.UInt16_To_BE((ushort)(x1 + workingKey[keyOff++]), output[4..]);
-            Pack.UInt16_To_BE((ushort)Mul(x3, workingKey[keyOff]), output[6..]);
+            Pack.UInt16_To_BE((ushort)(x2 + workingKey[keyOff++]), output.Slice(2));  /* NB: Order */
+            Pack.UInt16_To_BE((ushort)(x1 + workingKey[keyOff++]), output.Slice(4));
+            Pack.UInt16_To_BE((ushort)Mul(x3, workingKey[keyOff]), output.Slice(6));
         }
 #else
         private void IdeaFunc(int[] workingKey, byte[] input, int inOff, byte[] outBytes, int outOff)

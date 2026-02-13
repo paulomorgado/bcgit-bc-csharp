@@ -241,7 +241,7 @@ namespace Org.BouncyCastle.Crypto.Engines
                     if (++m_bufPos == m_buf.Length)
                     {
                         ProcessBufferDecrypt(m_buf.AsSpan(0, BufSize), output);
-                        output = output[BufSize..];
+                        output = output.Slice(BufSize);
 
                         Debug.Assert(BufSize >= MacSize);
                         Array.Copy(m_buf, BufSize, m_buf, 0, MacSize);
@@ -258,7 +258,7 @@ namespace Org.BouncyCastle.Crypto.Engines
                     if (++m_bufPos == BufSize)
                     {
                         ProcessBufferEncrypt(m_buf.AsSpan(0, BufSize), output);
-                        output = output[BufSize..];
+                        output = output.Slice(BufSize);
 
                         m_bufPos = 0;
                     }
@@ -356,7 +356,7 @@ namespace Org.BouncyCastle.Crypto.Engines
                 if (m_bufPos > 0)
                 {
                     ProcessBufferEncrypt(m_buf.AsSpan(0, m_bufPos), output);
-                    output = output[m_bufPos..];
+                    output = output.Slice(m_bufPos);
                 }
 
                 FinishData(State.EncFinal);

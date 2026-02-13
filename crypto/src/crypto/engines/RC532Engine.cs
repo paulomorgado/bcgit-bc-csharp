@@ -181,7 +181,7 @@ namespace Org.BouncyCastle.Crypto.Engines
         private int EncryptBlock(ReadOnlySpan<byte> input, Span<byte> output)
         {
             int A = (int)Pack.LE_To_UInt32(input) + _S[0];
-            int B = (int)Pack.LE_To_UInt32(input[4..]) + _S[1];
+            int B = (int)Pack.LE_To_UInt32(input.Slice(4)) + _S[1];
 
             for (int i = 1; i <= _noRounds; i++)
             {
@@ -190,7 +190,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             }
 
             Pack.UInt32_To_LE((uint)A, output);
-            Pack.UInt32_To_LE((uint)B, output[4..]);
+            Pack.UInt32_To_LE((uint)B, output.Slice(4));
 
             return 8;
         }
@@ -198,7 +198,7 @@ namespace Org.BouncyCastle.Crypto.Engines
         private int DecryptBlock(ReadOnlySpan<byte> input, Span<byte> output)
         {
             int A = (int)Pack.LE_To_UInt32(input);
-            int B = (int)Pack.LE_To_UInt32(input[4..]);
+            int B = (int)Pack.LE_To_UInt32(input.Slice(4));
 
             for (int i = _noRounds; i >= 1; i--)
             {
@@ -207,7 +207,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             }
 
             Pack.UInt32_To_LE((uint)(A - _S[0]), output);
-            Pack.UInt32_To_LE((uint)(B - _S[1]), output[4..]);
+            Pack.UInt32_To_LE((uint)(B - _S[1]), output.Slice(4));
 
             return 8;
         }

@@ -187,9 +187,9 @@ namespace Org.BouncyCastle.Crypto.Engines
             Check.OutputLength(output, BlockSize, "output buffer too short");
 
             uint X0 = Pack.BE_To_UInt32(input);
-            uint X1 = Pack.BE_To_UInt32(input[4..]);
-            uint X2 = Pack.BE_To_UInt32(input[8..]);
-            uint X3 = Pack.BE_To_UInt32(input[12..]);
+            uint X1 = Pack.BE_To_UInt32(input.Slice(4));
+            uint X2 = Pack.BE_To_UInt32(input.Slice(8));
+            uint X3 = Pack.BE_To_UInt32(input.Slice(12));
 
             for (int i = 0; i < 32; i += 4)
             {
@@ -200,8 +200,8 @@ namespace Org.BouncyCastle.Crypto.Engines
             }
 
             Pack.UInt32_To_BE(X3, output);
-            Pack.UInt32_To_BE(X2, output[4..]);
-            Pack.UInt32_To_BE(X1, output[8..]);
+            Pack.UInt32_To_BE(X2, output.Slice(4));
+            Pack.UInt32_To_BE(X1, output.Slice(8));
             Pack.UInt32_To_BE(X0, output[12..]);
 
             return BlockSize;

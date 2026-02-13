@@ -103,7 +103,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             Check.OutputLength(output, BLOCK_SIZE, "output buffer too short");
 
             uint hi32 = Pack.BE_To_UInt32(input);
-            uint lo32 = Pack.BE_To_UInt32(input[4..]);
+            uint lo32 = Pack.BE_To_UInt32(input.Slice(4));
 
             if (forEncryption)
             {
@@ -119,7 +119,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             }
 
             Pack.UInt32_To_BE(hi32, output);
-            Pack.UInt32_To_BE(lo32, output[4..]);
+            Pack.UInt32_To_BE(lo32, output.Slice(4));
 
             return BLOCK_SIZE;
         }

@@ -125,9 +125,9 @@ namespace Org.BouncyCastle.Crypto.Engines
 		private int EncryptBlock(ReadOnlySpan<byte> input, Span<byte> output)
 		{
 			uint a0 = Pack.BE_To_UInt32(input);
-			uint a1 = Pack.BE_To_UInt32(input[4..]);
-			uint a2 = Pack.BE_To_UInt32(input[8..]);
-			uint a3 = Pack.BE_To_UInt32(input[12..]);
+			uint a1 = Pack.BE_To_UInt32(input.Slice(4));
+			uint a2 = Pack.BE_To_UInt32(input.Slice(8));
+			uint a3 = Pack.BE_To_UInt32(input.Slice(12));
 
 			uint k0 = k[0], k1 = k[1], k2 = k[2], k3 = k[3];
 
@@ -186,9 +186,9 @@ namespace Org.BouncyCastle.Crypto.Engines
 			}
 
 			Pack.UInt32_To_BE(a0, output);
-			Pack.UInt32_To_BE(a1, output[4..]);
-			Pack.UInt32_To_BE(a2, output[8..]);
-			Pack.UInt32_To_BE(a3, output[12..]);
+			Pack.UInt32_To_BE(a1, output.Slice(4));
+			Pack.UInt32_To_BE(a2, output.Slice(8));
+			Pack.UInt32_To_BE(a3, output.Slice(12));
 
 			return Size;
 		}
@@ -196,9 +196,9 @@ namespace Org.BouncyCastle.Crypto.Engines
 		private int DecryptBlock(ReadOnlySpan<byte> input, Span<byte> output)
 		{
 			uint a0 = Pack.BE_To_UInt32(input);
-			uint a1 = Pack.BE_To_UInt32(input[4..]);
-			uint a2 = Pack.BE_To_UInt32(input[8..]);
-			uint a3 = Pack.BE_To_UInt32(input[12..]);
+			uint a1 = Pack.BE_To_UInt32(input.Slice(4));
+			uint a2 = Pack.BE_To_UInt32(input.Slice(8));
+			uint a3 = Pack.BE_To_UInt32(input.Slice(12));
 
 			uint k0 = k[0], k1 = k[1], k2 = k[2], k3 = k[3];
 
@@ -257,9 +257,9 @@ namespace Org.BouncyCastle.Crypto.Engines
 			}
 
 			Pack.UInt32_To_BE(a0, output);
-			Pack.UInt32_To_BE(a1, output[4..]);
-			Pack.UInt32_To_BE(a2, output[8..]);
-			Pack.UInt32_To_BE(a3, output[12..]);
+			Pack.UInt32_To_BE(a1, output.Slice(4));
+			Pack.UInt32_To_BE(a2, output.Slice(8));
+			Pack.UInt32_To_BE(a3, output.Slice(12));
 
 			return Size;
 		}

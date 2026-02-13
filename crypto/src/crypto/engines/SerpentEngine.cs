@@ -154,9 +154,9 @@ namespace Org.BouncyCastle.Crypto.Engines
         internal override void EncryptBlock(ReadOnlySpan<byte> input, Span<byte> output)
         {
             X0 = (int)Pack.LE_To_UInt32(input);
-            X1 = (int)Pack.LE_To_UInt32(input[4..]);
-            X2 = (int)Pack.LE_To_UInt32(input[8..]);
-            X3 = (int)Pack.LE_To_UInt32(input[12..]);
+            X1 = (int)Pack.LE_To_UInt32(input.Slice(4));
+            X2 = (int)Pack.LE_To_UInt32(input.Slice(8));
+            X3 = (int)Pack.LE_To_UInt32(input.Slice(12));
 
             Sb0(wKey[0] ^ X0, wKey[1] ^ X1, wKey[2] ^ X2, wKey[3] ^ X3); LT();
             Sb1(wKey[4] ^ X0, wKey[5] ^ X1, wKey[6] ^ X2, wKey[7] ^ X3); LT();
@@ -191,18 +191,18 @@ namespace Org.BouncyCastle.Crypto.Engines
             Sb6(wKey[120] ^ X0, wKey[121] ^ X1, wKey[122] ^ X2, wKey[123] ^ X3); LT();
             Sb7(wKey[124] ^ X0, wKey[125] ^ X1, wKey[126] ^ X2, wKey[127] ^ X3);
 
-            Pack.UInt32_To_LE((uint)(wKey[128] ^ X0), output);
-            Pack.UInt32_To_LE((uint)(wKey[129] ^ X1), output[4..]);
-            Pack.UInt32_To_LE((uint)(wKey[130] ^ X2), output[8..]);
-            Pack.UInt32_To_LE((uint)(wKey[131] ^ X3), output[12..]);
+            Pack.UInt32_To_LE((uint)(wKey[256] ^ X0), output);
+            Pack.UInt32_To_LE((uint)(wKey[257] ^ X1), output.Slice(4));
+            Pack.UInt32_To_LE((uint)(wKey[258] ^ X2), output.Slice(8));
+            Pack.UInt32_To_LE((uint)(wKey[259] ^ X3), output.Slice(12));
         }
 
         internal override void DecryptBlock(ReadOnlySpan<byte> input, Span<byte> output)
         {
-            X0 = wKey[128] ^ (int)Pack.LE_To_UInt32(input);
-            X1 = wKey[129] ^ (int)Pack.LE_To_UInt32(input[4..]);
-            X2 = wKey[130] ^ (int)Pack.LE_To_UInt32(input[8..]);
-            X3 = wKey[131] ^ (int)Pack.LE_To_UInt32(input[12..]);
+            X0 = wKey[256] ^ (int)Pack.LE_To_UInt32(input);
+            X1 = wKey[257] ^ (int)Pack.LE_To_UInt32(input.Slice(4));
+            X2 = wKey[258] ^ (int)Pack.LE_To_UInt32(input.Slice(8));
+            X3 = wKey[259] ^ (int)Pack.LE_To_UInt32(input.Slice(12));
 
             Ib7(X0, X1, X2, X3);
             X0 ^= wKey[124]; X1 ^= wKey[125]; X2 ^= wKey[126]; X3 ^= wKey[127];
@@ -269,9 +269,9 @@ namespace Org.BouncyCastle.Crypto.Engines
             InverseLT(); Ib0(X0, X1, X2, X3);
 
             Pack.UInt32_To_LE((uint)(X0 ^ wKey[0]), output);
-            Pack.UInt32_To_LE((uint)(X1 ^ wKey[1]), output[4..]);
-            Pack.UInt32_To_LE((uint)(X2 ^ wKey[2]), output[8..]);
-            Pack.UInt32_To_LE((uint)(X3 ^ wKey[3]), output[12..]);
+            Pack.UInt32_To_LE((uint)(X1 ^ wKey[1]), output.Slice(4));
+            Pack.UInt32_To_LE((uint)(X2 ^ wKey[2]), output.Slice(8));
+            Pack.UInt32_To_LE((uint)(X3 ^ wKey[3]), output.Slice(12));
         }
 #else
         internal override void EncryptBlock(byte[] input, int inOff, byte[] output, int outOff)
@@ -314,18 +314,18 @@ namespace Org.BouncyCastle.Crypto.Engines
             Sb6(wKey[120] ^ X0, wKey[121] ^ X1, wKey[122] ^ X2, wKey[123] ^ X3); LT();
             Sb7(wKey[124] ^ X0, wKey[125] ^ X1, wKey[126] ^ X2, wKey[127] ^ X3);
 
-            Pack.UInt32_To_LE((uint)(wKey[128] ^ X0), output, outOff);
-            Pack.UInt32_To_LE((uint)(wKey[129] ^ X1), output, outOff + 4);
-            Pack.UInt32_To_LE((uint)(wKey[130] ^ X2), output, outOff + 8);
-            Pack.UInt32_To_LE((uint)(wKey[131] ^ X3), output, outOff + 12);
+            Pack.UInt32_To_LE((uint)(wKey[256] ^ X0), output, outOff);
+            Pack.UInt32_To_LE((uint)(wKey[257] ^ X1), output, outOff + 4);
+            Pack.UInt32_To_LE((uint)(wKey[258] ^ X2), output, outOff + 8);
+            Pack.UInt32_To_LE((uint)(wKey[259] ^ X3), output, outOff + 12);
         }
 
         internal override void DecryptBlock(byte[] input, int inOff, byte[] output, int outOff)
         {
-            X0 = wKey[128] ^ (int)Pack.LE_To_UInt32(input, inOff);
-            X1 = wKey[129] ^ (int)Pack.LE_To_UInt32(input, inOff + 4);
-            X2 = wKey[130] ^ (int)Pack.LE_To_UInt32(input, inOff + 8);
-            X3 = wKey[131] ^ (int)Pack.LE_To_UInt32(input, inOff + 12);
+            X0 = wKey[256] ^ (int)Pack.LE_To_UInt32(input, inOff);
+            X1 = wKey[257] ^ (int)Pack.LE_To_UInt32(input, inOff + 4);
+            X2 = wKey[258] ^ (int)Pack.LE_To_UInt32(input, inOff + 8);
+            X3 = wKey[259] ^ (int)Pack.LE_To_UInt32(input, inOff + 12);
 
             Ib7(X0, X1, X2, X3);
             X0 ^= wKey[124]; X1 ^= wKey[125]; X2 ^= wKey[126]; X3 ^= wKey[127];

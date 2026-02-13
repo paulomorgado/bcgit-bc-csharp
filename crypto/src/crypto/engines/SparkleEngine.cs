@@ -302,8 +302,8 @@ namespace Org.BouncyCastle.Crypto.Engines
                     return;
                 }
 
-                input[..available].CopyTo(m_buf.AsSpan(m_bufPos));
-                input = input[available..];
+                input.Slice(0, available).CopyTo(m_buf.AsSpan(m_bufPos));
+                input = input.Slice(available);
 
                 ProcessBufferAad(m_buf);
                 //m_bufPos = 0;
@@ -312,7 +312,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             while (input.Length > RATE_BYTES)
             {
                 ProcessBufferAad(input);
-                input = input[RATE_BYTES..];
+                input = input.Slice(RATE_BYTES);
             }
 
             input.CopyTo(m_buf);
@@ -447,8 +447,8 @@ namespace Org.BouncyCastle.Crypto.Engines
                         return 0;
                     }
 
-                    input[..available].CopyTo(m_buf.AsSpan(m_bufPos));
-                    input = input[available..];
+                    input.Slice(0, available).CopyTo(m_buf.AsSpan(m_bufPos));
+                    input = input.Slice(available);
 
                     ProcessBufferEncrypt(m_buf, output);
                     resultLength = RATE_BYTES;
@@ -457,8 +457,8 @@ namespace Org.BouncyCastle.Crypto.Engines
 
                 while (input.Length > RATE_BYTES)
                 {
-                    ProcessBufferEncrypt(input, output[resultLength..]);
-                    input = input[RATE_BYTES..];
+                    ProcessBufferEncrypt(input, output.Slice(resultLength));
+                    input = input.Slice(RATE_BYTES);
                     resultLength += RATE_BYTES;
                 }
             }
@@ -489,16 +489,16 @@ namespace Org.BouncyCastle.Crypto.Engines
                 }
 
                 available = RATE_BYTES - m_bufPos;
-                input[..available].CopyTo(m_buf.AsSpan(m_bufPos));
-                input = input[available..];
-                ProcessBufferDecrypt(m_buf, output[resultLength..]);
+                input.Slice(0, available).CopyTo(m_buf.AsSpan(m_bufPos));
+                input = input.Slice(available);
+                ProcessBufferDecrypt(m_buf, output.Slice(resultLength));
                 resultLength += RATE_BYTES;
                 //m_bufPos = 0;
 
                 while (input.Length > m_bufferSizeDecrypt)
                 {
-                    ProcessBufferDecrypt(input, output[resultLength..]);
-                    input = input[RATE_BYTES..];
+                    ProcessBufferDecrypt(input, output.Slice(resultLength));
+                    input = input.Slice(RATE_BYTES);
                     resultLength += RATE_BYTES;
                 }
             }
@@ -1369,8 +1369,8 @@ namespace Org.BouncyCastle.Crypto.Engines
             }
 
             var u = s.AsUInt64();
-            BinaryPrimitives.WriteUInt64LittleEndian(b[..8], u.GetElement(0));
-            BinaryPrimitives.WriteUInt64LittleEndian(b[8..], u.GetElement(1));
+            BinaryPrimitives.WriteUInt64LittleEndian(b.Slice(0, 8), u.GetElement(0));
+            BinaryPrimitives.WriteUInt64LittleEndian(b.Slice(8), u.GetElement(1));
         }
 #endif
     }

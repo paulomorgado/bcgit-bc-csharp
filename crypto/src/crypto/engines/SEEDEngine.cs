@@ -241,7 +241,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 			Check.OutputLength(output, BlockSize, "output buffer too short");
 
 			long l = (long)Pack.BE_To_UInt64(input);
-			long r = (long)Pack.BE_To_UInt64(input[8..]);
+			long r = (long)Pack.BE_To_UInt64(input.Slice(8));
 
             if (forEncryption)
             {
@@ -271,7 +271,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             }
 
             Pack.UInt64_To_BE((ulong)r, output);
-			Pack.UInt64_To_BE((ulong)l, output[8..]);
+			Pack.UInt64_To_BE((ulong)l, output.Slice(8));
 
 			return BlockSize;
 		}

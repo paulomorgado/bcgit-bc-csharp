@@ -136,16 +136,16 @@ namespace Org.BouncyCastle.Crypto.Engines
             // process the input block
             // batch the units up into 4x32 bit chunks and go for it
             uint A = Pack.BE_To_UInt32(input);
-            uint B = Pack.BE_To_UInt32(input[4..]);
-            uint C = Pack.BE_To_UInt32(input[8..]);
-            uint D = Pack.BE_To_UInt32(input[12..]);
+            uint B = Pack.BE_To_UInt32(input.Slice(4));
+            uint C = Pack.BE_To_UInt32(input.Slice(8));
+            uint D = Pack.BE_To_UInt32(input.Slice(12));
             uint[] result = new uint[4];
             CAST_Encipher(A, B, C, D, result);
             // now stuff them into the destination block
             Pack.UInt32_To_BE(result[0], output);
-            Pack.UInt32_To_BE(result[1], output[4..]);
-            Pack.UInt32_To_BE(result[2], output[8..]);
-            Pack.UInt32_To_BE(result[3], output[12..]);
+            Pack.UInt32_To_BE(result[1], output.Slice(4));
+            Pack.UInt32_To_BE(result[2], output.Slice(8));
+            Pack.UInt32_To_BE(result[3], output.Slice(12));
             return BLOCK_SIZE;
         }
 
@@ -154,16 +154,16 @@ namespace Org.BouncyCastle.Crypto.Engines
             // process the input block
             // batch the units up into 4x32 bit chunks and go for it
             uint A = Pack.BE_To_UInt32(input);
-            uint B = Pack.BE_To_UInt32(input[4..]);
-            uint C = Pack.BE_To_UInt32(input[8..]);
-            uint D = Pack.BE_To_UInt32(input[12..]);
+            uint B = Pack.BE_To_UInt32(input.Slice(4));
+            uint C = Pack.BE_To_UInt32(input.Slice(8));
+            uint D = Pack.BE_To_UInt32(input.Slice(12));
             uint[] result = new uint[4];
             CAST_Decipher(A, B, C, D, result);
             // now stuff them into the destination block
             Pack.UInt32_To_BE(result[0], output);
-            Pack.UInt32_To_BE(result[1], output[4..]);
-            Pack.UInt32_To_BE(result[2], output[8..]);
-            Pack.UInt32_To_BE(result[3], output[12..]);
+            Pack.UInt32_To_BE(result[1], output.Slice(4));
+            Pack.UInt32_To_BE(result[2], output.Slice(8));
+            Pack.UInt32_To_BE(result[3], output.Slice(12));
             return BLOCK_SIZE;
         }
 #else

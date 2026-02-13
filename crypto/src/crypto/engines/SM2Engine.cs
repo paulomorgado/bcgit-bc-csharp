@@ -165,7 +165,7 @@ namespace Org.BouncyCastle.Crypto.Engines
         private byte[] Decrypt(ReadOnlySpan<byte> input)
         {
             int c1Length = mCurveLength * 2 + 1;
-            ECPoint c1P = mECParams.Curve.DecodePoint(input[..c1Length]);
+            ECPoint c1P = mECParams.Curve.DecodePoint(input.Slice(0, c1Length));
 
             ECPoint s = c1P.Multiply(mECParams.H);
             if (s.IsInfinity)
@@ -183,7 +183,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             }
             else
             {
-                input[c1Length..(c1Length + c2Length)].CopyTo(c2);
+                input.Slice(c1Length, c2Length).CopyTo(c2);
             }
 
             Kdf(mDigest, c1P, c2);
@@ -388,7 +388,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 
 #if !NETFRAMEWORK
                 Pack.UInt32_To_BE(++ct, buf);
-                digest.BlockUpdate(buf[..4]);
+                digest.BlockUpdate(buf.Slice(0, 4));
                 digest.DoFinal(buf);
                 Bytes.XorTo(xorLen, buf, encData.AsSpan(off));
 #else

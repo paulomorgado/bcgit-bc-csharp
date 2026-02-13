@@ -159,7 +159,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 
             {
 				ImplProcessBlock(input, output);
-				ImplProcessBlock(input[64..], output[64..]);
+				ImplProcessBlock(input.Slice(64), output.Slice(64));
 			}
 		}
 
