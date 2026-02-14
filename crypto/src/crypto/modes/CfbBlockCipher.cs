@@ -145,7 +145,7 @@ namespace Org.BouncyCastle.Crypto.Modes
             // change over the input block.
             //
             Array.Copy(cfbV, blockSize, cfbV, 0, cfbV.Length - blockSize);
-            output[..blockSize].CopyTo(cfbV.AsSpan(cfbV.Length - blockSize));
+            output.Slice(0, blockSize).CopyTo(cfbV.AsSpan(cfbV.Length - blockSize));
             return blockSize;
         }
 
@@ -159,7 +159,7 @@ namespace Org.BouncyCastle.Crypto.Modes
             // change over the input block.
             //
             Array.Copy(cfbV, blockSize, cfbV, 0, cfbV.Length - blockSize);
-            input[..blockSize].CopyTo(cfbV.AsSpan(cfbV.Length - blockSize));
+            input.Slice(0, blockSize).CopyTo(cfbV.AsSpan(cfbV.Length - blockSize));
             //
             // XOR the cfbV with the ciphertext producing the plaintext
             //

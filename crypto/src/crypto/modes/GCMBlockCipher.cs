@@ -355,10 +355,10 @@ namespace Org.BouncyCastle.Crypto.Modes
                     return;
                 }
 
-                input[..available].CopyTo(atBlock.AsSpan(atBlockPos));
+                input.Slice(0, available).CopyTo(atBlock.AsSpan(atBlockPos));
                 gHASHBlock(S_at, atBlock);
                 atLength += BlockSize;
-                input = input[available..];
+                input = input.Slice(available);
                 //atBlockPos = 0;
             }
 
@@ -366,7 +366,7 @@ namespace Org.BouncyCastle.Crypto.Modes
             {
                 gHASHBlock(S_at, input);
                 atLength += BlockSize;
-                input = input[BlockSize..];
+                input = input.Slice(BlockSize);
             }
 
             input.CopyTo(atBlock);
@@ -1423,7 +1423,7 @@ namespace Org.BouncyCastle.Crypto.Modes
                 var t2 = MemoryMarshal.Read<Vector128<byte>>(S.AsSpan());
 
                 t1 = Sse2.Xor(t1, t0);
-                t2 = Sse2.Xor(t2, t1);
+                t2 = Sse2.Xor(t2, t0);
 
 #if NET8_0_OR_GREATER
                 MemoryMarshal.Write(output, in t1);

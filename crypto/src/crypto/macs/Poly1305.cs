@@ -233,7 +233,7 @@ namespace Org.BouncyCastle.Crypto.Macs
             int pos = 0;
             if (currentBlockOffset > 0)
             {
-                input[..available].CopyTo(currentBlock.AsSpan(currentBlockOffset));
+                input.Slice(0, available).CopyTo(currentBlock.AsSpan(currentBlockOffset));
                 pos = available;
                 ProcessBlock(currentBlock);
             }
@@ -241,11 +241,11 @@ namespace Org.BouncyCastle.Crypto.Macs
             int remaining;
             while ((remaining = input.Length - pos) >= BlockSize)
             {
-                ProcessBlock(input[pos..]);
+                ProcessBlock(input.Slice(pos));
                 pos += BlockSize;
             }
 
-            input[pos..].CopyTo(currentBlock);
+            input.Slice(pos).CopyTo(currentBlock);
             currentBlockOffset = remaining;
         }
 #endif
@@ -254,9 +254,9 @@ namespace Org.BouncyCastle.Crypto.Macs
         private void ProcessBlock(ReadOnlySpan<byte> block)
         {
             uint t0 = Pack.LE_To_UInt32(block);
-            uint t1 = Pack.LE_To_UInt32(block[4..]);
-            uint t2 = Pack.LE_To_UInt32(block[8..]);
-            uint t3 = Pack.LE_To_UInt32(block[12..]);
+            uint t1 = Pack.LE_To_UInt32(block.Slice(4));
+            uint t2 = Pack.LE_To_UInt32(block.Slice(8));
+            uint t3 = Pack.LE_To_UInt32(block.Slice(12));
 #else
         private void ProcessBlock(byte[] buf, int off)
         {
@@ -370,11 +370,11 @@ namespace Org.BouncyCastle.Crypto.Macs
             c += (long)k0 + ((h0) | (h1 << 26));
             Pack.UInt32_To_LE((uint)c, output); c >>= 32;
             c += (long)k1 + ((h1 >> 6) | (h2 << 20));
-            Pack.UInt32_To_LE((uint)c, output[4..]); c >>= 32;
+            Pack.UInt32_To_LE((uint)c, output.Slice(4)); c >>= 32;
             c += (long)k2 + ((h2 >> 12) | (h3 << 14));
-            Pack.UInt32_To_LE((uint)c, output[8..]); c >>= 32;
+            Pack.UInt32_To_LE((uint)c, output.Slice(8)); c >>= 32;
             c += (long)k3 + ((h3 >> 18) | (h4 << 8));
-            Pack.UInt32_To_LE((uint)c, output[12..]);
+            Pack.UInt32_To_LE((uint)c, output.Slice(12));
 
             Reset();
             return BlockSize;

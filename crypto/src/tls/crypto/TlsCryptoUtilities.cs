@@ -258,9 +258,8 @@ namespace Org.BouncyCastle.Tls.Crypto
             // opaque label<7..255>
             {
                 TlsUtilities.CheckUint8(expandedLabelLength);
-                TlsUtilities.WriteUint8(expandedLabelLength, hkdfLabel[2..]);
-
-                Tls13Prefix.CopyTo(hkdfLabel[3..]);
+                TlsUtilities.WriteUint8(expandedLabelLength, hkdfLabel.Slice(2));
+                Tls13Prefix.CopyTo(hkdfLabel.Slice(3));
 
                 int labelPos = 2 + (1 + Tls13Prefix.Length);
                 for (int i = 0; i < labelLength; ++i)

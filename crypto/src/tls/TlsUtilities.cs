@@ -448,7 +448,7 @@ namespace Org.BouncyCastle.Tls
         {
             CheckUint8(data.Length);
             WriteUint8(data.Length, buf);
-            data.CopyTo(buf[1..]);
+            data.CopyTo(buf.Slice(1));
         }
 #endif
 

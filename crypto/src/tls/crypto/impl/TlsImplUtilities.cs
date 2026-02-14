@@ -71,7 +71,7 @@ namespace Org.BouncyCastle.Tls.Crypto.Impl
             Span<byte> cr = securityParameters.ClientRandom, sr = securityParameters.ServerRandom;
             Span<byte> seed = stackalloc byte[sr.Length + cr.Length];
             sr.CopyTo(seed);
-            cr.CopyTo(seed[sr.Length..]);
+            cr.CopyTo(seed.Slice(sr.Length));
 
             TlsSecret derived = master_secret.DeriveUsingPrf(prfAlgorithm, ExporterLabel.key_expansion, seed,
                 keyBlock.Length);

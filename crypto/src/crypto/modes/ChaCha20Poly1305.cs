@@ -315,7 +315,7 @@ namespace Org.BouncyCastle.Crypto.Modes
                 if (++mBufPos == BufSize)
                 {
                     ProcessBlock(mBuf, output);
-                    mPoly1305.BlockUpdate(output[..BufSize]);
+                    mPoly1305.BlockUpdate(output.Slice(0, BufSize));
                     this.mBufPos = 0;
                     return BufSize;
                 }
@@ -501,25 +501,25 @@ namespace Org.BouncyCastle.Crypto.Modes
                 int inLimit2 = inLimit1 + BufSize;
 
                 available = BufSize - mBufPos;
-                input[..available].CopyTo(mBuf.AsSpan(mBufPos));
+                input.Slice(0, available).CopyTo(mBuf.AsSpan(mBufPos));
                 mPoly1305.BlockUpdate(mBuf.AsSpan(0, BufSize));
-                ProcessBlock(mBuf, output[resultLen..]);
-                input = input[available..];
+                ProcessBlock(mBuf, output.Slice(resultLen));
+                input = input.Slice(available);
                 resultLen += BufSize;
 
                 while (input.Length >= inLimit2)
                 {
-                    mPoly1305.BlockUpdate(input[..(BufSize * 2)]);
-                    ProcessBlocks2(input, output[resultLen..]);
-                    input = input[(BufSize * 2)..];
+                    mPoly1305.BlockUpdate(input.Slice(0, BufSize * 2));
+                    ProcessBlocks2(input, output.Slice(resultLen));
+                    input = input.Slice(BufSize * 2);
                     resultLen += BufSize * 2;
                 }
 
                 if (input.Length >= inLimit1)
                 {
-                    mPoly1305.BlockUpdate(input[..BufSize]);
-                    ProcessBlock(input, output[resultLen..]);
-                    input = input[BufSize..];
+                    mPoly1305.BlockUpdate(input.Slice(0, BufSize));
+                    ProcessBlock(input, output.Slice(resultLen));
+                    input = input.Slice(BufSize);
                     resultLen += BufSize;
                 }
 
@@ -539,27 +539,27 @@ namespace Org.BouncyCastle.Crypto.Modes
 
                 if (mBufPos > 0)
                 {
-                    input[..available].CopyTo(mBuf.AsSpan(mBufPos));
+                    input.Slice(0, available).CopyTo(mBuf.AsSpan(mBufPos));
                     ProcessBlock(mBuf, output);
-                    input = input[available..];
+                    input = input.Slice(available);
                     resultLen = BufSize;
                 }
 
                 while (input.Length >= BufSize * 2)
                 {
-                    ProcessBlocks2(input, output[resultLen..]);
-                    input = input[(BufSize * 2)..];
+                    ProcessBlocks2(input, output.Slice(resultLen));
+                    input = input.Slice(BufSize * 2);
                     resultLen += BufSize * 2;
                 }
 
                 if (input.Length >= BufSize)
                 {
-                    ProcessBlock(input, output[resultLen..]);
-                    input = input[BufSize..];
+                    ProcessBlock(input, output.Slice(resultLen));
+                    input = input.Slice(BufSize);
                     resultLen += BufSize;
                 }
 
-                mPoly1305.BlockUpdate(output[..resultLen]);
+                mPoly1305.BlockUpdate(output.Slice(0, resultLen));
 
                 mBufPos = input.Length;
                 input.CopyTo(mBuf);
@@ -682,12 +682,12 @@ namespace Org.BouncyCastle.Crypto.Modes
                 if (mBufPos > 0)
                 {
                     ProcessData(mBuf.AsSpan(0, mBufPos), output);
-                    mPoly1305.BlockUpdate(output[..mBufPos]);
+                    mPoly1305.BlockUpdate(output.Slice(0, mBufPos));
                 }
 
                 FinishData(State.EncFinal);
 
-                mMac.AsSpan(0, MacSize).CopyTo(output[mBufPos..]);
+                mMac.AsSpan(0, MacSize).CopyTo(output.Slice(mBufPos));
                 break;
             }
             default:
@@ -788,7 +788,7 @@ namespace Org.BouncyCastle.Crypto.Modes
             try
             {
                 mChacha20.ProcessBytes(firstBlock, firstBlock);
-                mPoly1305.Init(new KeyParameter(firstBlock[..32]));
+                mPoly1305.Init(new KeyParameter(firstBlock.Slice(0, 32)));
             }
             finally
             {

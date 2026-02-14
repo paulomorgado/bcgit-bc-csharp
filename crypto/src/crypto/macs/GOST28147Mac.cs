@@ -241,7 +241,7 @@ namespace Org.BouncyCastle.Crypto.Macs
 
 			if (input.Length > gapLen)
 			{
-				input[..gapLen].CopyTo(buf.AsSpan(bufOff));
+				input.Slice(0, gapLen).CopyTo(buf.AsSpan(bufOff));
 
 				byte[] sum = new byte[buf.Length];
 				if (firstStep)

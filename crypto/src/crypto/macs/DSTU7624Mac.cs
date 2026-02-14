@@ -120,17 +120,17 @@ namespace Org.BouncyCastle.Crypto.Macs
 
             if (input.Length > gapLen)
             {
-                input[..gapLen].CopyTo(buf.AsSpan(bufOff));
+                input.Slice(0, gapLen).CopyTo(buf.AsSpan(bufOff));
 
                 ProcessBlock(buf);
 
                 bufOff = 0;
-                input = input[gapLen..];
+                input = input.Slice(gapLen);
 
                 while (input.Length > blockSize)
                 {
                     ProcessBlock(input);
-                    input = input[blockSize..];
+                    input = input.Slice(blockSize);
                 }
             }
 

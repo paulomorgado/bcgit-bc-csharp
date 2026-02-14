@@ -453,19 +453,19 @@ namespace Org.BouncyCastle.Crypto.Modes
 
                 while (index < (outputLen - BlockSize))
                 {
-                    ctrCipher.ProcessBlock(input[index..], output[index..]);
+                    ctrCipher.ProcessBlock(input.Slice(index), output.Slice(index));
                     index += BlockSize;
                 }
 
-                input[index..outputLen].CopyTo(block);
+                input.Slice(index, outputLen).CopyTo(block);
 
                 ctrCipher.ProcessBlock(block, block);
 
-                block[..(outputLen - index)].CopyTo(output[index..]);
+                block.AsSpan(0, outputLen - index).CopyTo(output.Slice(index));
 
                 Span<byte> calculatedMacBlock = stackalloc byte[BlockSize];
 
-                CalculateMac(output[..outputLen], calculatedMacBlock);
+                CalculateMac(output.Slice(0, outputLen), calculatedMacBlock);
 
                 if (!Arrays.FixedTimeEquals(macBlock, calculatedMacBlock))
                     throw new InvalidCipherTextException("mac check in CCM failed");

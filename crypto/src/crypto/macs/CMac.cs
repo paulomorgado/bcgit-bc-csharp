@@ -213,17 +213,17 @@ namespace Org.BouncyCastle.Crypto.Macs
 
             if (input.Length > gapLen)
             {
-                input[..gapLen].CopyTo(buf.AsSpan(bufOff));
+                input.Slice(0, gapLen).CopyTo(buf.AsSpan(bufOff));
 
                 m_cipherMode.ProcessBlock(buf, mac);
 
                 bufOff = 0;
-                input = input[gapLen..];
+                input = input.Slice(gapLen);
 
                 while (input.Length > blockSize)
                 {
-                    m_cipherMode.ProcessBlock(input, mac);
-                    input = input[blockSize..];
+                    m_cipherMode.ProcessBlock(input, buf);
+                    input = input.Slice(blockSize);
                 }
             }
 

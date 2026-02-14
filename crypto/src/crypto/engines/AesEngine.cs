@@ -1,5 +1,9 @@
 using System;
 
+#if !NETFRAMEWORK
+using System.Buffers;
+#endif
+
 using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Crypto.Utilities;
 using Org.BouncyCastle.Utilities;
@@ -715,9 +719,9 @@ namespace Org.BouncyCastle.Crypto.Engines
             C3 = (uint)Si[r3 & 255] ^ (((uint)s[(r2 >> 8) & 255]) << 8) ^ (((uint)s[(r1 >> 16) & 255]) << 16) ^ (((uint)s[(r0 >> 24) & 255]) << 24) ^ kw[3];
 
             Pack.UInt32_To_LE(C0, output);
-            Pack.UInt32_To_LE(C1, output.Slice(4));
-            Pack.UInt32_To_LE(C2, output.Slice(8));
-            Pack.UInt32_To_LE(C3, output.Slice(12));
+            Pack.UInt32_To_LE(C1, output.AsSpan(4));
+            Pack.UInt32_To_LE(C2, output.AsSpan(8));
+            Pack.UInt32_To_LE(C3, output.AsSpan(12));
         }
 #endif
     }

@@ -130,7 +130,7 @@ namespace Org.BouncyCastle.Crypto.Macs
             {
                 for (; i < fullWords; i += 8)
                 {
-                    m = (long)Pack.LE_To_UInt64(input[i..]);
+                    m = (long)Pack.LE_To_UInt64(input.Slice(i));
                     ProcessMessageWord();
                 }
                 for (; i < length; ++i)
@@ -144,7 +144,7 @@ namespace Org.BouncyCastle.Crypto.Macs
                 int bits = wordPos << 3;
                 for (; i < fullWords; i += 8)
                 {
-                    ulong n = Pack.LE_To_UInt64(input[i..]);
+                    ulong n = Pack.LE_To_UInt64(input.Slice(i));
                     m = (long)((n << bits) | ((ulong)m >> -bits));
                     ProcessMessageWord();
                     m = (long)n;

@@ -152,7 +152,7 @@ namespace Org.BouncyCastle.Crypto.Modes
 
             int length = cipher.ProcessBlock(cbcV, output);
 
-            output[..blockSize].CopyTo(cbcV);
+            output.Slice(0, blockSize).CopyTo(cbcV);
 
             return length;
         }
@@ -162,7 +162,7 @@ namespace Org.BouncyCastle.Crypto.Modes
             Check.DataLength(input, blockSize, "input buffer too short");
             Check.OutputLength(output, blockSize, "output buffer too short");
 
-            input[..blockSize].CopyTo(cbcNextV);
+            input.Slice(0, blockSize).CopyTo(cbcNextV);
 
             int length = cipher.ProcessBlock(input, output);
 

@@ -258,7 +258,7 @@ namespace Org.BouncyCastle.Crypto.Modes
 
             for (int i = 0; i != len; i++)
             {
-                resultLen += Process(input[i], output[resultLen..]);
+                resultLen += Process(input[i], output.Slice(resultLen));
             }
 
             return resultLen;
@@ -343,13 +343,13 @@ namespace Org.BouncyCastle.Crypto.Modes
 
                 cipher.ProcessBlock(bufBlock, tmp);
 
-				tmp[..extra].CopyTo(output);
+				tmp.Slice(0, extra).CopyTo(output);
 
-				mac.BlockUpdate(tmp[..extra]);
+				mac.BlockUpdate(tmp.Slice(0, extra));
 
 				CalculateMac();
 
-				macBlock.AsSpan(0, macSize).CopyTo(output[extra..]);
+				macBlock.AsSpan(0, macSize).CopyTo(output.Slice(extra));
 
 				Reset(false);
 
@@ -368,7 +368,7 @@ namespace Org.BouncyCastle.Crypto.Modes
 
 					cipher.ProcessBlock(bufBlock, tmp);
 
-					tmp[..(extra - macSize)].CopyTo(output);
+					tmp.Slice(0, extra - macSize).CopyTo(output);
 				}
 
 				CalculateMac();
@@ -436,7 +436,7 @@ namespace Org.BouncyCastle.Crypto.Modes
                 {
                     size = cipher.ProcessBlock(bufBlock, output);
 
-					mac.BlockUpdate(output[..blockSize]);
+					mac.BlockUpdate(output.Slice(0, blockSize));
                 }
                 else
                 {

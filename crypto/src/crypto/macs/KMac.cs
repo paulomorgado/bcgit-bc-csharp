@@ -78,10 +78,10 @@ namespace Org.BouncyCastle.Crypto.Macs
 
                 Span<byte> lengthEncoding = stackalloc byte[9];
                 int count = XofUtilities.RightEncode(GetMacSize() * 8, lengthEncoding);
-                cshake.BlockUpdate(lengthEncoding[..count]);
+                cshake.BlockUpdate(lengthEncoding.Slice(0, count));
             }
 
-            int rv = cshake.OutputFinal(output[..GetMacSize()]);
+            int rv = cshake.OutputFinal(output.Slice(0, GetMacSize()));
 
             Reset();
 
@@ -118,7 +118,7 @@ namespace Org.BouncyCastle.Crypto.Macs
 
                 Span<byte> lengthEncoding = stackalloc byte[9];
                 int count = XofUtilities.RightEncode(output.Length * 8, lengthEncoding);
-                cshake.BlockUpdate(lengthEncoding[..count]);
+                cshake.BlockUpdate(lengthEncoding.Slice(0, count));
             }
 
             int rv = cshake.OutputFinal(output);
@@ -156,7 +156,7 @@ namespace Org.BouncyCastle.Crypto.Macs
 
                 Span<byte> lengthEncoding = stackalloc byte[9];
                 int count = XofUtilities.RightEncode(0, lengthEncoding);
-                cshake.BlockUpdate(lengthEncoding[..count]);
+                cshake.BlockUpdate(lengthEncoding.Slice(0, count));
 
                 firstOutput = false;
             }

@@ -143,7 +143,6 @@ namespace Org.BouncyCastle.Crypto.Macs
             //
             Array.Copy(cfbV, blockSize, cfbV, 0, cfbV.Length - blockSize);
             output.Slice(0, blockSize).CopyTo(cfbV.AsSpan(cfbV.Length - blockSize));
-ze));
 
             return blockSize;
         }

@@ -75,7 +75,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.Bike
 #if !NETFRAMEWORK
             Span<byte> hashRes = stackalloc byte[48];
             Sha3Digest.CalculateDigest(e01, 16 * R_BYTE, hashRes, 384);
-            hashRes[..L_BYTE].CopyTo(c1.AsSpan(c1Off));
+            hashRes.Slice(0, L_BYTE).CopyTo(c1.AsSpan(c1Off));
 #else
             byte[] hashRes = new byte[48];
             Sha3Digest.CalculateDigest(e01, 0, 16 * R_BYTE, hashRes, 0, 384);
@@ -93,7 +93,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.Bike
             digest.BlockUpdate(c01);
             digest.DoFinal(hashRes);
 
-            hashRes[..L_BYTE].CopyTo(result);
+            hashRes.Slice(0, L_BYTE).CopyTo(result);
 #else
             byte[] hashRes = new byte[48];
 
@@ -117,7 +117,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.Bike
             digest.BlockUpdate(c1);
             digest.DoFinal(hashRes);
 
-            hashRes[..L_BYTE].CopyTo(result);
+            hashRes.Slice(0, L_BYTE).CopyTo(result);
 #else
             byte[] hashRes = new byte[48];
 
@@ -153,7 +153,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.Bike
 
             IXof digest = new ShakeDigest(256);
 #if !NETFRAMEWORK
-            digest.BlockUpdate(seeds[..L_BYTE]);
+            digest.BlockUpdate(seeds.Slice(0, L_BYTE));
 #else
             digest.BlockUpdate(seeds, 0, L_BYTE);
 #endif
@@ -173,7 +173,7 @@ namespace Org.BouncyCastle.Pqc.Crypto.Bike
 
             //3. Parse seed2 as sigma
 #if !NETFRAMEWORK
-            sigma.AsSpan().CopyFrom(seeds[L_BYTE..]);
+            sigma.AsSpan().CopyFrom(seeds.Slice(L_BYTE));
 #else
             Array.Copy(seeds, L_BYTE, sigma, 0, sigma.Length);
 #endif

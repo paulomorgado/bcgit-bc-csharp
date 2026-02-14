@@ -192,11 +192,11 @@ namespace Org.BouncyCastle.Crypto.Modes
                 Debug.Assert(updateOutputSize >= m_blockSize);
                 Check.OutputLength(output, updateOutputSize, "output buffer too short");
 
-                input[..available].CopyTo(buf.AsSpan(bufOff));
-                input = input[available..];
+                input.Slice(0, available).CopyTo(buf.AsSpan(bufOff));
+                input = input.Slice(available);
 
                 // Handle destructive overlap by copying the remaining input
-                if (output[..m_blockSize].Overlaps(input))
+                if (output.Slice(0, m_blockSize).Overlaps(input))
                 {
                     byte[] tmp = new byte[input.Length];
                     input.CopyTo(tmp);
@@ -209,9 +209,9 @@ namespace Org.BouncyCastle.Crypto.Modes
 
                 while (input.Length > m_blockSize)
                 {
-                    resultLen += m_cipherMode.ProcessBlock(buf, output[resultLen..]);
-                    input[..m_blockSize].CopyTo(buf);
-                    input = input[m_blockSize..];
+                    resultLen += m_cipherMode.ProcessBlock(buf, output.Slice(resultLen));
+                    input.Slice(0, m_blockSize).CopyTo(buf);
+                    input = input.Slice(m_blockSize);
                 }
             }
 
@@ -307,7 +307,7 @@ namespace Org.BouncyCastle.Crypto.Modes
                     }
 
                     m_cipherMode.UnderlyingCipher.ProcessBlock(buf.AsSpan(m_blockSize), output);
-                    buf.AsSpan(0, bufOff - m_blockSize).CopyTo(output[m_blockSize..]);
+                    buf.AsSpan(0, bufOff - m_blockSize).CopyTo(output.Slice(m_blockSize));
                 }
                 else
                 {
@@ -321,7 +321,7 @@ namespace Org.BouncyCastle.Crypto.Modes
                     }
 
                     m_cipherMode.ProcessBlock(buf, output);
-                    buf.AsSpan(m_blockSize, bufOff - m_blockSize).CopyTo(output[m_blockSize..]);
+                    buf.AsSpan(m_blockSize, bufOff - m_blockSize).CopyTo(output.Slice(m_blockSize));
                 }
 
                 return bufOff;

@@ -87,11 +87,11 @@ namespace Org.BouncyCastle.Tls.Crypto.Impl
                 : new byte[keyBlockSize];
             TlsImplUtilities.CalculateKeyBlock(cryptoParams, keyBlock);
 
-            clientMac.SetKey(keyBlock[..clientMac.MacLength]); keyBlock = keyBlock[clientMac.MacLength..];
-            serverMac.SetKey(keyBlock[..serverMac.MacLength]); keyBlock = keyBlock[serverMac.MacLength..];
+            clientMac.SetKey(keyBlock.Slice(0, clientMac.MacLength)); keyBlock = keyBlock.Slice(clientMac.MacLength);
+            serverMac.SetKey(keyBlock.Slice(0, serverMac.MacLength)); keyBlock = keyBlock.Slice(serverMac.MacLength);
 
-            clientCipher.SetKey(keyBlock[..cipherKeySize]); keyBlock = keyBlock[cipherKeySize..];
-            serverCipher.SetKey(keyBlock[..cipherKeySize]); keyBlock = keyBlock[cipherKeySize..];
+            clientCipher.SetKey(keyBlock.Slice(0, cipherKeySize)); keyBlock = keyBlock.Slice(cipherKeySize);
+            serverCipher.SetKey(keyBlock.Slice(0, cipherKeySize)); keyBlock = keyBlock.Slice(cipherKeySize);
 
             int clientIVLength = clientCipher.GetBlockSize();
             int serverIVLength = serverCipher.GetBlockSize();

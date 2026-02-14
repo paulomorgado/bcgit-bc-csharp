@@ -770,7 +770,7 @@ namespace Org.BouncyCastle.Tls
             if (count > 0)
             {
                 count = System.Math.Min(count, m_applicationDataQueue.Available);
-                m_applicationDataQueue.RemoveData(buffer[..count], 0);
+                m_applicationDataQueue.RemoveData(buffer.Slice(0, count), 0);
             }
             return count;
         }
@@ -1071,8 +1071,8 @@ namespace Org.BouncyCastle.Tls
                         {
                             if (buffer.Length > 1)
                             {
-                                SafeWriteRecord(ContentType.application_data, buffer[..1]);
-                                buffer = buffer[1..];
+                                SafeWriteRecord(ContentType.application_data, buffer.Slice(0, 1));
+                                buffer = buffer.Slice(1);
                             }
                             break;
                         }
@@ -1092,8 +1092,8 @@ namespace Org.BouncyCastle.Tls
 
                     // Fragment data according to the current fragment limit.
                     int toWrite = System.Math.Min(buffer.Length, m_recordStream.PlaintextLimit);
-                    SafeWriteRecord(ContentType.application_data, buffer[..toWrite]);
-                    buffer = buffer[toWrite..];
+                    SafeWriteRecord(ContentType.application_data, buffer.Slice(0, toWrite));
+                    buffer = buffer.Slice(toWrite);
                 }
             }
         }
