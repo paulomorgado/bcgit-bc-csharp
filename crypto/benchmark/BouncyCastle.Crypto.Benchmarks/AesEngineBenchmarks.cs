@@ -1,7 +1,7 @@
 ﻿using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Columns;
 using BenchmarkDotNet.Jobs;
-using Org.BouncyCastle.Crypto.Engines;
+using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Parameters;
 
 namespace BouncyCastle.Crypto.Benchmarks
@@ -9,12 +9,12 @@ namespace BouncyCastle.Crypto.Benchmarks
     [MemoryDiagnoser]
     [SimpleJob(RuntimeMoniker.Net10_0)]
     [SimpleJob(RuntimeMoniker.Net481)]
-    [HideColumns(Column.Error, Column.StdDev, Column.Mean)]
+    [HideColumns(Column.Error, Column.StdDev, Column.Median)]
     public class AesEngineBenchmarks
     {
         private KeyParameter key;
-        private AesEngine aesForInit;
-        private AesEngine aesForEncrypt;
+        private IBlockCipher aesForInit;
+        private IBlockCipher aesForEncrypt;
         private byte[] output = new byte[256];
         private byte[] iv = new byte[] { 0x59, 0x5B, 0x69, 0x9B, 0xBD, 0x3B, 0xC0, 0xDF, 0x26, 0x06, 0x20, 0x93, 0xC1, 0xAD, 0x8F, 0x73 };
 
@@ -23,9 +23,9 @@ namespace BouncyCastle.Crypto.Benchmarks
         {
             key = new KeyParameter(new byte[] { 0x23, 0x48, 0x29, 0x00, 0x84, 0x67, 0xbe, 0x18, 0x6c, 0x3d, 0xe1, 0x4a, 0xae, 0x72, 0xd6, 0x2c });
 
-            aesForInit = new AesEngine();
+            aesForInit = AesUtilities.CreateEngine();
 
-            aesForEncrypt = new AesEngine();
+            aesForEncrypt = AesUtilities.CreateEngine();
             aesForEncrypt.Init(true, key);
         }
 
